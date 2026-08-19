@@ -39,7 +39,21 @@ export default async function CitiesPage() {
                 </div>
                 <span className="badge">{c.active ? "● Active" : "Paused"}</span>
               </div>
-              <div style={{ marginTop: 13, padding: "10px 11px", borderRadius: 13, background: "rgba(160,187,255,.08)", border: "1px solid rgba(184,205,255,.10)" }}>
+              {c.connectivity && (
+                <div style={{ marginTop: 12, padding: "10px 11px", borderRadius: 13, background: "rgba(127,214,160,.08)", border: "1px solid rgba(127,214,160,.14)" }}>
+                  <div className="eyebrow" style={{ fontSize: 9, color: "#7fd6a0" }}>✈ BLR connectivity · {c.connectivity.rank}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, marginTop: 5 }}>{c.connectivity.metric}</div>
+                  {c.connectivity.detail && <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 3 }}>{c.connectivity.detail}</div>}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 7 }}>
+                    {c.connectivity.sources.map((s, i) => (
+                      <a key={i} href={s.url} target="_blank" rel="noreferrer" style={{ fontSize: 11, color: "var(--accent)" }}>
+                        {s.kind === "social" ? "◆ " : s.kind === "aviation-data" ? "✈ " : "↗ "}{s.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div style={{ marginTop: 12, padding: "10px 11px", borderRadius: 13, background: "rgba(160,187,255,.08)", border: "1px solid rgba(184,205,255,.10)" }}>
                 <div className="eyebrow" style={{ fontSize: 9, color: "#b6caff" }}>Six-month signal</div>
                 <div style={{ fontSize: 12.5, lineHeight: 1.4, marginTop: 4 }}>{pulse?.focus || "No distinct recent signal yet."}</div>
               </div>

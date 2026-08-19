@@ -41,6 +41,13 @@ export interface City {
   benchmarkAirport?: string; // peer hub used for competitive comparison
   rationale: string; // why this city is in the pilot (passenger / benchmark relevance)
   active: boolean;
+  // Why this city was selected — real BLR flight connectivity, with sources.
+  connectivity?: {
+    rank: string; // e.g. "#1 domestic route from BLR"
+    metric: string; // e.g. "~2,249 flights/mo · 477k seats"
+    detail?: string; // extra colour (airlines / daily frequency)
+    sources: { label: string; url: string; kind: "web" | "aviation-data" | "news" | "social" }[];
+  };
 }
 
 // --- Evidence -------------------------------------------------------------

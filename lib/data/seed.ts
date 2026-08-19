@@ -31,13 +31,91 @@ export const SEED: StoreShape = {
     lastRefreshAt: now,
   },
 
+  // Cities are chosen by REAL BLR flight connectivity (frequency + seats), not
+  // assumption. Domestic top-3 and international top-3 by route volume from BLR.
   cities: [
-    { id: "del", name: "Delhi NCR", country: "India", kind: "domestic", benchmarkAirport: "Delhi T3 (DEL)", rationale: "Largest domestic feeder/destination; DEL T3 is India's retail benchmark hub.", active: true },
-    { id: "bom", name: "Mumbai", country: "India", kind: "domestic", benchmarkAirport: "Mumbai T2 (BOM)", rationale: "High-value business + premium leisure origin; craft-brand launchpad.", active: true },
-    { id: "hyd", name: "Hyderabad", country: "India", kind: "domestic", benchmarkAirport: "Hyderabad (HYD)", rationale: "Fast-growing South metro; overlapping affluent demographic with BLR.", active: true },
-    { id: "dxb", name: "Dubai", country: "UAE", kind: "international", benchmarkAirport: "Dubai International (DXB)", rationale: "World's busiest international hub; travel-retail gold standard + large Indian diaspora.", active: true },
-    { id: "sin", name: "Singapore", country: "Singapore", kind: "international", benchmarkAirport: "Changi (SIN)", rationale: "Global benchmark for experiential airport retail + activations.", active: true },
-    { id: "lon", name: "London", country: "United Kingdom", kind: "international", benchmarkAirport: "Heathrow (LHR)", rationale: "Premium F&B / grab-and-go innovation benchmark; large VFR + business traffic.", active: true },
+    {
+      id: "del", name: "Delhi NCR", country: "India", kind: "domestic", benchmarkAirport: "Delhi T3 (DEL)",
+      rationale: "Busiest route from BLR and India's #2 domestic route overall; DEL T3 is India's retail benchmark hub.",
+      active: true,
+      connectivity: {
+        rank: "#1 domestic route from BLR",
+        metric: "~477k seats/mo · ~2,249 flights/mo",
+        detail: "35–60 daily flights (IndiGo, Air India, Akasa, Air India Express)",
+        sources: [
+          { label: "Aviation A2Z — top 15 busiest domestic routes", url: "https://aviationa2z.com/index.php/2024/11/22/top-15-busiest-domestic-routes-in-india/", kind: "aviation-data" },
+          { label: "Akbar Travels — busiest routes 2026", url: "https://www.akbartravels.com/in/blogs/busiest-airline-routes-in-2026/", kind: "web" },
+        ],
+      },
+    },
+    {
+      id: "bom", name: "Mumbai", country: "India", kind: "domestic", benchmarkAirport: "Mumbai T2 (BOM)",
+      rationale: "2nd-busiest route from BLR; high-value business + premium leisure origin and craft-brand launchpad.",
+      active: true,
+      connectivity: {
+        rank: "#2 domestic route from BLR",
+        metric: "~385k seats/mo · ~1,935 flights/mo",
+        detail: "35–60 daily flights",
+        sources: [
+          { label: "Aviation A2Z — top 15 busiest domestic routes", url: "https://aviationa2z.com/index.php/2024/11/22/top-15-busiest-domestic-routes-in-india/", kind: "aviation-data" },
+        ],
+      },
+    },
+    {
+      id: "ccu", name: "Kolkata", country: "India", kind: "domestic", benchmarkAirport: "Kolkata (CCU)",
+      rationale: "3rd-busiest route from BLR by flights/seats (ahead of Hyderabad); East-India gateway with a strong food-culture scene.",
+      active: true,
+      connectivity: {
+        rank: "#3 domestic route from BLR",
+        metric: "~245k seats/mo · ~1,254 flights/mo",
+        detail: "Ranks above Hyderabad (~204k seats) among BLR domestic routes",
+        sources: [
+          { label: "Aviation A2Z — CCU-BLR ranks among top 15 (rank 8 nationally)", url: "https://aviationa2z.com/index.php/2024/11/22/top-15-busiest-domestic-routes-in-india/", kind: "aviation-data" },
+        ],
+      },
+    },
+    {
+      id: "dxb", name: "Dubai", country: "UAE", kind: "international", benchmarkAirport: "Dubai International (DXB)",
+      rationale: "#1 busiest international route from BLR; travel-retail gold standard + very large Indian diaspora.",
+      active: true,
+      connectivity: {
+        rank: "#1 international route from BLR",
+        metric: "~39–44 flights/week",
+        detail: "Emirates ~21/wk + IndiGo + Air India Express",
+        sources: [
+          { label: "Trak.in — BLR busiest international routes", url: "https://trak.in/stories/bengaluru-airport-handled-4-4-crore-international-passengers-in-365-days/", kind: "news" },
+          { label: "FlightsFrom.com — BLR↔DXB schedules", url: "https://www.flightsfrom.com/BLR-DXB", kind: "aviation-data" },
+        ],
+      },
+    },
+    {
+      id: "sin", name: "Singapore", country: "Singapore", kind: "international", benchmarkAirport: "Changi (SIN)",
+      rationale: "Top-3 busiest international route and highest-frequency long-haul from BLR; global benchmark for experiential airport retail.",
+      active: true,
+      connectivity: {
+        rank: "Top-3 international route from BLR (highest frequency)",
+        metric: "~90+ direct flights/week",
+        detail: "Air India, Singapore Airlines, Scoot, IndiGo",
+        sources: [
+          { label: "Trak.in — BLR busiest international routes", url: "https://trak.in/stories/bengaluru-airport-handled-4-4-crore-international-passengers-in-365-days/", kind: "news" },
+          { label: "Singapore Airlines — BLR↔SIN schedule", url: "https://www.singaporeair.com/en-sg/flights-from-bengaluru-to-singapore", kind: "aviation-data" },
+        ],
+      },
+    },
+    {
+      id: "auh", name: "Abu Dhabi", country: "UAE", kind: "international", benchmarkAirport: "Zayed Intl (AUH)",
+      rationale: "2nd-busiest international route from BLR by passengers (ahead of London/KL); Etihad twice-daily + AED-10bn Aldar/Mubadala retail build-out.",
+      active: true,
+      connectivity: {
+        rank: "#2 international route from BLR (by passengers)",
+        metric: "~15–27 flights/week",
+        detail: "Etihad ~2× daily (EY233/EY239)",
+        sources: [
+          { label: "Trak.in — BLR busiest international routes (Abu Dhabi #2)", url: "https://trak.in/stories/bengaluru-airport-handled-4-4-crore-international-passengers-in-365-days/", kind: "news" },
+          { label: "FlightsFrom.com — AUH↔BLR schedules", url: "https://www.flightsfrom.com/AUH-BLR", kind: "aviation-data" },
+        ],
+      },
+    },
   ],
 
   // --- BIAL current portfolio (internal reference) -------------------------
@@ -71,6 +149,16 @@ export const SEED: StoreShape = {
     { id: "sig-basil", timestamp: now, firstDetectedAt: "2026-07-30T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-07-28", source: "D2C Insider", url: "https://pulse.d2cinsider.com/the-d2c-insider-20-indias-breakout-consumer-brands-of-2026/", city: "Hyderabad", country: "India", brand: "Basil", company: "Basil", category: "F&B", subCategory: "Healthy Fresh QSR", signalType: "Emerging Concept", trend: "Fresh, healthy QSR scaling toward 1,000 touchpoints", description: "Basil operates 60+ fresh-food outlets across three cities, targeting 1,000 touchpoints — a healthy grab-and-go format under-served airside at BLR.", confidence: 72, sourceTier: 2, corroboratingUrls: [], dedupeKey: "basil|india|healthy-qsr", opportunityId: "opp-basil" },
     { id: "sig-t2-debuts", timestamp: now, firstDetectedAt: "2026-08-04T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-06-10", source: "Hospitality Biz India", url: "https://hospitalitybizindia.com/news-track/international-fb-brands-make-india-debut-at-bengaluru-airports-terminal-2-boosting-non-aero-revenues/", city: "Hyderabad", country: "India", airport: "Kempegowda (BLR)", category: "F&B", subCategory: "Premium International Dining", signalType: "Competitive Movement", trend: "BLR T2 landing India-debut global brands boosts non-aero revenue", description: "P.F. Chang's, Wolfgang Puck and James Martin Kitchen made their India debut at BLR T2 — validating BLR's pull for 'first-at-airport / first-in-India' exclusives.", confidence: 83, sourceTier: 2, corroboratingUrls: ["https://www.bengaluruairport.com/terminal2"], dedupeKey: "t2-debuts|blr|first-in-india" },
     { id: "sig-mokobara-luggage-tender", timestamp: now, firstDetectedAt: "2026-08-04T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-05-01", source: "Moodie Davitt Report", url: "https://moodiedavittreport.com/four-retail-and-fb-opportunities-at-kempegowda-international-airport-bengaluru-set-to-close-for-bids/", city: "Delhi NCR", country: "India", airport: "Kempegowda (BLR)", category: "Retail", subCategory: "Accessories / Leather / Watches", signalType: "Commercial Gap", trend: "BLR T2 tendering leather, watches — accessories footprint expanding", description: "BLR T2 has actively tendered leather goods, luxury watches and accessories concessions — showing live appetite for design-led travel-retail categories.", confidence: 70, sourceTier: 1, corroboratingUrls: [], dedupeKey: "blr-tenders|accessories|retail" },
+
+    // --- Kolkata (new data-selected feeder market) ---
+    { id: "sig-twc-thirdrush", timestamp: now, firstDetectedAt: "2026-08-12T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-07-22", source: "Indian Retailer", url: "https://www.indianretailer.com/news/third-wave-coffee-enters-east-india-three-cafe-launches-kolkata", city: "Kolkata", country: "India", brand: "Third Wave Coffee", company: "Third Wave Coffee", category: "F&B", subCategory: "Specialty Coffee / Dessert Café", signalType: "Emerging Concept", trend: "Third Wave enters East India + launches 'Third Rush' dessert-café format", event: "3 café launches in Kolkata", description: "Third Wave Coffee entered East India with three Kolkata cafés and rolled out 'Third Rush', a dessert-focused concept for evening consumption occasions.", confidence: 78, sourceTier: 2, corroboratingUrls: [], dedupeKey: "thirdwave|kolkata|dessert-cafe" },
+    { id: "sig-yourstruly-ccu", timestamp: now, firstDetectedAt: "2026-08-11T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-06-30", source: "EazyDiner", url: "https://www.eazydiner.com/food-trends/kolkatas-8-most-instagrammable-restaurants-to-light-up-your-social-feed", city: "Kolkata", country: "India", brand: "Yours Truly", company: "Yours Truly", category: "F&B", subCategory: "Specialty Coffee + Bakery", signalType: "Emerging Brand", trend: "15,000 sq ft specialty-coffee destination with Lavonne bakery + coffee classroom", description: "Bhowanipore's 'Yours Truly' is a 15,000 sq ft specialty-coffee destination (Coffee Classroom + bakery developed with Lavonne Academy) — an experiential-café format.", confidence: 68, sourceTier: 3, corroboratingUrls: [], dedupeKey: "yourstruly|kolkata|specialty-coffee" },
+    { id: "sig-ccu-foodsocial", timestamp: now, firstDetectedAt: "2026-08-10T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-02-01", source: "Modash (Instagram influencer index)", url: "https://www.modash.io/find-influencers/india/kolkata/food", city: "Kolkata", country: "India", category: "F&B", subCategory: "Social Food Buzz", signalType: "Category Growth", trend: "Kolkata food-influencer economy driving 'Instagrammable' dining demand", description: "A dense Kolkata food-influencer scene on Instagram (top-20 index) plus 'most Instagrammable restaurant' round-ups signal strong social-led, experience-first dining demand.", confidence: 60, sourceTier: 4, corroboratingUrls: ["https://www.eazydiner.com/food-trends/kolkatas-8-most-instagrammable-restaurants-to-light-up-your-social-feed"], dedupeKey: "kolkata|social|instagrammable-dining" },
+
+    // --- Abu Dhabi (new data-selected international hub) ---
+    { id: "sig-reemmall", timestamp: now, firstDetectedAt: "2026-08-13T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-07-18", source: "TTN Worldwide", url: "https://www.ttnworldwide.com/ArticleTA/461530/vision-hospitality-unveils-multi-concept-destination-in-abu-dhabi", city: "Abu Dhabi", country: "UAE", brand: "Vision Hospitality", company: "Vision Hospitality", category: "F&B", subCategory: "Multi-Concept F&B + Entertainment", signalType: "Airport Innovation", trend: "45,000 sq ft multi-concept F&B + live-sport + social destination at Reem Mall", event: "Reem Mall multi-concept launch", description: "Vision Hospitality is opening a 45,000 sq ft destination at Reem Mall combining food, live sport, entertainment and social spaces — an experiential 'eatertainment' format relevant to airport dwell zones.", confidence: 74, sourceTier: 2, corroboratingUrls: [], dedupeKey: "reemmall|abudhabi|eatertainment" },
+    { id: "sig-curate-phygital", timestamp: now, firstDetectedAt: "2026-08-12T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-06-25", source: "Time Out Abu Dhabi", url: "https://www.timeoutabudhabi.com/shopping/concept-stores-boutiques", city: "Abu Dhabi", country: "UAE", brand: "Curate", company: "Curate", category: "Retail", subCategory: "Phygital / Experiential Retail", signalType: "Emerging Concept", trend: "Abu Dhabi's first 'phygital' experiential retail + local-maker (Emirati SME) incubator", description: "Curate (Reem Mall) is a 1,200 sqm phygital retail platform pairing physical experiential space with a digital marketplace, plus an incubator giving Emirati women-owned SMEs free year-long retail presence — a 'local makers' model.", confidence: 70, sourceTier: 3, corroboratingUrls: [], dedupeKey: "curate|abudhabi|phygital-retail" },
+    { id: "sig-aldar-mubadala", timestamp: now, firstDetectedAt: "2026-08-13T00:00:00Z", lastUpdatedAt: now, publishedAt: "2026-05-20", source: "Mubadala", url: "https://www.mubadala.com/en/news/aldar-and-mubadala-complete-joint-venture-to-establish-aed-10-billion-retail-champion-in-abu-dhabi", city: "Abu Dhabi", country: "UAE", brand: "Aldar / Mubadala", company: "Aldar Properties", category: "Retail", subCategory: "Luxury Retail Platform", signalType: "Competitive Movement", trend: "AED 10bn Aldar–Mubadala retail JV consolidating Yas Mall + Galleria luxury", description: "Aldar and Mubadala completed an AED 10bn JV to build a curated luxury-retail champion (Yas Mall + The Galleria) — signalling a premiumisation wave in Abu Dhabi travel-adjacent retail.", confidence: 76, sourceTier: 2, corroboratingUrls: [], dedupeKey: "aldar-mubadala|abudhabi|luxury-retail" },
   ],
 
   // --- Opportunities -------------------------------------------------------
