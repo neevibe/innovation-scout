@@ -10,7 +10,7 @@ const FLAG: Record<string, string> = { India: "🇮🇳", UAE: "🇦🇪", Singa
 
 export default async function CitiesPage() {
   const { config, opportunities } = await getPageData();
-  const [cities, signals, portfolio] = await Promise.all([Repo.cities(), Repo.signals(), Repo.portfolio()]);
+  const [cities, signals, portfolio, candidates] = await Promise.all([Repo.cities(), Repo.signals(), Repo.portfolio(), Repo.candidates()]);
   const report = buildSixMonthReport(cities, signals, portfolio, opportunities);
 
   return (
@@ -30,6 +30,7 @@ export default async function CitiesPage() {
           const fnb = citySignals.filter((s) => s.category === "F&B").length;
           const retail = citySignals.filter((s) => s.category !== "F&B").length;
           const topScore = cityOpps.length ? Math.max(...cityOpps.map((o) => o.score)) : 0;
+          const candCount = candidates.filter((cd) => cd.city === c.name).length;
           return (
             <div key={c.id} className="card lift-card" style={{ padding: 18 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
@@ -74,6 +75,9 @@ export default async function CitiesPage() {
                 ))}
                 {cityOpps.length === 0 && <div className="muted" style={{ fontSize: 12 }}>Monitoring — no scored opportunity yet.</div>}
               </div>
+              <Link href={`/markets/${c.id}`} className="btn" style={{ marginTop: 12, width: "100%", justifyContent: "center", fontSize: 12.5 }}>
+                {candCount > 0 ? `Explore ${candCount} buzzing brands` : "Market shortlist"} →
+              </Link>
             </div>
           );
         })}

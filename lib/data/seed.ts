@@ -1,5 +1,6 @@
 import type { StoreShape } from "@/lib/types";
 import { DEFAULT_WEIGHTS } from "@/lib/scoring/engine";
+import { ALL_CANDIDATES } from "@/lib/data/candidates";
 
 // ===========================================================================
 // SEED INTELLIGENCE
@@ -454,6 +455,8 @@ export const SEED: StoreShape = {
       tags: ["F&B", "Wellness", "Pop-Up", "Needs Validation"],
     },
   ],
+
+  candidates: ALL_CANDIDATES,
 
   refreshLog: [
     { at: now, mode: "offline", signalsScanned: 10, signalsNew: 10, duplicatesConsolidated: 4, opportunitiesCreated: 7, opportunitiesUpdated: 0, notes: "Initial seed ingestion from grounded trade-source research (Aug 2026)." },

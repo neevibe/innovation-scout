@@ -204,6 +204,26 @@ export interface BuzzProfile {
   note: string; // human-readable justification of the trajectory call
 }
 
+// --- Market shortlist candidate (the ≥10-per-market coverage layer) --------
+// Lighter than a full Opportunity: every buzzing brand in a market, scored and
+// buzz-profiled with sources, so the pick set is auditable. Top candidates get
+// promoted to full Opportunities.
+export interface MarketCandidate {
+  id: string;
+  city: string;
+  brand: string;
+  company?: string;
+  vertical: Vertical;
+  category: string;
+  score: number; // 0-100 composite (same model as opportunities)
+  buzz: BuzzProfile;
+  why: string; // the trending evidence — why it's on the shortlist
+  bialFit: string; // how BIAL could bring it here
+  airportPrecedent?: boolean; // already live in an airport somewhere
+  sources: { label: string; url: string; tier: SourceTier }[];
+  promotedOpportunityId?: string;
+}
+
 // --- BIAL internal reference data (kept separate) -------------------------
 export interface BialPortfolioEntry {
   category: string;
@@ -243,6 +263,7 @@ export interface StoreShape {
   cities: City[];
   signals: Signal[];
   opportunities: Opportunity[];
+  candidates: MarketCandidate[];
   bialPortfolio: BialPortfolioEntry[];
   dutyFreeSkus: DutyFreeSku[];
   refreshLog: RefreshLogEntry[];

@@ -116,6 +116,12 @@ export const Repo = {
     return updated;
   },
 
+  async candidates(): Promise<import("@/lib/types").MarketCandidate[]> {
+    return (await read()).candidates || [];
+  },
+  async candidatesForCity(city: string) {
+    return ((await read()).candidates || []).filter((c) => c.city === city).sort((a, b) => b.score - a.score);
+  },
   async portfolio() {
     return (await read()).bialPortfolio;
   },
