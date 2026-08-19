@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ScoredOpportunity } from "@/lib/scoring/engine";
 import { ScoreDonut, TierPill } from "@/components/ScoreBadge";
+import { DomainBadge } from "@/components/DomainBadge";
 import { Icon } from "@/components/Icon";
 
 const FLAG: Record<string, string> = { India: "🇮🇳", UAE: "🇦🇪", Singapore: "🇸🇬", "United Kingdom": "🇬🇧" };
@@ -17,7 +18,7 @@ export function OpportunityCard({ o }: { o: ScoredOpportunity }) {
         )}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(20,24,28,0.05), rgba(20,24,28,0.5))" }} />
         <div style={{ position: "absolute", top: 12, left: 12, display: "flex", gap: 6 }}>
-          <span className="badge" style={{ background: "rgba(24,28,32,0.7)", backdropFilter: "blur(6px)", color: "#fff" }}>{o.vertical}</span>
+          <DomainBadge vertical={o.vertical} />
           {!o.sufficientEvidence && <span className="badge" style={{ background: "rgba(24,28,32,0.7)", borderColor: "var(--warn)", color: "var(--warn)" }}>Insufficient evidence</span>}
         </div>
         <div style={{ position: "absolute", top: 10, right: 10, background: "rgba(24,28,32,0.78)", backdropFilter: "blur(6px)", borderRadius: 999, padding: 3 }}>

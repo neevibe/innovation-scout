@@ -2,6 +2,8 @@ import { Repo } from "@/lib/db/store";
 import { getPageData } from "@/lib/view";
 import { Topbar } from "@/components/Topbar";
 import { BuzzSpark } from "@/components/BuzzSpark";
+import { MarketChart } from "@/components/MarketChart";
+import { DomainBadge } from "@/components/DomainBadge";
 import { FACTOR_LABELS, normaliseWeights } from "@/lib/scoring/engine";
 import type { FactorKey } from "@/lib/types";
 import Link from "next/link";
@@ -57,6 +59,14 @@ export default async function MethodologyPage() {
             <RankTable title="Domestic (from BLR)" rows={DOM} />
             <RankTable title="International (from BLR)" rows={INT} />
           </div>
+          <div style={{ marginTop: 16 }}>
+            <div className="eyebrow" style={{ marginBottom: 8 }}>Interactive — flights (x) vs passengers (y), size = load factor</div>
+            <MarketChart
+              domestic={DOM.map((r) => ({ ...r }))}
+              international={INT.map((r) => ({ ...r }))}
+            />
+          </div>
+          <Eq label="Market Priority score (per city)" eq="MP = 0.60·P̂ + 0.25·L̂ + 0.15·F̂" note="P̂, L̂, F̂ = min-max-normalised Passengers, Load-factor, Flights. Passengers dominate (retail = footfall); load factor rewards genuine demand; flights count least." />
           <Callout>
             The metric choice changes the answer — and that's the point. By <b>flights</b>, the #3 domestic would be <b>Pune</b> (3,981 ATM) and the #1 international would be <b>Abu Dhabi</b> (1,001 ATM). But Pune runs only <b>76.9%</b> full vs Kolkata's <b>91.6%</b>, and Abu Dhabi carries <b>165k</b> pax vs London's <b>193k</b>. On footfall + load — the retail-correct axis — the picks are <b>Delhi · Mumbai · Kolkata</b> and <b>Dubai · Singapore · London</b>.
           </Callout>
@@ -90,6 +100,9 @@ export default async function MethodologyPage() {
             <Traj c="#e0b877" name="Fading" d="Declining — demote" />
             <Traj c="#e8908f" name="Spike-and-fade" d="One/two-month event spike — DEMOTE; import the format, not the brand" />
           </div>
+          <Eq label="Persistence" eq="ρ = monthsActive ÷ windowMonths" note="Fraction of the window in which the brand showed measurable buzz. ρ = 1 → present every month." />
+          <Eq label="Momentum (slope)" eq="μ = (b_last − b_first) ÷ (windowMonths − 1)" note="Average month-on-month change of the buzz index b. μ > 0 rising, μ < 0 fading." />
+          <Eq label="Promotion rule" eq="promote ⇔ (ρ ≥ 0.5) ∨ (trajectory ∈ {Emerging, Accelerating})" note="A one/two-month Spike-and-fade fails both tests → demoted." />
           <Callout>
             Promotion rule: a signal becomes a scored opportunity only if <b>persistence ≥ 0.5</b> <i>or</i> the trajectory is clearly <b>Accelerating/Emerging</b>. <b>Spike-and-fade</b> items (e.g. a time-boxed pop-up) are labelled and excluded from durable-trend treatment — you import the <i>format</i>, not the fleeting name.
           </Callout>
@@ -98,12 +111,21 @@ export default async function MethodologyPage() {
         {/* Scoring model */}
         <Section n="05" title="Opportunity Scoring Model — 9 weighted factors, 0–100">
           <P>Qualified opportunities are scored on nine factors with admin-configurable weights (buzz persistence feeds <i>Market Momentum</i> and <i>Evidence Confidence</i>). Tiers: ≥{cfg.thresholds.immediate} Immediate · ≥{cfg.thresholds.highPotential} High · ≥{cfg.thresholds.monitor} Monitor.</P>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))", gap: 8, marginTop: 8 }}>
-            {(Object.keys(w) as FactorKey[]).map((k) => (
-              <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "8px 12px", borderRadius: 10, background: "var(--surface-2)", fontSize: 12.5 }}>
-                <span>{FACTOR_LABELS[k]}</span><b>{w[k].toFixed(0)}%</b>
-              </div>
-            ))}
+          <Eq label="Opportunity Score" eq="Score = ( Σ wᵢ · fᵢ ) ÷ ( Σ wᵢ ),  i = 1…9,  fᵢ ∈ [0,100]" note="Weighted mean of nine factor sub-scores; weights below sum to 100 and re-rank every opportunity live." />
+          <div style={{ display: "grid", gap: 7, marginTop: 12 }}>
+            {(Object.keys(w) as FactorKey[]).map((k, i) => {
+              const grads = ["#5b8cff", "#a06bff", "#ff6bcb", "#34e3c8", "#f59e0b", "#22c55e", "#06b6d4", "#ef4444", "#6366f1"];
+              const col = grads[i % grads.length];
+              return (
+                <div key={k} style={{ display: "grid", gridTemplateColumns: "180px 1fr 40px", gap: 10, alignItems: "center", fontSize: 12 }}>
+                  <span style={{ color: "var(--muted)" }}>{FACTOR_LABELS[k]}</span>
+                  <span style={{ height: 8, borderRadius: 6, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                    <span style={{ display: "block", height: "100%", width: `${(w[k] / 20) * 100}%`, background: `linear-gradient(90deg, ${col}, ${col}bb)`, borderRadius: 6 }} />
+                  </span>
+                  <b style={{ textAlign: "right" }}>{w[k].toFixed(0)}%</b>
+                </div>
+              );
+            })}
           </div>
           <P><Link href="/admin" style={{ color: "var(--accent)" }}>Re-weight the model →</Link> Every score re-ranks live.</P>
         </Section>
@@ -115,8 +137,12 @@ export default async function MethodologyPage() {
             {examples.map((o) => (
               <Link key={o.id} href={`/opportunities/${o.id}`} className="card lift-card" style={{ padding: 16, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
                 <div style={{ minWidth: 190, flex: 1 }}>
-                  <div style={{ fontWeight: 600, fontSize: 15 }}>{o.brand} <span style={{ fontSize: 11, color: "var(--muted-2)" }}>· {o.city} · {o.vertical}</span></div>
-                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 4, lineHeight: 1.5 }}>{o.buzz?.note}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <span style={{ fontWeight: 600, fontSize: 15 }}>{o.brand}</span>
+                    <DomainBadge vertical={o.vertical} size="sm" />
+                    <span style={{ fontSize: 11, color: "var(--muted-2)" }}>{o.city}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 6, lineHeight: 1.5 }}>{o.buzz?.note}</div>
                 </div>
                 {o.buzz && <BuzzSpark buzz={o.buzz} />}
                 <div className="tnum" style={{ fontSize: 22, fontWeight: 700 }}>{o.score}</div>
@@ -151,6 +177,15 @@ function P({ children }: { children: React.ReactNode }) {
 }
 function Callout({ children }: { children: React.ReactNode }) {
   return <div style={{ marginTop: 14, padding: 14, borderRadius: 12, background: "rgba(127,214,160,.07)", border: "1px solid rgba(127,214,160,.16)", fontSize: 13, lineHeight: 1.55 }}>{children}</div>;
+}
+function Eq({ label, eq, note }: { label: string; eq: string; note: string }) {
+  return (
+    <div style={{ marginTop: 12, padding: "13px 16px", borderRadius: 12, background: "linear-gradient(120deg, rgba(91,140,255,0.10), rgba(160,107,255,0.08))", border: "1px solid rgba(122,162,255,0.22)" }}>
+      <div className="eyebrow" style={{ fontSize: 9.5, color: "#9db4ff" }}>{label}</div>
+      <div style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 15, marginTop: 6, color: "#eaf0ff", letterSpacing: "0.01em" }}>{eq}</div>
+      <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.5 }}>{note}</div>
+    </div>
+  );
 }
 function Tier({ n, items }: { n: string; items: string }) {
   return (

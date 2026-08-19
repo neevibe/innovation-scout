@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Repo } from "@/lib/db/store";
 import { Topbar } from "@/components/Topbar";
 import { BuzzSpark } from "@/components/BuzzSpark";
+import { DomainBadge } from "@/components/DomainBadge";
 import { MotionGrid, MotionItem } from "@/components/Motion";
 import { Icon } from "@/components/Icon";
 
@@ -47,7 +48,7 @@ export default async function MarketPage({ params }: { params: Promise<{ id: str
                     <div style={{ flex: 1, minWidth: 220 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                         <span style={{ fontWeight: 600, fontSize: 16 }}>{c.brand}</span>
-                        <span className="badge">{c.vertical}</span>
+                        <DomainBadge vertical={c.vertical} />
                         <span style={{ fontSize: 11, color: "var(--muted-2)" }}>{c.category}</span>
                         {c.airportPrecedent && <span className="badge" style={{ borderColor: "#7fd6a0", color: "var(--ok)" }}>✈ Airport precedent</span>}
                       </div>

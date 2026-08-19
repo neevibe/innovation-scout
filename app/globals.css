@@ -247,3 +247,48 @@ table.data tr:hover td { background: rgba(255,255,255,0.025); }
   .six-month-lens { padding: 20px; border-radius: 24px; }
   .city-orbit { min-height: 310px; transform: scale(.78); transform-origin: center; margin: -30px -15% -20px; width: 130%; }
 }
+
+/* ===========================================================================
+   COLOUR SYSTEM — vibrancy overrides (dark base kept, colour dialled up)
+   =========================================================================== */
+:root {
+  --accent: #7aa2ff;
+  --accent-soft: rgba(122, 162, 255, 0.16);
+  --grad-a: #5b8cff;  /* blue */
+  --grad-b: #a06bff;  /* violet */
+  --grad-c: #ff6bcb;  /* pink */
+  --grad-d: #34e3c8;  /* teal */
+}
+/* Colourful animated aurora background */
+.app-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background:
+  radial-gradient(46% 40% at 14% 8%, rgba(91,140,255,0.20), transparent 60%),
+  radial-gradient(40% 44% at 88% 12%, rgba(160,107,255,0.18), transparent 60%),
+  radial-gradient(50% 46% at 78% 92%, rgba(52,227,200,0.14), transparent 62%),
+  radial-gradient(44% 40% at 8% 94%, rgba(255,107,203,0.14), transparent 60%),
+  var(--bg); }
+.ambient-orb { mix-blend-mode: screen; opacity: 0.5; }
+.ambient-orb-a { background: radial-gradient(circle, rgba(91,140,255,0.55), transparent 65%) !important; }
+.ambient-orb-b { background: radial-gradient(circle, rgba(255,107,203,0.42), transparent 65%) !important; }
+
+.grad-text { background: linear-gradient(92deg, var(--grad-a), var(--grad-b) 42%, var(--grad-c) 78%, var(--grad-d)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.btn-primary {
+  background: linear-gradient(120deg, var(--grad-a), var(--grad-b)) !important;
+  border-color: transparent !important; color: #fff !important;
+  box-shadow: 0 8px 24px -8px rgba(122,110,255,0.6) !important;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+
+.nav-link.active { background: linear-gradient(120deg, rgba(91,140,255,0.20), rgba(160,107,255,0.16)) !important; color: #fff !important; border-color: rgba(122,162,255,0.4) !important; }
+.nav-link.active svg { color: var(--accent); }
+
+.badge-accent, .badge-gold { border-color: rgba(122,162,255,0.4) !important; color: #cdd9ff !important; background: rgba(122,162,255,0.14) !important; }
+
+/* Colour-tinted card top edge for stat/opportunity cards */
+.eyebrow { color: #8ea6d8; }
+a[href^="/opportunities"], a[href^="/markets"] { }
+
+.live-dot { background: #34e3c8; }
+.live-dot::after { background: #34e3c8; }
+
+::selection { background: rgba(160,107,255,0.35); }
