@@ -44,6 +44,9 @@ export default async function MethodologyPage() {
             ))}
           </div>
           <P>Nothing is chosen by taste. Each stage has an explicit input, metric and threshold, and everything below is traceable to a source. The two questions this page answers: <b>why these markets</b>, and <b>why these brands</b>.</P>
+          <Callout>
+            <b>Scope = any commercial opportunity, not just F&amp;B/retail/duty-free.</b> The system covers brands, individual <b>products &amp; SKUs</b>, <b>services</b> (forex, eSIM, luggage, valet, meet-&amp;-greet), <b>experiences</b> &amp; activations, <b>wellness</b> (spa, sleep pods), <b>technology</b> (phygital, click-&amp;-collect, biometric, loyalty), <b>travel services</b> and <b>media &amp; advertising</b> — anything that grows non-aero revenue or passenger experience.
+          </Callout>
         </Section>
 
         {/* Market model */}

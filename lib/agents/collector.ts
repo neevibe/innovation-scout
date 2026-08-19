@@ -18,7 +18,10 @@ const isLive = () => process.env.SCOUT_MODE === "live";
 const LENSES = [
   "new retail brand OR store opening OR expansion",
   "new restaurant OR cafe OR F&B concept",
-  "airport duty free OR travel retail brand",
+  "airport duty free OR travel retail brand OR new product launch",
+  "new service OR experiential concept OR pop-up OR activation",
+  "travel service OR wellness OR spa OR sleep pod OR forex OR eSIM OR lounge",
+  "retail technology OR phygital OR loyalty OR click-and-collect OR digital commerce",
 ];
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

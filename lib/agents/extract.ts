@@ -38,14 +38,26 @@ function tierFor(url: string, source: string): SourceTier {
   return 3;
 }
 
-const FNB = /(coffee|cafe|café|restaurant|dining|food|bakery|patisserie|beverage|matcha|qsr|kitchen|brew|snack|tea|juice|dessert|chocolat)/i;
+const FNB = /(coffee|cafe|café|restaurant|dining|food|bakery|patisserie|beverage|matcha|qsr|kitchen|brew|snack|tea|juice|dessert|chocolat|mishti|sweets)/i;
 const DUTYFREE = /(duty[- ]free|fragrance|perfume|whisky|whiskey|liquor|spirits|confection|cosmetic|beauty|skincare)/i;
 const RETAIL = /(retail|luggage|fashion|apparel|electronics|lifestyle|sneaker|watch|jewel|accessor|store|boutique|pop-?up)/i;
+const WELLNESS = /(spa|wellness|massage|sleep pod|nap|meditation|yoga|fitness|health|clinic|pharmacy)/i;
+const TECH = /(app|digital|phygital|self-?checkout|kiosk tech|ai |loyalty|rewards|subscription|e-?commerce|click[- ]?and[- ]?collect|payment|fintech|platform)/i;
+const TRAVEL_SVC = /(forex|currency exchange|e-?sim|sim card|baggage|luggage wrap|valet|meet[- ]?and[- ]?greet|fast track|porter|left luggage|car rental|transfer|lounge)/i;
+const EXPERIENCE = /(experiential|activation|immersive|entertainment|eatertainment|pop-?up|installation|exhibition|gaming|vr|xr|live sport)/i;
+const MEDIA = /(advertis|media|billboard|dooh|screen|sponsorship|branding takeover)/i;
+const SERVICES = /(service|concierge|repair|tailoring|personalis|on-?demand|delivery|rental)/i;
 
 function classify(text: string): Vertical {
   if (DUTYFREE.test(text)) return "Duty Free";
+  if (TRAVEL_SVC.test(text)) return "Travel Services";
+  if (WELLNESS.test(text)) return "Wellness";
+  if (MEDIA.test(text)) return "Media & Advertising";
+  if (EXPERIENCE.test(text)) return "Experiences";
+  if (TECH.test(text)) return "Technology";
   if (FNB.test(text)) return "F&B";
   if (RETAIL.test(text)) return "Retail";
+  if (SERVICES.test(text)) return "Services";
   return "Retail";
 }
 
@@ -98,10 +110,10 @@ export async function extractWithLLM(docs: RawDoc[]): Promise<Signal[]> {
   const schema = z.object({
     signals: z.array(
       z.object({
-        relevant: z.boolean().describe("true only if this is a genuine retail/F&B/duty-free commercial trend or brand movement relevant to an airport"),
+        relevant: z.boolean().describe("true if this is a genuine commercial trend, brand, product/SKU, service, experience, technology or idea relevant to an airport's non-aero revenue or passenger experience — NOT limited to F&B/retail/duty-free"),
         brand: z.string().nullable(),
         company: z.string().nullable(),
-        vertical: z.enum(["Retail", "F&B", "Duty Free"]),
+        vertical: z.enum(["Retail", "F&B", "Duty Free", "Products & SKUs", "Services", "Experiences", "Technology", "Wellness", "Travel Services", "Media & Advertising"]),
         subCategory: z.string(),
         signalType: z.enum([
           "Emerging Brand", "Emerging Concept", "Category Growth", "Airport Innovation",

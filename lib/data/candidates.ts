@@ -85,6 +85,22 @@ export const DUBAI_CANDIDATES: MarketCandidate[] = [
     bialFit: "Travel-lifestyle / home-gifting concept — lower airport-fit, but a compact gifting edit could work landside.",
     sources: [{ label: "RetailBoss — H&M HOME first global concept, Dubai Mall", url: "https://retailboss.co/hm-home-opens-first-global-concept-store-at-dubai-mall/", tier: 2 }],
   },
+  {
+    id: "cand-dxb-sleeppods", city: "Dubai", brand: "Wellness Sleep Pods (aromatherapy + biometric)", vertical: "Wellness", category: "Passenger-Experience Service", score: 72,
+    airportPrecedent: true,
+    buzz: bz([40, 46, 52, 58, 64, 70], "Accelerating", "Airport-wellness demand rising all 6 months; pods now layer aromatherapy, soundscapes and biometric sleep/HR tracking. A paid SERVICE — not F&B/retail.", "2026-03"),
+    why: "Dubai Airport sleep pods now include aromatherapy diffusers, customisable soundscapes, guided-meditation apps and biometric sensors tracking sleep quality, heart rate and stress.",
+    bialFit: "A paid wellness sleep-pod + recovery lounge for BLR red-eye / long-layover passengers — direct non-aero service revenue and a premium experience differentiator.",
+    sources: [{ label: "airssist — Dubai Airport sleeping pods", url: "https://airssist.com/dubai-airport-sleeping-pods/", tier: 3 }, { label: "The National — Dubai sleep-pod lounge", url: "https://www.thenationalnews.com/travel/news/2022/08/30/inside-the-biggest-sleep-pod-lounge-at-dubai-international-airport/", tier: 2 }],
+  },
+  {
+    id: "cand-dxb-biometric", city: "Dubai", brand: "Biometric Smart Gates + AI personalisation", company: "Dubai Airports", vertical: "Technology", category: "Seamless-Journey Tech / Passenger Experience", score: 70,
+    airportPrecedent: true,
+    buzz: bz([48, 52, 56, 60, 66, 72], "Accelerating", "Structural airport-tech shift; 9M+ pax cleared via biometric Smart Gates in H1 2026, AI-personalised services scaling. A technology/idea play, not a product.", "2026-01"),
+    why: "Over 9M travellers cleared immigration via biometric Smart Gates at Dubai Airport in H1 2026, with full Emirates ID integration and AI-powered personalised services underway.",
+    bialFit: "Biometric seamless journey + AI personalisation at BLR — faster flow AND a data engine for dwell-based retail/F&B offers and retail-media (a commercial play, not just ops).",
+    sources: [{ label: "Travel And Tour World — Dubai AI/biometric travel 2026", url: "https://www.travelandtourworld.com/news/article/jlojyrd3vjw8/", tier: 2 }, { label: "Airport Show 2026 — biometrics", url: "https://tech.einnews.com/pr_news/923826973/airport-show-2026-to-showcase-newest-biometrics-technology-for-seamless-and-secure-passenger-experience", tier: 3 }],
+  },
 ];
 
 // ===========================================================================

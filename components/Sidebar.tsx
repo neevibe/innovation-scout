@@ -85,7 +85,7 @@ export function Sidebar() {
             <span className="live-dot" />
             <span className="eyebrow" style={{ fontSize: 9.5 }}>Scout Active</span>
           </div>
-          <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, lineHeight: 1.5 }}>Monitoring 6 markets · Retail · F&amp;B · Duty Free</div>
+          <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, lineHeight: 1.5 }}>6 markets · any product, service, experience or idea</div>
         </div>
       </div>
     </aside>

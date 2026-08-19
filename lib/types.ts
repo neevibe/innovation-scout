@@ -3,7 +3,20 @@
 // External intelligence is kept structurally separate from BIAL internal data.
 // ===========================================================================
 
-export type Vertical = "Retail" | "F&B" | "Duty Free";
+// Domains are intentionally broad: BIAL commercial intelligence covers ANY
+// business, product, SKU, service, experience, technology or idea — not just
+// F&B / retail / duty free.
+export type Vertical =
+  | "Retail"
+  | "F&B"
+  | "Duty Free"
+  | "Products & SKUs"
+  | "Services"
+  | "Experiences"
+  | "Technology"
+  | "Wellness"
+  | "Travel Services"
+  | "Media & Advertising";
 
 export type SignalType =
   | "Emerging Brand"
