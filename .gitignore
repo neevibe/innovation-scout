@@ -1,0 +1,16 @@
+/node_modules
+/.next
+/out
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+.env
+.env*.local
+
+# Runtime store (regenerated from seed on first run). Keep out of git.
+/data/store.json
+
+.DS_Store
+/.vercel
+.gstack/

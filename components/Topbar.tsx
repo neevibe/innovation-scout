@@ -1,0 +1,62 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { Icon } from "@/components/Icon";
+import type { Role } from "@/lib/types";
+
+const ROLES: Role[] = [
+  "Super Admin", "Commercial Leadership", "Retail Team", "F&B Team",
+  "Duty Free Team", "Strategy Team", "Analyst",
+];
+
+export function Topbar({ title, subtitle, mode, lastRefresh }: { title: string; subtitle?: string; mode: string; lastRefresh?: string }) {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+  const [busy, setBusy] = useState(false);
+  const [role, setRole] = useState<Role>("Commercial Leadership");
+
+  async function refresh() {
+    setBusy(true);
+    try {
+      await fetch("/api/refresh", { method: "POST" });
+      startTransition(() => router.refresh());
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const live = mode === "live";
+  return (
+    <header
+      className="apple-topbar"
+      style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+      }}
+    >
+      <div>
+        <h1 style={{ margin: 0, fontSize: 25, fontWeight: 600, letterSpacing: "-0.024em", lineHeight: 1.1 }}>{title}</h1>
+        {subtitle && <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 5 }}>{subtitle}</div>}
+      </div>
+      <div className="topbar-actions" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <span className="badge" title="Intelligence mode" style={{ borderColor: live ? "#a7e0b8" : "var(--line-strong)", color: live ? "var(--ok)" : "var(--muted)" }}>
+          <span style={{ width: 7, height: 7, borderRadius: 999, background: live ? "var(--ok)" : "#c7c7cc", display: "inline-block" }} />
+          {live ? "Live" : "Offline"} mode
+        </span>
+        {lastRefresh && (
+          <span style={{ fontSize: 12, color: "var(--muted-2)" }}>
+            Updated {new Date(lastRefresh).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
+          </span>
+        )}
+        <select value={role} onChange={(e) => setRole(e.target.value as Role)} className="btn" style={{ padding: "9px 14px", appearance: "none" }} title="Viewing role (RBAC)">
+          {ROLES.map((r) => (<option key={r} value={r}>{r}</option>))}
+        </select>
+        <button className="btn btn-primary" onClick={refresh} disabled={busy || pending}>
+          <Icon name="refresh" size={15} color="#23282e" style={{ animation: busy || pending ? "spin 0.9s linear infinite" : undefined }} />
+          {busy || pending ? "Refreshing…" : "Refresh Intelligence"}
+        </button>
+      </div>
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    </header>
+  );
+}
