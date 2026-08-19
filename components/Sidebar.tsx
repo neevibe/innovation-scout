@@ -24,7 +24,10 @@ const GROUPS: { title: string; items: { href: string; label: string; icon: strin
   },
   {
     title: "Research",
-    items: [{ href: "/scout", label: "AI Scout", icon: "spark" }],
+    items: [
+      { href: "/scout", label: "AI Scout", icon: "spark" },
+      { href: "/methodology", label: "Methodology", icon: "doc" },
+    ],
   },
   {
     title: "Analytics",

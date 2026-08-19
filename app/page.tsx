@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 const CITY_COORDS: Record<string, [number, number]> = {
   Bangalore: [12.97, 77.59], "Delhi NCR": [28.61, 77.21], Mumbai: [19.08, 72.88],
   Kolkata: [22.57, 88.36], Singapore: [1.35, 103.82], Dubai: [25.2, 55.27],
-  "Abu Dhabi": [24.45, 54.37], London: [51.51, -0.13], Tokyo: [35.68, 139.69], Bangkok: [13.76, 100.5],
+  London: [51.51, -0.13], Hyderabad: [17.38, 78.49], Pune: [18.52, 73.86], Tokyo: [35.68, 139.69],
 };
 
 function greeting(): string {

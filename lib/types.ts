@@ -187,6 +187,21 @@ export interface Opportunity {
   tags: string[];
   image?: string; // representative category photo (licensed stock, not the brand's own)
   imageAlt?: string;
+  buzz?: BuzzProfile; // longevity / momentum of the buzz — distinguishes spikes from sustained trends
+}
+
+// Tracks HOW LONG and HOW STRONGLY a brand/concept has trended over the window.
+// Prevents "one-month spike" picks from being treated like durable trends.
+export type BuzzTrajectory = "Emerging" | "Accelerating" | "Sustained" | "Plateauing" | "Fading" | "Spike-and-fade";
+
+export interface BuzzProfile {
+  windowMonths: number; // observation window (e.g. 6)
+  firstSeen: string; // ISO month first detected
+  monthsActive: number; // in how many of the window months it showed measurable buzz
+  monthly: number[]; // per-month buzz index 0-100 across the window (oldest → newest)
+  persistence: number; // monthsActive / windowMonths (0-1)
+  trajectory: BuzzTrajectory;
+  note: string; // human-readable justification of the trajectory call
 }
 
 // --- BIAL internal reference data (kept separate) -------------------------

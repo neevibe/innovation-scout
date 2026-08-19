@@ -4,6 +4,7 @@ import { Repo } from "@/lib/db/store";
 import { scoreOpportunity, FACTOR_LABELS, normaliseWeights } from "@/lib/scoring/engine";
 import { ScoreDonut, TierPill } from "@/components/ScoreBadge";
 import { StageControl } from "@/components/StageControl";
+import { BuzzSpark } from "@/components/BuzzSpark";
 import type { FactorKey } from "@/lib/types";
 import { Topbar } from "@/components/Topbar";
 
@@ -100,6 +101,13 @@ export default async function OpportunityDetail({ params }: { params: Promise<{ 
 
         {/* Score breakdown */}
         <div className="card" style={{ padding: 20 }}>
+          {o.buzz && (
+            <div style={{ marginBottom: 18, paddingBottom: 16, borderBottom: "1px solid var(--line)" }}>
+              <h2 style={{ marginTop: 0, marginBottom: 10, fontSize: 15, fontWeight: 750 }}>📈 Buzz Longevity <Link href="/methodology" style={{ fontSize: 11, color: "var(--accent)", fontWeight: 400 }}>· model ↗</Link></h2>
+              <BuzzSpark buzz={o.buzz} w={150} h={40} />
+              <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 10, lineHeight: 1.5 }}>{o.buzz.note}</div>
+            </div>
+          )}
           <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>📊 Factor Breakdown</h2>
           <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>Weighted 0–100 · weights configurable in Admin</div>
           {(Object.keys(o.factors) as FactorKey[]).map((k) => {
