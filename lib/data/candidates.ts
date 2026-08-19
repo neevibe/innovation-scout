@@ -87,4 +87,82 @@ export const DUBAI_CANDIDATES: MarketCandidate[] = [
   },
 ];
 
-export const ALL_CANDIDATES: MarketCandidate[] = [...DUBAI_CANDIDATES];
+// ===========================================================================
+// KOLKATA market shortlist (≥10) — the surprising data-driven #3 domestic.
+// Mix of F&B (specialty coffee / dessert / experiential), retail D2C brands
+// racing into East India, and a heritage-gifting anchor.
+// ===========================================================================
+export const KOLKATA_CANDIDATES: MarketCandidate[] = [
+  {
+    id: "cand-ccu-thirdwave", city: "Kolkata", brand: "Third Wave Coffee", company: "Third Wave Coffee", vertical: "F&B", category: "Specialty Coffee", score: 80,
+    buzz: bz([55, 58, 62, 66, 72, 78], "Accelerating", "Fresh East-India entry with a stated 100-café FY27 plan (220→320 nationwide); rising every month of the window.", "2026-03"),
+    why: "Debuted in East India with 3 Kolkata cafés (2 Ballygunge, 1 Salt Lake) and 5–6 more planned in-city this FY; national network 220+ heading to ~320.",
+    bialFit: "Specialty-coffee flagship for T1 domestic — captures the Kolkata specialty-coffee wave for BLR's coffee-literate travellers.",
+    sources: [{ label: "Indian Retailer — Third Wave enters East India (Kolkata)", url: "https://www.indianretailer.com/news/third-wave-coffee-enters-east-india-three-cafe-launches-kolkata", tier: 2 }, { label: "Franchise India — East-India entry", url: "https://www.franchiseindia.com/insights/en/news/third-wave-coffee-marks-east-india-entry-through-three-kolkata-cafs.59069", tier: 3 }],
+  },
+  {
+    id: "cand-ccu-balaram", city: "Kolkata", brand: "Balaram Mullick & Radharaman Mullick", company: "Balaram Mullick", vertical: "Duty Free", category: "Heritage Bengali Sweets / Gifting", score: 79,
+    buzz: bz([64, 64, 66, 66, 68, 70], "Sustained", "Heritage brand (since 1885) with modern SKUs + e-commerce — durable, gently rising buzz, not a fad.", "2026-01"),
+    why: "Iconic Kolkata sweet house innovating on tradition — baked rasogolla, daab sandesh, mango soufflé, signature mishti doi; 7 locations + online delivery.",
+    bialFit: "A Kolkata 'sense-of-place' sweets & gifting bay (duty free + domestic) — regional heritage gifting is exactly the diaspora/tourist white space BLR under-serves.",
+    sources: [{ label: "Slurrp — Balaram Mullick history & signatures", url: "https://www.slurrp.com/article/balaram-mullik-amp-radharam-mullik-history-and-what-to-eat-at-this-iconic-sweet-shop-1728209582037", tier: 3 }, { label: "Balaram Mullick — official", url: "https://www.balarammullick.in/", tier: 1 }],
+  },
+  {
+    id: "cand-ccu-thirdrush", city: "Kolkata", brand: "Third Rush (by Third Wave)", company: "Third Wave Coffee", vertical: "F&B", category: "Dessert-Forward Café", score: 76,
+    buzz: bz([0, 0, 30, 52, 70, 82], "Accelerating", "Brand-new dessert concept climbing steeply on Bengal's dessert culture — 4/6 months, strong slope; young but purpose-built for the market.", "2026-05"),
+    why: "Third Wave's dessert-forward concept (Jim Jam Tres Leches, layered cakes, tarts, mousses, cheesecakes) launched specifically for Kolkata's love of sweets/evening consumption.",
+    bialFit: "Dessert-café grab-and-go — an Instagrammable, evening-occasion format for dwell zones; pairs with specialty coffee.",
+    sources: [{ label: "Indian Retailer — Third Wave 'Third Rush' dessert concept", url: "https://www.indianretailer.com/news/third-wave-coffee-enters-east-india-three-cafe-launches-kolkata", tier: 2 }],
+  },
+  {
+    id: "cand-ccu-snitch", city: "Kolkata", brand: "Snitch", company: "Snitch", vertical: "Retail", category: "Menswear D2C / Fast Fashion", score: 74,
+    buzz: bz([50, 54, 60, 66, 72, 80], "Accelerating", "High-velocity menswear D2C in aggressive offline rollout; opened its first Kolkata store mid-window — accelerating, 6/6.", "2026-02"),
+    why: "Fast-growing menswear D2C brand opened its first Kolkata store on 15 Aug 2026 as part of a rapid national retail expansion.",
+    bialFit: "Compact menswear capsule / travel-retail store for young male travellers — high-turnover fashion, low-capex kiosk-to-inline.",
+    sources: [{ label: "Indian Retailer — Snitch first Kolkata store", url: "https://www.indianretailer.com/news/retail-india-news-snitch-open-first-kolkata-store-august-15", tier: 2 }],
+  },
+  {
+    id: "cand-ccu-palmonas", city: "Kolkata", brand: "Palmonas", company: "Palmonas", vertical: "Retail", category: "Demi-Fine Jewellery D2C", score: 70,
+    buzz: bz([40, 46, 52, 58, 64, 70], "Accelerating", "D2C demi-fine jewellery brand entering East India; rising, 6/6 months.", "2026-03"),
+    why: "Opened its first East India store in Kolkata — affordable demi-fine jewellery, a fast-scaling D2C category.",
+    bialFit: "Affordable-luxury jewellery kiosk for self-treat + gifting — strong impulse/gifting fit at departures.",
+    sources: [{ label: "Indian Retailer — Palmonas first East India store (Kolkata)", url: "https://www.indianretailer.com/news/retail-india-news-palmonas-opens-first-east-india-store-kolkata", tier: 2 }],
+  },
+  {
+    id: "cand-ccu-azorte", city: "Kolkata", brand: "Azorte", company: "Reliance Retail", vertical: "Retail", category: "New-Age Fashion + Beauty Concept", score: 68,
+    buzz: bz([30, 36, 44, 52, 58, 64], "Emerging", "Reliance-backed new-format concept opening its first Kolkata high-street store — rising but newer to the market.", "2026-04"),
+    why: "Reliance's new-age fashion + beauty self-discovery concept opened its first high-street store in Kolkata.",
+    bialFit: "Multi-brand fashion + beauty concept — a curated 'discovery' format for a departures lifestyle zone.",
+    sources: [{ label: "Indian Retailer — Azorte first high-street store, Kolkata", url: "https://www.indianretailer.com/news/azorte-opens-first-high-street-store-kolkata", tier: 2 }],
+  },
+  {
+    id: "cand-ccu-yourstruly", city: "Kolkata", brand: "Yours Truly", company: "Yours Truly", vertical: "F&B", category: "Specialty Coffee + Bakery", score: 68,
+    buzz: bz([56, 58, 58, 60, 62, 64], "Sustained", "Steady experiential-café buzz; durable, moderate slope.", "2026-02"),
+    why: "15,000 sq ft specialty-coffee destination in Bhowanipore with a Coffee Classroom and a bakery built with Lavonne Academy.",
+    bialFit: "Experiential café-bakery — a flagship destination format if space allows; else a compact bakery-coffee grab-and-go.",
+    sources: [{ label: "EazyDiner — Kolkata's most Instagrammable restaurants", url: "https://www.eazydiner.com/food-trends/kolkatas-8-most-instagrammable-restaurants-to-light-up-your-social-feed", tier: 3 }],
+  },
+  {
+    id: "cand-ccu-lasoiree", city: "Kolkata", brand: "La Soiree", company: "La Soiree", vertical: "F&B", category: "Experiential Fine-Casual Dining", score: 66,
+    buzz: bz([48, 50, 54, 56, 58, 60], "Sustained", "Design-led experiential venue; steady social-led buzz.", "2026-02"),
+    why: "French-inspired multi-cuisine 'food library' in Bhowanipore, interiors designed by Gauri Khan — a design-led experiential draw.",
+    bialFit: "Premium experiential dining / lounge concept for a lounge-adjacent or premium dwell zone.",
+    sources: [{ label: "EazyDiner — Kolkata's most Instagrammable restaurants", url: "https://www.eazydiner.com/food-trends/kolkatas-8-most-instagrammable-restaurants-to-light-up-your-social-feed", tier: 3 }],
+  },
+  {
+    id: "cand-ccu-hammer", city: "Kolkata", brand: "Hammer (rooftop café)", company: "Hammer", vertical: "F&B", category: "Rooftop / Experiential Café", score: 61,
+    buzz: bz([0, 0, 0, 40, 55, 62], "Emerging", "New Park Street rooftop launch; only 3/6 months — genuinely emerging, validate durability.", "2026-06"),
+    why: "Newly launched rooftop café on Park Street, Kolkata's marquee F&B high street.",
+    bialFit: "Experiential café concept — lower airport-fit (rooftop format), but a landside terrace/viewing-deck adaptation could work.",
+    sources: [{ label: "Indiablooms — Hammer rooftop café, Park Street", url: "https://www.indiablooms.com/life/kolkata-hammer-launches-rooftop-cafe-in-park-street/details", tier: 3 }],
+  },
+  {
+    id: "cand-ccu-converse", city: "Kolkata", brand: "Converse (South City Mall)", company: "Converse", vertical: "Retail", category: "Footwear / Streetwear", score: 60,
+    buzz: bz([50, 50, 52, 52, 54, 54], "Sustained", "International brand steady retail expansion; low volatility, dependable rather than hyped.", "2026-01"),
+    why: "Converse opened a new store at South City Mall, Kolkata — continued global-brand retail expansion into the East.",
+    bialFit: "Iconic footwear/streetwear travel-retail unit for younger travellers — proven global brand, easy airside ops.",
+    sources: [{ label: "Indian Retailer — Converse new Kolkata store (South City Mall)", url: "https://www.indianretailer.com/news/retail-india-news-converse-opens-new-store-kolkata-south-city-mall", tier: 2 }],
+  },
+];
+
+export const ALL_CANDIDATES: MarketCandidate[] = [...DUBAI_CANDIDATES, ...KOLKATA_CANDIDATES];
