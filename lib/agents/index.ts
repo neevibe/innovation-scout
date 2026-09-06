@@ -1,6 +1,7 @@
 import type { Signal, Opportunity, StoreShape, RefreshLogEntry, Vertical, SignalType } from "@/lib/types";
 import { read, mutate, Repo } from "@/lib/db/store";
 import { collectSignals, collectSignalsDetailed, type CollectionResult } from "@/lib/agents/collector";
+import { buildMasterySheet } from "@/lib/agents/mastery";
 
 // ===========================================================================
 // Agent orchestration
@@ -102,11 +103,24 @@ export async function runPipeline(): Promise<RefreshResult> {
   const newSignals = consolidated.filter((s) => !existingIds.has(s.id));
 
   const store = await mutate((d) => {
-    // upsert consolidated signals
+    // upsert consolidated signals — Master DB ACCUMULATES across refreshes,
+    // never wiped. Each refresh deepens convergence and source attribution.
     for (const s of consolidated) {
       const idx = d.signals.findIndex((x) => x.id === s.id);
       if (idx === -1) d.signals.push(s);
-      else d.signals[idx] = { ...d.signals[idx], ...s, lastUpdatedAt: new Date().toISOString() };
+      else {
+        // Carry forward corroborating URLs from the existing entry so the
+        // Mastery layer sees the full multi-refresh attribution, not just
+        // today's slice.
+        const prior = d.signals[idx];
+        const merged = new Set<string>([...(prior.corroboratingUrls || []), ...s.corroboratingUrls]);
+        d.signals[idx] = {
+          ...prior,
+          ...s,
+          corroboratingUrls: Array.from(merged),
+          lastUpdatedAt: new Date().toISOString(),
+        };
+      }
     }
     // re-evaluate anti-hallucination flag on every opportunity
     for (const o of d.opportunities) {
@@ -114,11 +128,18 @@ export async function runPipeline(): Promise<RefreshResult> {
     }
     // reflect the actual runtime collection mode in stored config
     d.config.mode = collection.meta.live ? "live" : "offline";
+
+    // Rebuild the Mastery sheet from the FULL accumulated signal set.
+    // New entries are added, existing entries' masteryScore/verdict are
+    // recomputed, per-source attribution grows monotonically.
+    const sheet = buildMasterySheet(d.signals);
+    (d as StoreShape & { mastery?: ReturnType<typeof buildMasterySheet> }).mastery = sheet;
   });
 
   const m = collection.meta;
   const liveNotes = m.live
-    ? `Live pass via ${m.provider ?? "provider"} · ${m.queriesRun ?? 0} queries · ${m.docsFound ?? 0} docs · extraction: ${m.usedLLM ? "LLM" : "heuristic"}.${m.complianceNote ? ` [${m.complianceNote}]` : ""}`
+    ? `Live pass via ${m.providersUsed.join(" + ") || "provider"} · ${m.queriesRun ?? 0} queries · ${m.docsFound ?? 0} docs · extraction: ${m.usedLLM ? "LLM" : "heuristic"}.` +
+      (m.failedProviders.length ? ` Failed: ${m.failedProviders.join(", ")}.` : "")
     : "Offline pass: re-scanned collected signals, consolidated duplicates, revalidated evidence flags. Set SCOUT_MODE=live to collect fresh signals.";
 
   const entry: RefreshLogEntry = {

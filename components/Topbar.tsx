@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import type { Role } from "@/lib/types";
@@ -10,16 +10,40 @@ const ROLES: Role[] = [
   "Duty Free Team", "Strategy Team", "Analyst",
 ];
 
+type MasterySummary = {
+  totalEntries: number;
+  topScore: number;
+  topTopic: string | null;
+  byVerdict: Record<string, number>;
+};
+
 export function Topbar({ title, subtitle, mode, lastRefresh }: { title: string; subtitle?: string; mode: string; lastRefresh?: string }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [busy, setBusy] = useState(false);
   const [role, setRole] = useState<Role>("Commercial Leadership");
+  const [mastery, setMastery] = useState<MasterySummary | null>(null);
+
+  async function fetchMastery() {
+    try {
+      const r = await fetch("/api/mastery?limit=1", { cache: "no-store" });
+      if (!r.ok) return;
+      const j = await r.json();
+      setMastery(j.summary);
+    } catch {}
+  }
+
+  useEffect(() => {
+    fetchMastery();
+    const id = setInterval(fetchMastery, 30000); // poll every 30s
+    return () => clearInterval(id);
+  }, []);
 
   async function refresh() {
     setBusy(true);
     try {
       await fetch("/api/refresh", { method: "POST" });
+      await fetchMastery();
       startTransition(() => router.refresh());
     } finally {
       setBusy(false);
@@ -27,6 +51,12 @@ export function Topbar({ title, subtitle, mode, lastRefresh }: { title: string; 
   }
 
   const live = mode === "live";
+  const verdict = mastery && mastery.topScore >= 75 ? "strong" :
+                  mastery && mastery.topScore >= 50 ? "moderate" :
+                  mastery && mastery.topScore > 0 ? "single" : null;
+  const verdictColor = verdict === "strong" ? "var(--ok)" :
+                       verdict === "moderate" ? "#d4a64a" :
+                       verdict === "single" ? "var(--muted)" : "var(--muted-2)";
   return (
     <header
       className="apple-topbar"
@@ -39,6 +69,16 @@ export function Topbar({ title, subtitle, mode, lastRefresh }: { title: string; 
         {subtitle && <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 5 }}>{subtitle}</div>}
       </div>
       <div className="topbar-actions" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        {mastery && mastery.topScore > 0 && (
+          <span
+            className="badge"
+            title={`Mastery: ${mastery.totalEntries} entries · top "${mastery.topTopic}" scored ${mastery.topScore}`}
+            style={{ borderColor: verdictColor, color: verdictColor, fontVariantNumeric: "tabular-nums" }}
+          >
+            <Icon name="check" size={12} color={verdictColor} style={{ marginRight: 4 }} />
+            Mastery {mastery.topScore}/100
+          </span>
+        )}
         <span className="badge" title="Intelligence mode" style={{ borderColor: live ? "#a7e0b8" : "var(--line-strong)", color: live ? "var(--ok)" : "var(--muted)" }}>
           <span style={{ width: 7, height: 7, borderRadius: 999, background: live ? "var(--ok)" : "#c7c7cc", display: "inline-block" }} />
           {live ? "Live" : "Offline"} mode

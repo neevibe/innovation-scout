@@ -2,13 +2,28 @@ import type { SearchProvider } from "./types";
 import { tavilyProvider } from "./tavily";
 import { gdeltProvider } from "./gdelt";
 import { googleNewsProvider } from "./googlenews";
+import { githubProvider } from "./github";
+import { redditProvider } from "./reddit";
+import { youtubeProvider } from "./youtube";
+import { arxivProvider } from "./arxiv";
 
 export * from "./types";
+export { tavilyProvider } from "./tavily";
+export { gdeltProvider } from "./gdelt";
+export { googleNewsProvider } from "./googlenews";
+export { githubProvider } from "./github";
+export { redditProvider } from "./reddit";
+export { youtubeProvider } from "./youtube";
+export { arxivProvider } from "./arxiv";
 
 const REGISTRY: Record<string, SearchProvider> = {
   tavily: tavilyProvider,
   gdelt: gdeltProvider,
   googlenews: googleNewsProvider,
+  github: githubProvider,
+  reddit: redditProvider,
+  youtube: youtubeProvider,
+  arxiv: arxivProvider,
 };
 
 /**

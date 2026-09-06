@@ -8,12 +8,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "migrate": "tsx scripts/migrate.ts"
   },
   "dependencies": {
+    "@types/pg": "^8.23.1",
     "ai": "^5.0.239",
     "framer-motion": "^13.1.0",
     "next": "^15.5.23",
+    "pg": "^8.23.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "zod": "^3.25.76"

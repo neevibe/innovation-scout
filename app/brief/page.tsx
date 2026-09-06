@@ -2,13 +2,37 @@ import { getPageData } from "@/lib/view";
 import { Repo } from "@/lib/db/store";
 import { Topbar } from "@/components/Topbar";
 import { TierPill } from "@/components/ScoreBadge";
+import { buildMasterySheet } from "@/lib/agents/mastery";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+const STALE_THRESHOLD_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+async function refreshIfStale(): Promise<void> {
+  // Server-side stale check. If the last refresh is older than 6h, kick a
+  // refresh in the background. Render proceeds from current state.
+  try {
+    const cfg = await Repo.config();
+    const last = cfg.lastRefreshAt ? Date.parse(cfg.lastRefreshAt) : 0;
+    if (Date.now() - last < STALE_THRESHOLD_MS) return;
+    // Fire-and-forget — refresh is independent of the render path.
+    const { runPipeline } = await import("@/lib/agents");
+    runPipeline().catch((e) => console.error("[brief] stale-refresh failed:", e));
+  } catch (e) {
+    console.error("[brief] stale-refresh kick failed:", e);
+  }
+}
 
 export default async function BriefPage() {
+  // Kick stale-refresh BEFORE rendering so the next page load sees fresh data.
+  // (The render itself uses the current snapshot — that's intentional.)
+  await refreshIfStale();
+
   const { config, opportunities } = await getPageData();
   const signals = await Repo.signals();
+  const mastery = buildMasterySheet(signals).slice(0, 5);
   const today = new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
   const top5 = opportunities.filter((o) => o.sufficientEvidence).slice(0, 5);
@@ -21,6 +45,27 @@ export default async function BriefPage() {
     <>
       <Topbar title="AI Executive Brief" subtitle={`BIAL Innovation Brief · ${today}`} mode={config.mode} lastRefresh={config.lastRefreshAt} />
       <div style={{ padding: 28, maxWidth: 900 }}>
+        {mastery.length > 0 && (
+          <Section title="🎯 Cross-Source Mastery (top convergence)">
+            <div style={{ fontSize: 12.5, color: "var(--muted)", marginBottom: 10 }}>
+              Each row shows how many distinct scraping sources independently surfaced the same story.
+              <b> Strong</b> = 3+ sources, <b>Moderate</b> = 2, <b>Single</b> = 1 (tier 1-2).
+            </div>
+            {mastery.map((m) => (
+              <div key={m.dedupeKey} style={{ display: "flex", gap: 12, padding: "8px 0", borderBottom: "1px solid var(--line)", alignItems: "center" }}>
+                <div style={{ width: 44, fontWeight: 820, fontSize: 17, color: m.verdict === "strong" ? "var(--ok)" : m.verdict === "moderate" ? "#d4a64a" : "var(--muted)" }}>{m.masteryScore}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700 }}>{m.topic}</div>
+                  <div style={{ fontSize: 12, color: "var(--muted)" }}>
+                    verdict: <b>{m.verdict}</b> · {m.providerCount} provider{m.providerCount === 1 ? "" : "s"} · {m.sourceCount} source{m.sourceCount === 1 ? "" : "s"}
+                  </div>
+                </div>
+                <div style={{ fontSize: 11, color: "var(--muted-2)" }}>{new Date(m.lastUpdatedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</div>
+              </div>
+            ))}
+          </Section>
+        )}
+
         <Section title="🔥 Top 5 Opportunities This Week">
           {top5.map((o, i) => (
             <div key={o.id} style={{ display: "flex", gap: 12, padding: "12px 0", borderBottom: "1px solid var(--line)" }}>
