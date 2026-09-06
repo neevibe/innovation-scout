@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" />
+<script src="./image-slot.js"></script>
+<script type="importmap">
+{"imports":{"three":"https://esm.sh/three@0.160.0","three/addons/":"https://esm.sh/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+window.THREE = THREE;
+window.__threeReady = true;
+window.dispatchEvent(new Event('three-ready'));
+</script>
+<style>
+  html, body { margin:0; padding:0; background:#04060A; }
+  body { -webkit-font-smoothing:antialiased; }
+  ::selection { background:#F0B429; color:#04060A; }
+  a { color:#F0B429; text-decoration:none; }
+  a:hover { color:#FFD87A; }
+  @keyframes is-fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes is-fade { from { opacity:0; } to { opacity:1; } }
+  @keyframes is-scan { 0% { transform:translateX(-100%); } 100% { transform:translateX(100%); } }
+  @keyframes is-introveil { 0% { background:#04060A; } 55% { background:rgba(4,6,10,.55); } 100% { background:rgba(4,6,10,0); } }
+  @keyframes is-blink { 0%,100% { opacity:1; } 50% { opacity:.25; } }
+  @keyframes is-ticker { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { * { animation-duration:.01ms !important; } }
+  @media (max-width: 880px) { [data-r]{ grid-template-columns:1fr !important; } [data-cols]{ columns:1 !important; } }
+</style>
+</helmet>
+
+<div style="position:relative; background:#04060A; color:#EDE9E1; font-family:'Instrument Sans',system-ui,sans-serif;">
+
+  <div style="position:fixed; inset:0; z-index:0;">
+    <canvas ref="{{ canvasRef }}" style="width:100%; height:100%; display:block; touch-action:pan-y; cursor:grab;"></canvas>
+  </div>
+
+  <div style="position:fixed; inset:0; z-index:2; pointer-events:none; background:radial-gradient(125% 95% at 50% 45%, rgba(0,0,0,0) 52%, rgba(2,3,6,.5) 100%);"></div>
+
+  <div ref="{{ tipRef }}" style="position:fixed; z-index:45; pointer-events:none; opacity:0; transform:translate(-50%,calc(-100% - 18px)) scale(.96); transition:opacity .22s ease, transform .32s cubic-bezier(.16,1,.3,1); background:rgba(6,9,14,.94); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.16); padding:16px 18px; width:290px; box-shadow:0 24px 60px rgba(0,0,0,.6);"></div>
+
+  <div ref="{{ greetRef }}" style="position:fixed; inset:0; z-index:70; pointer-events:none; opacity:0; transition:opacity .8s cubic-bezier(.16,1,.3,1); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:radial-gradient(60% 45% at 50% 50%, rgba(4,6,10,.72), rgba(4,6,10,0));">
+    <div ref="{{ greetKickerRef }}" style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.42em; color:#F0B429; opacity:0; transition:opacity .6s;">A DESTINATION IS WAKING UP</div>
+    <div ref="{{ greetTextRef }}" style="font-family:'Instrument Serif',serif; font-style:italic; font-size:clamp(72px,11vw,200px); line-height:.98; color:#F4F0E8; letter-spacing:-.02em; margin-top:20px; text-wrap:balance; text-shadow:0 6px 60px rgba(0,0,0,.8);">—</div>
+    <div ref="{{ greetSubRef }}" style="margin-top:28px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.34em; color:#C6CDD7; opacity:0; transition:opacity .6s;">LET'S SEE WHAT'S BUZZING</div>
+  </div>
+
+  <div ref="{{ wordsRef }}" style="position:fixed; inset:0; z-index:6; pointer-events:none;"></div>
+
+  <aside ref="{{ hudRef }}" style="position:fixed; right:0; top:96px; bottom:96px; width:min(392px,92vw); z-index:44; display:none; flex-direction:column; transform:translateX(110%); opacity:0; transition:transform .7s cubic-bezier(.16,1,.3,1), opacity .5s ease; background:linear-gradient(180deg, rgba(6,9,14,.94), rgba(6,9,14,.82)); backdrop-filter:blur(22px); border:1px solid rgba(127,212,255,.2); border-right:none;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:18px 20px 14px; border-bottom:1px solid rgba(255,255,255,.09);">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#7FD4FF;">AGENT MESH · TELEMETRY</div>
+        <div style="display:flex; align-items:baseline; gap:10px; margin-top:6px;">
+          <span ref="{{ phaseRef }}" style="font-family:'Instrument Serif',serif; font-size:26px; line-height:1; color:#F4F0E8;">SPIN-UP</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.16em; color:#5C6675;">tenant_001_BIAL</span>
+        </div>
+      </div>
+      <button onClick="{{ closeHud }}" style="background:none; border:1px solid rgba(255,255,255,.16); color:#8894A3; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; padding:7px 10px; cursor:pointer;" style-hover="border-color:#F0B429; color:#F0B429;">HIDE</button>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.09);">
+      <div data-agent="scraper" style="background:#070A10; padding:11px 12px;"><div style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.18em; color:#6E7A8A;">01 SCRAPER SWARM</div><div data-state="" style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; color:#5C6675; margin-top:5px;">IDLE</div></div>
+      <div data-agent="semantic" style="background:#070A10; padding:11px 12px;"><div style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.18em; color:#6E7A8A;">02 SEMANTIC GAP</div><div data-state="" style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; color:#5C6675; margin-top:5px;">IDLE</div></div>
+      <div data-agent="quant" style="background:#070A10; padding:11px 12px;"><div style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.18em; color:#6E7A8A;">03 COMMERCIAL QUANT</div><div data-state="" style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; color:#5C6675; margin-top:5px;">IDLE</div></div>
+      <div data-agent="qa" style="background:#070A10; padding:11px 12px;"><div style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.18em; color:#6E7A8A;">04 QA · HALLUCINATION</div><div data-state="" style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; color:#5C6675; margin-top:5px;">IDLE</div></div>
+    </div>
+    <div ref="{{ logRef }}" style="flex:1; overflow-y:auto; padding:12px 16px;"></div>
+    <div ref="{{ summaryRef }}" style="display:none; padding:16px 18px; border-top:1px solid rgba(111,227,168,.28); background:rgba(7,14,12,.6);"></div>
+  </aside>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:40; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 28px; pointer-events:none; mix-blend-mode:normal;">
+    <div style="display:flex; align-items:baseline; gap:12px; pointer-events:auto;">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.34em; color:#F0B429;">INNOVATION SCOUT</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.24em; color:#5C6675;">BIAL</span>
+    </div>
+    <nav ref="{{ navRef }}" style="display:flex; gap:2px; pointer-events:auto; border:1px solid rgba(255,255,255,.08); background:rgba(6,9,14,.5); backdrop-filter:blur(12px); padding:4px;">
+      <button onClick="{{ goWorld }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">WORLD</button>
+      <button onClick="{{ goIndia }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">INDIA</button>
+      <button onClick="{{ goGlobal }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">GLOBAL</button>
+      <button onClick="{{ goTrends }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">TRENDS</button>
+      <button onClick="{{ goBrands }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">BRANDS</button>
+      <button onClick="{{ goAirports }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">AIRPORTS</button>
+      <button onClick="{{ goOpps }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">OPPORTUNITIES</button>
+    </nav>
+    <div style="display:flex; align-items:center; gap:10px; pointer-events:auto;">
+      <button onClick="{{ runScan }}" style="display:flex; align-items:center; gap:8px; background:rgba(240,180,41,.12); border:1px solid rgba(240,180,41,.5); color:#F0B429; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:9px 14px; cursor:pointer;" style-hover="background:rgba(240,180,41,.24);">
+        <span style="width:6px; height:6px; border-radius:50%; background:#F0B429; display:block; animation:is-blink 1.8s infinite;"></span>RUN GLOBAL SCOUT
+      </button>
+      <button onClick="{{ toggleDaily }}" style="display:flex; align-items:center; gap:8px; background:none; border:1px solid rgba(255,255,255,.12); color:#EDE9E1; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:9px 13px; cursor:pointer;" style-hover="border-color:rgba(240,180,41,.6); color:#F0B429;">THE SCOUT DAILY</button>
+      <button onClick="{{ toggleSound }}" style="display:flex; align-items:center; gap:8px; background:none; border:1px solid rgba(255,255,255,.12); color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:9px 13px; cursor:pointer;" style-hover="border-color:rgba(240,180,41,.6); color:#F0B429;">
+        <span ref="{{ soundDotRef }}" style="width:6px; height:6px; border-radius:50%; background:#3A4452; display:block;"></span>SOUND
+      </button>
+      <input ref="{{ volRef }}" type="range" min="0" max="100" step="1" onInput="{{ onVolume }}" aria-label="Ambience volume" style="width:76px; accent-color:#F0B429; background:none; cursor:pointer;" />
+    </div>
+  </header>
+
+  <div style="position:fixed; left:28px; top:50%; transform:translateY(-50%); z-index:38; display:flex; flex-direction:column; gap:9px; pointer-events:none;">
+    <span ref="{{ sceneLabelRef }}" style="writing-mode:vertical-rl; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.32em; color:#5C6675;">EARTH</span>
+    <div style="width:1px; height:120px; background:linear-gradient(180deg, rgba(240,180,41,.7), rgba(255,255,255,.06));"></div>
+    <span ref="{{ sceneNumRef }}" style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; color:#F0B429;">01</span>
+  </div>
+
+  <div ref="{{ trackRef }}" style="position:relative; z-index:10; pointer-events:none;">
+
+    <section data-screen-label="01 EARTH" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 6vw; pointer-events:none;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.34em; color:#D3DAE3; text-shadow:0 1px 14px rgba(3,5,9,.95), 0 0 30px rgba(3,5,9,.8);">GLOBAL COMMERCIAL INTELLIGENCE — LIVE SCAN</span>
+        <h1 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(44px,6.4vw,104px); line-height:.94; letter-spacing:-.02em; margin:22px 0 0; color:#F4F0E8; text-wrap:balance; text-shadow:0 2px 40px rgba(3,5,9,.9);">The world is moving.<br /><span style="font-style:italic; color:#F0B429;">We're watching what's next.</span></h1>
+        <p style="max-width:560px; margin:26px 0 0; font-size:15px; line-height:1.65; color:#C6CDD7; text-shadow:0 1px 16px rgba(3,5,9,.95);">A continuous read of commercial activity across airports, streets, kitchens, counters and feeds — resolved into one question for Bengaluru.</p>
+        <div style="margin-top:44px; display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.24em; color:#B4BDC8; text-shadow:0 1px 14px rgba(3,5,9,.95);"><span style="width:6px;height:6px;border-radius:50%;background:#F0B429;animation:is-blink 2.4s infinite;"></span>SCROLL TO TRAVEL</div>
+      </div>
+    </section>
+
+    <section data-screen-label="02 BLR" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; max-width:430px; background:linear-gradient(180deg, rgba(7,10,16,.82), rgba(7,10,16,.5)); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.09); padding:30px 32px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#FF7A45;">ANCHOR NODE</span>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:52px; line-height:1; margin:14px 0 6px; color:#F4F0E8;">Bengaluru</h2>
+          <p style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; color:#6E7A8A; margin:0 0 22px;">BLR · KEMPEGOWDA INTL · 13.1986°N 77.7066°E</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);">
+            <div style="background:#070A10; padding:16px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#6E7A8A;">INTL ROUTES</div><div style="font-family:'Instrument Serif',serif; font-size:32px; color:#F4F0E8; line-height:1.1;">34</div></div>
+            <div style="background:#070A10; padding:16px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#6E7A8A;">SIGNALS / 24H</div><div style="font-family:'Instrument Serif',serif; font-size:32px; color:#F0B429; line-height:1.1;">412</div></div>
+            <div style="background:#070A10; padding:16px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#6E7A8A;">CATEGORY GAPS</div><div style="font-family:'Instrument Serif',serif; font-size:32px; color:#F4F0E8; line-height:1.1;">07</div></div>
+            <div style="background:#070A10; padding:16px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#6E7A8A;">OPEN OPPORTUNITIES</div><div style="font-family:'Instrument Serif',serif; font-size:32px; color:#FF7A45; line-height:1.1;">03</div></div>
+          </div>
+          <p style="font-size:14px; line-height:1.6; color:#98A2B1; margin:20px 0 0;">Every signal in this system is measured against one node. The question is never "what happened" — it is <em style="color:#F4F0E8; font-style:italic;">what does this mean for BLR.</em></p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="03 PASSENGER MOVEMENT" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:flex-end; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; width:400px; background:linear-gradient(180deg, rgba(7,10,16,.82), rgba(7,10,16,.5)); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.09); padding:28px 30px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#7FD4FF;">PASSENGER MOVEMENT</span>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:40px; line-height:1.05; margin:12px 0 20px; color:#F4F0E8;">Where BLR touches the world</h2>
+          <div style="display:flex; flex-direction:column; gap:1px; background:rgba(255,255,255,.07);">
+            <div style="display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center; background:#070A10; padding:11px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em;"><span style="color:#EDE9E1;">BLR → SIN</span><span style="color:#6E7A8A;">SE ASIA</span><span style="color:#6FE3A8;">+18%</span></div>
+            <div style="display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center; background:#070A10; padding:11px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em;"><span style="color:#EDE9E1;">BLR → DXB</span><span style="color:#6E7A8A;">GULF</span><span style="color:#6FE3A8;">+22%</span></div>
+            <div style="display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center; background:#070A10; padding:11px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em;"><span style="color:#EDE9E1;">BLR → LHR</span><span style="color:#6E7A8A;">EUROPE</span><span style="color:#6FE3A8;">+9%</span></div>
+            <div style="display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center; background:#070A10; padding:11px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em;"><span style="color:#EDE9E1;">BLR → ICN</span><span style="color:#6E7A8A;">NE ASIA</span><span style="color:#F0B429;">+31%</span></div>
+            <div style="display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center; background:#070A10; padding:11px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em;"><span style="color:#EDE9E1;">BLR → BKK</span><span style="color:#6E7A8A;">SE ASIA</span><span style="color:#6FE3A8;">+14%</span></div>
+            <div style="display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center; background:#070A10; padding:11px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em;"><span style="color:#EDE9E1;">BLR → DEL</span><span style="color:#6E7A8A;">DOMESTIC</span><span style="color:#6FE3A8;">+6%</span></div>
+          </div>
+          <p style="font-size:13px; line-height:1.6; color:#8894A3; margin:18px 0 0;">Movement is the first proxy for relevance. Where our passengers already go, their taste has already been formed.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="04 INDIA" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; max-width:460px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#F0B429;">MODE — INDIA NOW</span>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(40px,4.6vw,68px); line-height:1; margin:14px 0 24px; color:#F4F0E8;">Eleven cities,<br /><span style="font-style:italic;">one accelerating market</span></h2>
+          <div data-r="2" style="display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.07);">
+            <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:14px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;">MUMBAI</div><div style="font-size:12px; color:#8894A3; margin-top:5px;">Premium Indian D2C · jewellery</div></div>
+            <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:14px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;">DELHI</div><div style="font-size:12px; color:#8894A3; margin-top:5px;">Luxury beauty · duty-free</div></div>
+            <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:14px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#FF7A45;">BENGALURU</div><div style="font-size:12px; color:#8894A3; margin-top:5px;">Tech-enabled services · specialty coffee</div></div>
+            <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:14px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;">HYDERABAD</div><div style="font-size:12px; color:#8894A3; margin-top:5px;">Fine jewellery · regional QSR</div></div>
+            <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:14px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;">KOCHI · GOA</div><div style="font-size:12px; color:#8894A3; margin-top:5px;">Travel retail · wellness</div></div>
+            <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:14px 14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;">PUNE · JAIPUR</div><div style="font-size:12px; color:#8894A3; margin-top:5px;">Fashion · craft luxury</div></div>
+          </div>
+          <div style="display:flex; gap:26px; margin-top:22px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:#6E7A8A;"><span>NEW · 41</span><span style="color:#6FE3A8;">ACCELERATING · 19</span><span>COOLING · 6</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="05 ASIA" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:flex-end; justify-content:flex-end; padding:0 6vw 12vh; pointer-events:none;">
+        <div style="pointer-events:auto; max-width:520px; text-align:right;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#7FD4FF;">REGION — ASIA</span>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(38px,4.4vw,64px); line-height:1.02; margin:14px 0 18px; color:#F4F0E8;">The taste-making belt</h2>
+          <p style="font-size:15px; line-height:1.7; color:#98A2B1; margin:0;">Seoul writes beauty. Tokyo writes convenience. Singapore writes retail theatre. Bangkok writes food. Within eighteen months, the same concepts surface in Indian metros — and roughly six months later, at Indian airports.</p>
+          <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; margin-top:22px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; border:1px solid rgba(255,255,255,.14); padding:7px 11px; color:#EDE9E1;">SEOUL</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; border:1px solid rgba(255,255,255,.14); padding:7px 11px; color:#EDE9E1;">TOKYO</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; border:1px solid rgba(255,255,255,.14); padding:7px 11px; color:#EDE9E1;">SINGAPORE</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; border:1px solid rgba(255,255,255,.14); padding:7px 11px; color:#EDE9E1;">BANGKOK</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; border:1px solid rgba(255,255,255,.14); padding:7px 11px; color:#EDE9E1;">HONG KONG</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="06 GLOBAL" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 6vw; pointer-events:none;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#6E7A8A;">MODE — GLOBAL NOW</span>
+        <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(42px,5.4vw,86px); line-height:1; margin:16px 0 0; color:#F4F0E8;">Twelve centres of<br /><span style="font-style:italic; color:#F0B429;">commercial gravity</span></h2>
+        <div style="margin-top:34px; width:min(880px,86vw); overflow:hidden; border-top:1px solid rgba(255,255,255,.1); border-bottom:1px solid rgba(255,255,255,.1); padding:14px 0;">
+          <div style="display:flex; gap:38px; width:max-content; animation:is-ticker 34s linear infinite; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em; color:#8894A3;">
+            <span>SINGAPORE <span style="color:#6FE3A8;">▲</span></span><span>DUBAI <span style="color:#6FE3A8;">▲</span></span><span>SEOUL <span style="color:#F0B429;">▲▲</span></span><span>TOKYO <span style="color:#6FE3A8;">▲</span></span><span>LONDON <span style="color:#8894A3;">■</span></span><span>PARIS <span style="color:#6FE3A8;">▲</span></span><span>NEW YORK <span style="color:#8894A3;">■</span></span><span>BANGKOK <span style="color:#6FE3A8;">▲</span></span><span>HONG KONG <span style="color:#8894A3;">■</span></span><span>DOHA <span style="color:#6FE3A8;">▲</span></span><span>SYDNEY <span style="color:#8894A3;">■</span></span><span>ISTANBUL <span style="color:#6FE3A8;">▲</span></span>
+            <span>SINGAPORE <span style="color:#6FE3A8;">▲</span></span><span>DUBAI <span style="color:#6FE3A8;">▲</span></span><span>SEOUL <span style="color:#F0B429;">▲▲</span></span><span>TOKYO <span style="color:#6FE3A8;">▲</span></span><span>LONDON <span style="color:#8894A3;">■</span></span><span>PARIS <span style="color:#6FE3A8;">▲</span></span><span>NEW YORK <span style="color:#8894A3;">■</span></span><span>BANGKOK <span style="color:#6FE3A8;">▲</span></span><span>HONG KONG <span style="color:#8894A3;">■</span></span><span>DOHA <span style="color:#6FE3A8;">▲</span></span><span>SYDNEY <span style="color:#8894A3;">■</span></span><span>ISTANBUL <span style="color:#6FE3A8;">▲</span></span>
+          </div>
+        </div>
+        <p style="max-width:600px; margin:24px 0 0; font-size:14px; line-height:1.7; color:#8894A3;">Centres are not fixed. They are recalculated from signal frequency, source diversity, freshness and geographic spread.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="07 WHATS BUZZING" style="height:150vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; width:min(720px,88vw);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#F0B429;">LIVE — WHAT'S BUZZING</span>
+          <div style="display:flex; flex-direction:column; margin-top:18px; border-top:1px solid rgba(255,255,255,.1);">
+            <sc-for list="{{ topSignals }}" as="row" hint-placeholder-count="8">
+              <div onClick="{{ row.open }}" style="display:grid; grid-template-columns:150px 1fr 108px; gap:18px; align-items:baseline; padding:15px 0; border-bottom:1px solid rgba(255,255,255,.07); cursor:pointer;" style-hover="background:rgba(240,180,41,.06);">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em; color:{{ row.cityColor }};">{{ row.city }}</span>
+                <span><span style="font-family:'Instrument Serif',serif; font-size:28px; color:#F4F0E8;">{{ row.brand }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#5C6675; margin-left:10px;">{{ row.cat }}</span></span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:{{ row.color }}; text-align:right;">{{ row.dir }} {{ row.score }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <p style="font-size:13px; line-height:1.6; color:#6E7A8A; margin:16px 0 0; font-family:'JetBrains Mono',monospace; letter-spacing:.06em;">SCORES DERIVED FROM SIGNAL FREQUENCY × SOURCE DIVERSITY × FRESHNESS × SPREAD</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="08 BRANDS" style="height:150vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; width:min(1020px,88vw);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#B98BFF;">BRAND MOVEMENT — EVIDENCE LAYER</span>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(34px,3.8vw,54px); line-height:1.04; margin:12px 0 24px; color:#F4F0E8;">Detected this week</h2>
+          <div data-r="3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
+            <article style="border:1px solid rgba(255,255,255,.09); background:rgba(7,10,16,.7); backdrop-filter:blur(12px);">
+              <div style="position:relative; height:190px;"><image-slot id="scout-brand-1" shape="rect" placeholder="Mokobara store — drop image"></image-slot></div>
+              <div style="padding:16px 18px 18px;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#6FE3A8;">NEW STORE DETECTED</div>
+                <div style="font-family:'Instrument Serif',serif; font-size:26px; color:#F4F0E8; margin:6px 0 2px;">Mokobara</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; color:#6E7A8A;">MUMBAI · TRAVEL GOODS</div>
+                <p style="font-size:13px; line-height:1.6; color:#98A2B1; margin:12px 0 0;">Store expansion into premium malls. Travel category. Direct airport adjacency.</p>
+              </div>
+            </article>
+            <article style="border:1px solid rgba(255,255,255,.09); background:rgba(7,10,16,.7); backdrop-filter:blur(12px);">
+              <div style="position:relative; height:190px;"><image-slot id="scout-brand-2" shape="rect" placeholder="K-beauty counter — drop image"></image-slot></div>
+              <div style="padding:16px 18px 18px;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#F0B429;">AIRPORT ENTRY</div>
+                <div style="font-family:'Instrument Serif',serif; font-size:26px; color:#F4F0E8; margin:6px 0 2px;">Olive Young</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; color:#6E7A8A;">ICN · BEAUTY</div>
+                <p style="font-size:13px; line-height:1.6; color:#98A2B1; margin:12px 0 0;">Format shrinking to travel-retail footprints. Category proven in transit.</p>
+              </div>
+            </article>
+            <article style="border:1px solid rgba(255,255,255,.09); background:rgba(7,10,16,.7); backdrop-filter:blur(12px);">
+              <div style="position:relative; height:190px;"><image-slot id="scout-brand-3" shape="rect" placeholder="Specialty coffee bar — drop image"></image-slot></div>
+              <div style="padding:16px 18px 18px;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#7FD4FF;">MARKET EXPANSION</div>
+                <div style="font-family:'Instrument Serif',serif; font-size:26px; color:#F4F0E8; margin:6px 0 2px;">Blue Tokai</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; color:#6E7A8A;">PAN-INDIA · SPECIALTY COFFEE</div>
+                <p style="font-size:13px; line-height:1.6; color:#98A2B1; margin:12px 0 0;">Transit-format trials. High dwell-time relevance for departures.</p>
+              </div>
+            </article>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; margin-top:18px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; color:#5C6675;"><span style="color:#F0B429;">WHY?</span><span>SOURCE · DATE · EXTRACT · TYPE · CONFIDENCE · LINK ATTACHED TO EVERY SIGNAL</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="09 CATEGORIES" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:flex-end; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; width:min(520px,88vw);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#6E7A8A;">CATEGORY MOMENTUM</span>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:44px; line-height:1.04; margin:12px 0 26px; color:#F4F0E8;">What is gaining</h2>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div><div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;"><span>BEAUTY</span><span style="color:#F0B429;">94</span></div><div style="height:2px; background:rgba(255,255,255,.09); margin-top:8px;"><div style="height:2px; width:94%; background:#F0B429;"></div></div></div>
+            <div><div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;"><span>PREMIUM F&amp;B</span><span style="color:#6FE3A8;">88</span></div><div style="height:2px; background:rgba(255,255,255,.09); margin-top:8px;"><div style="height:2px; width:88%; background:#6FE3A8;"></div></div></div>
+            <div><div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;"><span>JEWELLERY</span><span style="color:#6FE3A8;">76</span></div><div style="height:2px; background:rgba(255,255,255,.09); margin-top:8px;"><div style="height:2px; width:76%; background:#6FE3A8;"></div></div></div>
+            <div><div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;"><span>TRAVEL GOODS</span><span style="color:#6FE3A8;">72</span></div><div style="height:2px; background:rgba(255,255,255,.09); margin-top:8px;"><div style="height:2px; width:72%; background:#6FE3A8;"></div></div></div>
+            <div><div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;"><span>DUTY-FREE LIQUOR</span><span style="color:#8894A3;">58</span></div><div style="height:2px; background:rgba(255,255,255,.09); margin-top:8px;"><div style="height:2px; width:58%; background:#5C6675;"></div></div></div>
+            <div><div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#EDE9E1;"><span>PRINT &amp; MEDIA</span><span style="color:#FF7A45;">21</span></div><div style="height:2px; background:rgba(255,255,255,.09); margin-top:8px;"><div style="height:2px; width:21%; background:#FF7A45;"></div></div></div>
+          </div>
+          <p style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; color:#5C6675; margin:20px 0 0;">EMERGING · ACCELERATING · STABLE · COOLING · DECLINING</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="10 AIRPORTS" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; width:min(660px,88vw); background:linear-gradient(180deg, rgba(7,10,16,.86), rgba(7,10,16,.55)); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.09); padding:28px 30px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#7FD4FF;">AIRPORT BENCHMARK</span>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:40px; line-height:1.04; margin:12px 0 22px; color:#F4F0E8;">Present there. Absent here.</h2>
+          <div style="display:grid; grid-template-columns:1.4fr repeat(4,1fr); gap:1px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em;">
+            <div style="background:#070A10; padding:12px 12px; color:#6E7A8A;">CATEGORY</div><div style="background:#070A10; padding:12px 8px; color:#6E7A8A; text-align:center;">DXB</div><div style="background:#070A10; padding:12px 8px; color:#6E7A8A; text-align:center;">SIN</div><div style="background:#070A10; padding:12px 8px; color:#6E7A8A; text-align:center;">ICN</div><div style="background:#070A10; padding:12px 8px; color:#FF7A45; text-align:center;">BLR</div>
+            <div style="background:#070A10; padding:12px 12px; color:#EDE9E1;">PREMIUM K-BEAUTY</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#FF7A45; text-align:center;">○</div>
+            <div style="background:#070A10; padding:12px 12px; color:#EDE9E1;">CHEF-LED DINING</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#8894A3; text-align:center;">◐</div><div style="background:#070A10; padding:12px 8px; color:#FF7A45; text-align:center;">○</div>
+            <div style="background:#070A10; padding:12px 12px; color:#EDE9E1;">EXPERIENTIAL RETAIL</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#8894A3; text-align:center;">◐</div>
+            <div style="background:#070A10; padding:12px 12px; color:#EDE9E1;">CRAFT JEWELLERY</div><div style="background:#070A10; padding:12px 8px; color:#8894A3; text-align:center;">◐</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div><div style="background:#070A10; padding:12px 8px; color:#8894A3; text-align:center;">◐</div><div style="background:#070A10; padding:12px 8px; color:#6FE3A8; text-align:center;">●</div>
+          </div>
+          <p style="font-size:14px; line-height:1.65; color:#98A2B1; margin:18px 0 0;">Three competitor hubs carry premium K-beauty in transit. BLR carries none. That difference is the opportunity engine's strongest input.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="11 CONSUMER BEHAVIOUR" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 6vw; pointer-events:none;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#6E7A8A;">CONSUMER BEHAVIOUR</span>
+        <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(36px,4.6vw,72px); line-height:1.06; margin:18px 0 0; max-width:960px; color:#F4F0E8; text-wrap:balance;">Passengers no longer shop the airport.<br /><span style="font-style:italic; color:#F0B429;">They continue a habit inside it.</span></h2>
+        <div data-r="3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:44px; width:min(900px,88vw); text-align:left;">
+          <div style="border-top:1px solid rgba(240,180,41,.5); padding-top:14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:#F0B429;">DWELL</div><p style="font-size:14px; line-height:1.6; color:#98A2B1; margin:8px 0 0;">Longer security-side dwell shifts spend from duty-free to food and self-care.</p></div>
+          <div style="border-top:1px solid rgba(240,180,41,.5); padding-top:14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:#F0B429;">DISCOVERY</div><p style="font-size:14px; line-height:1.6; color:#98A2B1; margin:8px 0 0;">Brand discovery happens on feeds abroad, purchase happens in transit at home.</p></div>
+          <div style="border-top:1px solid rgba(240,180,41,.5); padding-top:14px;"><div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:#F0B429;">GIFTING</div><p style="font-size:14px; line-height:1.6; color:#98A2B1; margin:8px 0 0;">Return-leg gifting is now category-led, not price-led. Provenance beats discount.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="12 AI SYNTHESIS" style="height:130vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; width:min(600px,88vw); border-left:1px solid rgba(240,180,41,.5); padding-left:26px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#F0B429;">SYNTHESIS</span>
+          <div style="display:flex; flex-direction:column; gap:14px; margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7; letter-spacing:.04em; color:#98A2B1;">
+            <div><span style="color:#5C6675;">01 ›</span> 1,284 sources parsed across news, store locators, airport releases and public discussion.</div>
+            <div><span style="color:#5C6675;">02 ›</span> 412 entities resolved. 96 duplicates collapsed. 7 unverifiable claims discarded.</div>
+            <div><span style="color:#5C6675;">03 ›</span> Cross-referenced against BLR passenger mix and existing concession map.</div>
+            <div><span style="color:#5C6675;">04 ›</span> Momentum modelled over 18 months, weighted for freshness and source diversity.</div>
+            <div style="color:#F0B429;"><span style="color:#5C6675;">05 ›</span> Three gaps exceed the action threshold.</div>
+          </div>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,3.6vw,52px); line-height:1.06; margin:30px 0 0; color:#F4F0E8;">Not "what happened".<br /><span style="font-style:italic;">What does this mean?</span></h2>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="13 BLR OPPORTUNITIES" style="height:170vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center; padding:0 6vw; pointer-events:none;">
+        <div style="pointer-events:auto; width:min(1040px,90vw); background:linear-gradient(180deg, rgba(8,11,17,.9), rgba(8,11,17,.62)); backdrop-filter:blur(18px); border:1px solid rgba(240,180,41,.28); padding:0; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, #F0B429, transparent); animation:is-scan 3.6s linear infinite;"></div>
+          <div data-r="2" style="display:grid; grid-template-columns:1.25fr 1fr;">
+            <div style="padding:32px 34px; border-right:1px solid rgba(255,255,255,.08);">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#FF7A45;">OPPORTUNITY DETECTED</span>
+              <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(38px,4.4vw,62px); line-height:1; margin:14px 0 8px; color:#F4F0E8;">Premium K-Beauty</h2>
+              <p style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; color:#6E7A8A; margin:0 0 24px;">CATEGORY · TRAVEL RETAIL · DEPARTURES INTL</p>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:10px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#8894A3;">GLOBAL MOMENTUM</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6FE3A8;">HIGH</span></div>
+                <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:10px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#8894A3;">PASSENGER RELEVANCE</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6FE3A8;">HIGH</span></div>
+                <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:10px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#8894A3;">BLR GAP</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#FF7A45;">HIGH</span></div>
+                <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:10px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; color:#8894A3;">COMPETITOR PRESENCE</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#EDE9E1;">DXB · SIN · ICN</span></div>
+              </div>
+              <p style="font-size:14px; line-height:1.65; color:#98A2B1; margin:22px 0 0;"><strong style="color:#F4F0E8; font-weight:600;">Why BLR.</strong> Bengaluru's outbound mix into Seoul, Singapore and the Gulf is the youngest of the top five Indian hubs, and the category already converts in those transit environments.</p>
+            </div>
+            <div style="padding:32px 34px; display:flex; flex-direction:column; justify-content:space-between; gap:24px;">
+              <div>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#6E7A8A;">OPPORTUNITY SCORE</span>
+                <div style="display:flex; align-items:baseline; gap:8px; margin-top:6px;"><span style="font-family:'Instrument Serif',serif; font-size:112px; line-height:.9; color:#F0B429;">88</span><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#6E7A8A;">/100</span></div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:9.5px; line-height:1.9; letter-spacing:.1em; color:#6E7A8A; margin-top:12px;">RECENCY 18/20 · VOLUME 13/15 · VELOCITY 14/15 · ENGAGEMENT 13/15<br />DIVERSITY 9/10 · SENTIMENT 9/10 · GEO 4/5 · BRAND 5/5 · BLR FIT 3/5</div>
+              </div>
+              <div>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#6E7A8A;">RELEVANT BRANDS</span>
+                <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:12px;">
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">OLIVE YOUNG</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">TIRTIR</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">BEAUTY OF JOSEON</span>
+                </div>
+              </div>
+              <div style="border-top:1px solid rgba(255,255,255,.08); padding-top:16px;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#F0B429;">EVIDENCE</span>
+                <div style="font-size:12.5px; line-height:1.6; color:#8894A3; margin-top:10px;">14 sources · 9 distinct publishers · newest 3 days old · confidence 0.82. Every claim opens its extract and link.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="14 WHAT NEXT" style="height:200vh; position:relative;">
+      <div data-panel="" style="position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 6vw; pointer-events:none;">
+        <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(42px,6vw,96px); line-height:1; margin:0; color:#F4F0E8;">What should BLR<br /><span style="font-style:italic; color:#F0B429;">do next?</span></h2>
+        <div data-r="3" style="pointer-events:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08); margin-top:42px; width:min(940px,90vw); text-align:left;">
+          <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:22px 22px;"><div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:#F0B429;">01 · INVESTIGATE</div><p style="font-size:14px; line-height:1.6; color:#C6CDD7; margin:10px 0 0;">Commission a K-beauty transit concept for International Departures, 40–60 sqm.</p></div>
+          <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:22px 22px;"><div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:#F0B429;">02 · TEST</div><p style="font-size:14px; line-height:1.6; color:#C6CDD7; margin:10px 0 0;">Six-week pop-up with two Korean brands on the Seoul and Singapore wave.</p></div>
+          <div style="background:rgba(7,10,16,.86); backdrop-filter:blur(12px); padding:22px 22px;"><div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:#F0B429;">03 · WATCH</div><p style="font-size:14px; line-height:1.6; color:#C6CDD7; margin:10px 0 0;">Chef-led dining and craft jewellery are 40 days from crossing the same threshold.</p></div>
+        </div>
+        <div style="margin-top:82px;">
+          <p style="font-family:'Instrument Serif',serif; font-size:clamp(26px,3vw,44px); line-height:1.15; color:#F4F0E8; margin:0;">The world doesn't stop.</p>
+          <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:clamp(26px,3vw,44px); line-height:1.15; color:#6E7A8A; margin:2px 0 0;">Neither does innovation.</p>
+          <div style="margin-top:26px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.32em; color:#5C6675;">INNOVATION SCOUT · BIAL</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div style="position:fixed; left:50%; bottom:26px; transform:translateX(-50%); z-index:42; width:min(680px,92vw); pointer-events:none;">
+    <sc-if value="{{ answer }}" hint-placeholder-val="{{ false }}">
+      <div style="pointer-events:auto; margin-bottom:10px; background:rgba(6,9,14,.92); backdrop-filter:blur(18px); border:1px solid rgba(240,180,41,.3); padding:20px 22px; animation:is-fadeUp .4s ease both;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:16px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#F0B429;">{{ answerTitle }}</span>
+          <button onClick="{{ clearAnswer }}" style="background:none; border:none; color:#5C6675; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; cursor:pointer;" style-hover="color:#F0B429;">CLOSE</button>
+        </div>
+        <div style="display:flex; flex-direction:column; margin-top:14px;">
+          <sc-for list="{{ answerItems }}" as="row" hint-placeholder-count="3">
+            <div style="display:grid; grid-template-columns:1fr auto; gap:16px; align-items:baseline; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.07);">
+              <div><div style="font-size:15px; color:#F4F0E8;">{{ row.label }}</div><div style="font-size:12.5px; color:#8894A3; margin-top:3px;">{{ row.detail }}</div></div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#F0B429;">{{ row.score }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <form onSubmit="{{ onAsk }}" style="pointer-events:auto; display:flex; align-items:center; gap:12px; background:rgba(6,9,14,.82); backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,.12); padding:12px 16px;">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.24em; color:#F0B429; white-space:nowrap;">ASK THE SCOUT</span>
+      <input ref="{{ askRef }}" placeholder="What should BLR bring next?" style="flex:1; background:none; border:none; outline:none; color:#EDE9E1; font-family:'Instrument Sans',sans-serif; font-size:14px;" />
+      <button type="submit" style="background:none; border:1px solid rgba(240,180,41,.4); color:#F0B429; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14);">RUN</button>
+    </form>
+  </div>
+
+  <div ref="{{ paperRef }}" style="position:fixed; inset:0; z-index:70; display:none; background:rgba(3,4,7,.93); backdrop-filter:blur(22px); overflow-y:auto; padding:40px 6vw 80px;">
+    <div style="max-width:1080px; margin:0 auto;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid rgba(255,255,255,.16); padding-bottom:16px;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#6E7A8A;">GLOBAL COMMERCIAL INTELLIGENCE</div>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(40px,5vw,76px); line-height:1; margin:8px 0 0; color:#F4F0E8;">The Scout Daily</h2>
+        </div>
+        <div style="display:flex; align-items:center; gap:20px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em; color:#8894A3;">26 AUGUST 2026</span>
+          <button onClick="{{ toggleDaily }}" style="background:none; border:1px solid rgba(255,255,255,.16); color:#EDE9E1; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:9px 13px; cursor:pointer;" style-hover="border-color:#F0B429; color:#F0B429;">CLOSE</button>
+        </div>
+      </div>
+      <div data-r="2" style="display:grid; grid-template-columns:1.7fr 1fr; gap:38px; margin-top:32px;">
+        <article>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#F0B429;">TOP STORY</div>
+          <h3 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(30px,3.6vw,52px); line-height:1.04; margin:10px 0 16px; color:#F4F0E8;">K-Beauty is moving into airport retail — and India is the last major gap</h3>
+          <div style="position:relative; height:320px; margin-bottom:18px;"><image-slot id="scout-daily-hero" shape="rect" placeholder="Top story image — drop here"></image-slot></div>
+          <div data-cols="2" style="columns:2; column-gap:28px; font-size:14.5px; line-height:1.75; color:#B4BDC8;">
+            <p style="margin:0 0 14px;">Three of the four highest-spend transit hubs in Asia and the Gulf now carry a dedicated Korean beauty format in departures. Footprints have compressed from mall-scale to 40–60 square metres, and assortment has narrowed to travel-legal sizes and gifting sets.</p>
+            <p style="margin:0 0 14px;">Bengaluru's outbound passenger mix into Seoul, Singapore and the Gulf skews younger than any other Indian metro hub, and the category already converts for those passengers on the outbound leg.</p>
+            <p style="margin:0;">The scout's reading is not that the trend is new. It is that the airport channel has caught up with it everywhere except here.</p>
+          </div>
+        </article>
+        <aside style="display:flex; flex-direction:column; gap:26px;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#6E7A8A; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:8px;">INDIA NOW · 3 MOVEMENTS</div>
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px; font-size:14px; line-height:1.55; color:#B4BDC8;">
+              <div><strong style="color:#F4F0E8; font-weight:600;">Mokobara</strong> opens in two premium Mumbai malls.</div>
+              <div><strong style="color:#F4F0E8; font-weight:600;">Blue Tokai</strong> trials a transit-format bar.</div>
+              <div><strong style="color:#F4F0E8; font-weight:600;">Craft jewellery</strong> expands beyond Jaipur into metro flagships.</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#6E7A8A; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:8px;">GLOBAL NOW · 7 MOVEMENTS</div>
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px; font-size:14px; line-height:1.55; color:#B4BDC8;">
+              <div><strong style="color:#F4F0E8; font-weight:600;">ICN</strong> extends beauty concessions airside.</div>
+              <div><strong style="color:#F4F0E8; font-weight:600;">DXB</strong> adds two chef-led dining formats.</div>
+              <div><strong style="color:#F4F0E8; font-weight:600;">SIN</strong> converts a duty-free bay to experience retail.</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#6E7A8A; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:8px;">CATEGORY WATCH</div>
+            <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:12px;">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">RETAIL</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">F&amp;B</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">JEWELLERY</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">DUTY-FREE</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">SERVICES</span>
+            </div>
+          </div>
+          <div style="border:1px solid rgba(240,180,41,.3); padding:16px 18px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#F0B429;">BLR OPPORTUNITIES · 3</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.08em; color:#C6CDD7;">
+              <div style="display:flex; justify-content:space-between;"><span>PREMIUM K-BEAUTY</span><span style="color:#F0B429;">88</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>CHEF-LED DINING</span><span style="color:#F0B429;">74</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>CRAFT JEWELLERY</span><span style="color:#F0B429;">69</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ focused }}" hint-placeholder-val="{{ false }}">
+    <aside style="position:fixed; top:0; right:0; bottom:0; width:min(486px,94vw); z-index:55; overflow-y:auto; background:linear-gradient(180deg, rgba(6,9,14,.96), rgba(6,9,14,.9)); backdrop-filter:blur(22px); border-left:1px solid rgba(255,255,255,.1); animation:is-fadeUp .5s cubic-bezier(.16,1,.3,1) both;">
+      <div style="padding:26px 28px 40px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+          <div>
+            <div style="font-family:'Instrument Serif',serif; font-size:34px; line-height:1; color:#F0B429; margin-bottom:8px; font-style:italic;">{{ fGreet }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#F0B429;">LET'S SEE WHAT'S BUZZING IN {{ fCityUp }}</div>
+            <h3 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:42px; line-height:1; margin:10px 0 4px; color:#F4F0E8;">{{ fCity }}</h3>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; color:#6E7A8A;">{{ fCountry }} · {{ fCode }} · DETECTED {{ fDet }}</div>
+          </div>
+          <button onClick="{{ closeFocus }}" style="background:none; border:1px solid rgba(255,255,255,.16); color:#8894A3; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 11px; cursor:pointer;" style-hover="border-color:#F0B429; color:#F0B429;">CLOSE</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:1px; margin-top:22px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08); font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:#6E7A8A;">
+          <div style="background:#070A10; padding:10px 8px; text-align:center;">WHAT'S NEW</div>
+          <div style="background:#070A10; padding:10px 8px; text-align:center; color:#F0B429;">WHAT'S BUZZING</div>
+          <div style="background:#070A10; padding:10px 8px; text-align:center;">WHO'S MOVING</div>
+          <div style="background:#070A10; padding:10px 8px; text-align:center;">WHAT PEOPLE BUY</div>
+          <div style="background:#070A10; padding:10px 8px; text-align:center; color:#FF7A45;">MATTER TO BLR</div>
+        </div>
+
+        <div style="margin-top:24px; border-top:1px solid rgba(255,255,255,.1); padding-top:18px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#6E7A8A;">WHAT PEOPLE ARE BUYING · BRAND / CATEGORY</div>
+          <div style="font-family:'Instrument Serif',serif; font-size:32px; color:#F4F0E8; margin:6px 0 2px;">{{ fBrand }}</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; color:#B98BFF;">{{ fCat }}</div>
+          <p style="font-size:14.5px; line-height:1.65; color:#C6CDD7; margin:14px 0 0;">{{ fEvent }}</p>
+          <div style="display:flex; gap:1px; margin-top:16px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);">
+            <div style="flex:1; background:#070A10; padding:12px 12px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">MENTIONS</div><div style="font-family:'JetBrains Mono',monospace; font-size:16px; color:#F4F0E8; margin-top:4px;">{{ fMen }}</div></div>
+            <div style="flex:1; background:#070A10; padding:12px 12px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">VELOCITY</div><div style="font-family:'JetBrains Mono',monospace; font-size:16px; color:#6FE3A8; margin-top:4px;">{{ fVel }}</div></div>
+            <div style="flex:1; background:#070A10; padding:12px 12px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">CONFIDENCE</div><div style="font-family:'JetBrains Mono',monospace; font-size:16px; color:#F4F0E8; margin-top:4px;">{{ fConf }}</div></div>
+          </div>
+        </div>
+
+        <div style="margin-top:26px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#F0B429;">WHAT'S BUZZING · WHY</div>
+          <div style="display:flex; flex-direction:column; gap:9px; margin-top:12px;">
+            <sc-for list="{{ fWhy }}" as="w" hint-placeholder-count="4">
+              <div style="display:grid; grid-template-columns:14px 1fr; gap:10px; font-size:14px; line-height:1.55; color:#B4BDC8;"><span style="color:#6FE3A8;">+</span><span>{{ w }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-top:26px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#6E7A8A;">WHO'S MOVING · WHERE THE BUZZ COMES FROM</div>
+          <div style="display:flex; flex-direction:column; gap:11px; margin-top:14px;">
+            <sc-for list="{{ fSrc }}" as="s" hint-placeholder-count="5">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:baseline; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em;"><span style="color:#EDE9E1;">{{ s.name }} <span style="color:#5C6675;">· {{ s.q }}</span></span><span style="color:#8894A3;">{{ s.pct }}</span></div>
+                <div style="height:3px; background:rgba(255,255,255,.08); margin-top:6px;"><div style="height:3px; width:{{ s.w }}; background:{{ s.color }};"></div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-top:28px; border:1px solid rgba(240,180,41,.28); padding:20px 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#F0B429;">BUZZ SCORE</div>
+              <div style="display:flex; align-items:baseline; gap:6px; margin-top:4px;"><span ref="{{ scoreRef }}" style="font-family:'Instrument Serif',serif; font-size:64px; line-height:.9; color:#F0B429;">{{ fTotal }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6E7A8A;">/100</span></div>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; color:#8894A3; text-align:right;">{{ fBand }}</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:18px;">
+            <sc-for list="{{ fParts }}" as="p" hint-placeholder-count="9">
+              <div style="display:grid; grid-template-columns:1fr 76px 46px; gap:10px; align-items:center;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em; color:#8894A3;">{{ p.k }}</span>
+                <div style="height:3px; background:rgba(255,255,255,.08);"><div style="height:3px; width:{{ p.w }}; background:#F0B429;"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#EDE9E1; text-align:right;">{{ p.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <p style="font-size:13.5px; line-height:1.65; color:#B4BDC8; margin:18px 0 0; border-top:1px solid rgba(255,255,255,.08); padding-top:14px;">{{ fExplain }}</p>
+        </div>
+
+        <div style="margin-top:26px; border:1px solid rgba(111,227,168,.28); padding:20px 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#6FE3A8;">COMMERCIAL FEASIBILITY INDEX</div>
+              <div style="display:flex; align-items:baseline; gap:6px; margin-top:4px;"><span style="font-family:'Instrument Serif',serif; font-size:64px; line-height:.9; color:#6FE3A8;">{{ fCfi }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6E7A8A;">/100</span></div>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.18em; color:{{ fVerdictColor }}; text-align:right;">{{ fVerdict }}</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:18px;">
+            <sc-for list="{{ fCfiParts }}" as="c" hint-placeholder-count="4">
+              <div style="display:grid; grid-template-columns:1fr 76px 46px; gap:10px; align-items:center;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em; color:#8894A3;">{{ c.k }}</span>
+                <div style="height:3px; background:rgba(255,255,255,.08);"><div style="height:3px; width:{{ c.w }}; background:#6FE3A8;"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#EDE9E1; text-align:right;">{{ c.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-top:18px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);">
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">SPP UPLIFT</div><div style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#F4F0E8; margin-top:5px;">{{ fDspp }} / pax</div></div>
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">ANNUAL REVENUE</div><div style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#6FE3A8; margin-top:5px;">{{ fRevenue }}</div></div>
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">ATV · PAX SHARE</div><div style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#F4F0E8; margin-top:5px;">{{ fAtv }} · {{ fPaxShare }}</div></div>
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">PENETRATION GROWTH</div><div style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#F4F0E8; margin-top:5px;">{{ fPen }}</div></div>
+          </div>
+          <div style="margin-top:16px; border-top:1px solid rgba(255,255,255,.08); padding-top:14px; display:flex; flex-direction:column; gap:7px;">
+            <sc-for list="{{ fMath }}" as="m" hint-placeholder-count="4">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.6; letter-spacing:.02em; color:#8894A3;">{{ m }}</div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-top:26px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#F0B429;">WHAT'S NEW · EVIDENCE</div>
+          <div style="display:flex; flex-direction:column; gap:1px; margin-top:12px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);">
+            <sc-for list="{{ fEvid }}" as="e" hint-placeholder-count="2">
+              <div style="background:#070A10; padding:14px 14px;">
+                <div style="display:flex; justify-content:space-between; gap:12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em;"><span style="color:#EDE9E1;">{{ e.s }}</span><span style="color:#5C6675;">{{ e.d }}</span></div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.16em; color:{{ e.qc }}; margin-top:6px;">{{ e.t }} · SOURCE QUALITY {{ e.q }}</div>
+                <p style="font-size:13px; line-height:1.6; color:#98A2B1; margin:9px 0 0;">“{{ e.x }}”</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-top:26px; border-top:1px solid rgba(255,255,255,.1); padding-top:18px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.28em; color:#FF7A45;">WHAT COULD MATTER TO BLR</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-top:12px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);">
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">PASSENGER RELEVANCE</div><div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#EDE9E1; margin-top:5px;">{{ fRel }}</div></div>
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">BLR GAP</div><div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#FF7A45; margin-top:5px;">{{ fGap }}</div></div>
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">COMPARABLE AIRPORTS</div><div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#EDE9E1; margin-top:5px;">{{ fAir }}</div></div>
+            <div style="background:#070A10; padding:12px 13px;"><div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:#6E7A8A;">BIAL OPPORTUNITY</div><div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#F0B429; margin-top:5px;">{{ fOpp }}</div></div>
+          </div>
+          <p style="font-size:13.5px; line-height:1.65; color:#C6CDD7; margin:16px 0 0;">{{ fBlrWhy }}</p>
+        </div>
+      </div>
+    </aside>
+  </sc-if>
+
+  <div ref="{{ introRef }}" style="position:fixed; inset:0; z-index:80; background:#04060A; animation:is-introveil 6s ease-in 1.4s both; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; transition:opacity 1.2s ease, background 2s ease;">
+    <div style="opacity:0; animation:is-fade 2s ease 3.2s both;">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.34em; color:#6E7A8A;">BENGALURU · 13.1986°N 77.7066°E</span>
+    </div>
+    <h1 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(46px,7vw,120px); line-height:.96; letter-spacing:-.02em; margin:20px 0 0; color:#F4F0E8; opacity:0; animation:is-fadeUp 1.8s cubic-bezier(.16,1,.3,1) 5.4s both;">Innovation Scout</h1>
+    <div style="opacity:0; animation:is-fadeUp 1.6s cubic-bezier(.16,1,.3,1) 6.4s both; margin-top:18px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.34em; color:#F0B429;">GLOBAL COMMERCIAL INTELLIGENCE</div>
+    <button onClick="{{ skipIntro }}" style="position:absolute; bottom:34px; right:34px; background:none; border:1px solid rgba(255,255,255,.14); color:#8894A3; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.24em; padding:10px 14px; cursor:pointer;" style-hover="border-color:#F0B429; color:#F0B429;">ENTER SYSTEM</button>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const GREETINGS = {
+  BLR:{ g:'Namma Bengaluru', lang:'kn-IN' },
+  BOM:{ g:'Amchi Mumbai',   lang:'mr-IN' },
+  DEL:{ g:'Dilli',           lang:'hi-IN' },
+  MAA:{ g:'Vanakkam Chennai',lang:'ta-IN' },
+  HYD:{ g:'Adaab Hyderabad', lang:'ur-IN' },
+  CCU:{ g:'Kolkata, City of Joy', lang:'bn-IN' },
+  PNQ:{ g:'Namaskar Pune',   lang:'mr-IN' },
+  AMD:{ g:'Kem Cho Ahmedabad', lang:'gu-IN' },
+  COK:{ g:'Namaskaram Kochi',lang:'ml-IN' },
+  GOI:{ g:'Susegad Goa',     lang:'kok-IN' },
+  JAI:{ g:'Padharo Jaipur',  lang:'hi-IN' },
+  ICN:{ g:'Annyeong Seoul',  lang:'ko-KR' },
+  DXB:{ g:'Marhaba Dubai',   lang:'ar-AE' },
+  SIN:{ g:'Selamat Datang Singapore', lang:'ms-MY' },
+  NRT:{ g:'Konnichiwa Tokyo',lang:'ja-JP' },
+  LHR:{ g:'Hello London',    lang:'en-GB' },
+  CDG:{ g:'Bonjour Paris',   lang:'fr-FR' },
+  BKK:{ g:'Sawasdee Bangkok',lang:'th-TH' },
+  HKG:{ g:'Nei Hou Hong Kong', lang:'zh-HK' },
+  DOH:{ g:'Marhaba Doha',    lang:'ar-QA' },
+  JFK:{ g:'Hello New York',  lang:'en-US' },
+  SYD:{ g:'G’day Sydney',    lang:'en-AU' },
+  IST:{ g:'Merhaba Istanbul',lang:'tr-TR' },
+  KUL:{ g:'Selamat Datang Kuala Lumpur', lang:'ms-MY' },
+  SFO:{ g:'Hello San Francisco', lang:'en-US' },
+  AMS:{ g:'Hallo Amsterdam', lang:'nl-NL' }
+};
+
+const CITIES = [
+  { n:'BENGALURU', c:'BLR', lat:13.20, lon:77.71, t:'anchor', s:'ANCHOR NODE · TECH-ENABLED SERVICES' },
+  { n:'DELHI', c:'DEL', lat:28.61, lon:77.21, t:'airport', s:'LUXURY BEAUTY · DUTY-FREE' },
+  { n:'MUMBAI', c:'BOM', lat:19.08, lon:72.88, t:'trend', s:'PREMIUM INDIAN D2C ▲▲' },
+  { n:'HYDERABAD', c:'HYD', lat:17.39, lon:78.49, t:'market', s:'FINE JEWELLERY ▲' },
+  { n:'CHENNAI', c:'MAA', lat:13.08, lon:80.27, t:'market', s:'REGIONAL QSR ▲' },
+  { n:'KOLKATA', c:'CCU', lat:22.57, lon:88.36, t:'market', s:'CRAFT RETAIL ■' },
+  { n:'PUNE', c:'PNQ', lat:18.52, lon:73.86, t:'market', s:'FASHION ▲' },
+  { n:'AHMEDABAD', c:'AMD', lat:23.02, lon:72.57, t:'market', s:'JEWELLERY ▲' },
+  { n:'KOCHI', c:'COK', lat:9.93, lon:76.27, t:'market', s:'WELLNESS ▲' },
+  { n:'GOA', c:'GOI', lat:15.30, lon:74.12, t:'market', s:'TRAVEL RETAIL ▲' },
+  { n:'JAIPUR', c:'JAI', lat:26.91, lon:75.79, t:'market', s:'CRAFT LUXURY ▲' },
+  { n:'SEOUL', c:'ICN', lat:37.55, lon:126.99, t:'trend', s:'K-BEAUTY ▲▲▲ 94' },
+  { n:'DUBAI', c:'DXB', lat:25.20, lon:55.27, t:'trend', s:'PREMIUM F&B ▲▲ 87' },
+  { n:'SINGAPORE', c:'SIN', lat:1.35, lon:103.82, t:'trend', s:'EXPERIENTIAL RETAIL ▲▲ 82' },
+  { n:'TOKYO', c:'NRT', lat:35.68, lon:139.69, t:'trend', s:'CONVENIENCE CRAFT ▲▲ 79' },
+  { n:'LONDON', c:'LHR', lat:51.51, lon:-0.12, t:'trend', s:'LUXURY WELLNESS ▲ 71' },
+  { n:'PARIS', c:'CDG', lat:48.85, lon:2.35, t:'airport', s:'BEAUTY FLAGSHIPS ▲' },
+  { n:'BANGKOK', c:'BKK', lat:13.75, lon:100.50, t:'airport', s:'FOOD CONCEPTS ▲▲' },
+  { n:'HONG KONG', c:'HKG', lat:22.32, lon:114.17, t:'airport', s:'TRAVEL RETAIL ■' },
+  { n:'DOHA', c:'DOH', lat:25.29, lon:51.53, t:'airport', s:'LUXURY TRANSIT ▲' },
+  { n:'NEW YORK', c:'JFK', lat:40.71, lon:-74.01, t:'brand', s:'BRAND HQ SIGNALS ■' },
+  { n:'SYDNEY', c:'SYD', lat:-33.87, lon:151.21, t:'brand', s:'WELLNESS RETAIL ■' },
+  { n:'ISTANBUL', c:'IST', lat:41.01, lon:28.98, t:'airport', s:'HUB EXPANSION ▲' },
+  { n:'KUALA LUMPUR', c:'KUL', lat:3.14, lon:101.69, t:'market', s:'HALAL PREMIUM ▲' },
+  { n:'SAN FRANCISCO', c:'SFO', lat:37.77, lon:-122.42, t:'brand', s:'CONCEPT ORIGIN ■' },
+  { n:'AMSTERDAM', c:'AMS', lat:52.37, lon:4.90, t:'airport', s:'FORMAT INNOVATION ▲' }
+];
+const ROUTES = ['SIN','DXB','LHR','CDG','BKK','HKG','ICN','NRT','DEL','BOM'];
+const BUZZWORDS = ['SPECIALTY POUR-OVER','ZERO-TOUCH SPA','DIGITAL ART LOUNGE','TRAVEL-LEGAL BEAUTY','CHEF-LED TRANSIT','CRAFT PROVENANCE','SLEEP PODS','REGIONAL GIFTING','COMPACT FLAGSHIP','SENSORY RETAIL','QUIET LUXURY','GRAB-READY CRAFT'];
+const TYPE_COLOR = { anchor:0xFF7A45, airport:0x7FD4FF, trend:0xF0B429, brand:0xB98BFF, market:0x6FE3A8 };
+const SCENES = [
+  { lat:18, lon:52, d:5.2, label:'EARTH' },
+  { lat:13.2, lon:77.7, d:2.15, label:'BLR' },
+  { lat:16, lon:92, d:3.7, label:'PASSENGER MOVEMENT' },
+  { lat:21, lon:79, d:2.55, label:'INDIA' },
+  { lat:22, lon:108, d:3.6, label:'ASIA' },
+  { lat:16, lon:58, d:5.6, label:'GLOBAL' },
+  { lat:26, lon:96, d:4.5, label:"WHAT'S BUZZING" },
+  { lat:28, lon:64, d:3.5, label:'BRANDS' },
+  { lat:24, lon:56, d:3.1, label:'CATEGORIES' },
+  { lat:25, lon:52, d:2.6, label:'AIRPORTS' },
+  { lat:30, lon:118, d:3.4, label:'CONSUMER BEHAVIOUR' },
+  { lat:20, lon:82, d:4.7, label:'AI SYNTHESIS' },
+  { lat:13.2, lon:77.7, d:2.35, label:'BLR OPPORTUNITIES' },
+  { lat:13.2, lon:77.7, d:6.2, label:'WHAT NEXT' }
+];
+const ANSWERS = {
+  next: { title:'5 OPPORTUNITIES DETECTED · BLR', items:[
+    { label:'Premium K-Beauty', detail:'Present at DXB, SIN, ICN. Absent at BLR. Youngest outbound mix in India.', score:'88' },
+    { label:'Chef-led regional dining', detail:'Dwell-time shift from duty-free to food. Two Gulf hubs added formats this quarter.', score:'74' },
+    { label:'Craft jewellery, airside', detail:'Jaipur and Hyderabad ateliers moving to metro flagships. Gifting-led.', score:'69' },
+    { label:'Specialty coffee, transit format', detail:'Blue Tokai and peers trialling compact bars. High local affinity.', score:'64' },
+    { label:'Travel-goods flagship', detail:'Mokobara-class D2C brands scaling into premium malls.', score:'61' }
+  ]},
+  beauty: { title:'BEAUTY · GLOBAL READ', items:[
+    { label:'Seoul — K-Beauty', detail:'Momentum 94. Airport formats compressed to 40–60 sqm.', score:'▲▲▲' },
+    { label:'Delhi — Luxury beauty', detail:'Duty-free counters expanding, premium skew.', score:'▲▲' },
+    { label:'BLR gap', detail:'No dedicated Korean beauty format in departures.', score:'HIGH' }
+  ]},
+  food: { title:'F&B · ASIA READ', items:[
+    { label:'Bangkok — food concepts', detail:'Street-format licensing into transit environments.', score:'▲▲' },
+    { label:'Dubai — premium F&B', detail:'Two chef-led formats added airside this quarter.', score:'▲▲' },
+    { label:'Tokyo — convenience craft', detail:'Grab-and-go quality bar raised across terminals.', score:'▲▲' }
+  ]},
+  brand: { title:'BRAND EXPANSION · INDIA', items:[
+    { label:'Mokobara', detail:'Two new premium mall stores, Mumbai. Travel category.', score:'NEW' },
+    { label:'Blue Tokai', detail:'Transit-format trials. Specialty coffee.', score:'▲▲' },
+    { label:'Olive Young', detail:'Airport entry at ICN. Watch for India licensing.', score:'▲▲▲' }
+  ]},
+  gap: { title:'PRESENT AT DXB · ABSENT AT BLR', items:[
+    { label:'Premium K-beauty', detail:'DXB, SIN, ICN all carry dedicated formats.', score:'GAP' },
+    { label:'Chef-led dining', detail:'DXB and SIN. ICN partial.', score:'GAP' },
+    { label:'Experiential retail', detail:'All three hubs. BLR partial.', score:'PARTIAL' }
+  ]},
+  duty: { title:'DUTY-FREE · TREND READ', items:[
+    { label:'Liquor', detail:'Stable to cooling. Price-led gifting declining.', score:'58' },
+    { label:'Beauty', detail:'Accelerating. Provenance and routine-led.', score:'94' },
+    { label:'Confection', detail:'Regional premium gaining over global brands.', score:'66' }
+  ]},
+  default: { title:'SCAN COMPLETE · CLOSEST SIGNALS', items:[
+    { label:'Premium K-Beauty', detail:'Strongest open gap against competitor hubs.', score:'88' },
+    { label:'Premium F&B — Dubai', detail:'Format innovation transferable to BLR departures.', score:'87' },
+    { label:'Experiential retail — Singapore', detail:'Space productivity model worth studying.', score:'82' }
+  ]}
+};
+
+class Component extends DCLogic {
+  state = { answer:null, focus:null };
+
+  constructor(props) {
+    super(props);
+    this.canvasRef = React.createRef();
+    this.introRef = React.createRef();
+    this.trackRef = React.createRef();
+    this.tipRef = React.createRef();
+    this.paperRef = React.createRef();
+    this.askRef = React.createRef();
+    this.soundDotRef = React.createRef();
+    this.sceneLabelRef = React.createRef();
+    this.sceneNumRef = React.createRef();
+    this.scoreRef = React.createRef();
+    this.navRef = React.createRef();
+    this.volRef = React.createRef();
+    this.hudRef = React.createRef();
+    this.logRef = React.createRef();
+    this.phaseRef = React.createRef();
+    this.summaryRef = React.createRef();
+    this.wordsRef = React.createRef();
+    this.greetRef = React.createRef();
+    this.greetTextRef = React.createRef();
+    this.greetSubRef = React.createRef();
+    this.greetKickerRef = React.createRef();
+    this.vol = 0.5;
+    this.scanning = false;
+    this.signals = CITIES.map(ci => signalFor(ci));
+    this.signals.slice().sort((a, b) => b.total - a.total).forEach((s, i) => { s.rank = i + 1; });
+    this.cam = { lat:13.2, lon:77.7, d:1.14 };
+    this.tgt = { lat:13.2, lon:77.7, d:1.14 };
+    this.introT = 0;
+    this.introDone = false;
+    this.paperOpen = false;
+    this.soundOn = false;
+    this.reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  componentDidMount() {
+    this._onScroll = () => {
+      this.scrollY = window.scrollY || window.pageYOffset;
+      if (this.introDone) { try { this.updateScroll(0.016); } catch (e) {} }
+    };
+    window.addEventListener('scroll', this._onScroll, { passive:true });
+    this.scrollY = window.scrollY || 0;
+    if (this.volRef.current) this.volRef.current.value = String(Math.round(this.vol * 100));
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.focus) this.closeFocus(); };
+    window.addEventListener('keydown', this._onKey);
+    const armOnce = () => { this.armVoice(); window.removeEventListener('pointerdown', armOnce, true); window.removeEventListener('keydown', armOnce, true); window.removeEventListener('scroll', armOnce, true); window.removeEventListener('wheel', armOnce, true); window.removeEventListener('touchstart', armOnce, true); };
+    window.addEventListener('pointerdown', armOnce, true);
+    window.addEventListener('keydown', armOnce, true);
+    window.addEventListener('scroll', armOnce, true);
+    window.addEventListener('wheel', armOnce, true);
+    window.addEventListener('touchstart', armOnce, true);
+    const tr = this.trackRef.current;
+    if (tr && !this.reduced) for (let i = 0; i < tr.children.length; i++) {
+      const p = tr.children[i].firstElementChild;
+      if (p) { p.style.opacity = '0'; p.style.filter = 'blur(6px)'; }
+    }
+    if (!this.reduced) {
+      document.documentElement.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+      this._unlock = setTimeout(() => this.skipIntro(), 9200);
+    } else {
+      this.introT = 1; this.introDone = true;
+      if (this.introRef.current) this.introRef.current.style.display = 'none';
+    }
+    if (window.__threeReady) this.initThree();
+    else window.addEventListener('three-ready', () => this.initThree(), { once:true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('keydown', this._onKey);
+    window.removeEventListener('resize', this._onResize);
+    document.documentElement.style.overflow = '';
+    clearTimeout(this._unlock);
+    cancelAnimationFrame(this._raf);
+    if (this.renderer) this.renderer.dispose();
+    if (this.audio) { try { this.audio.close(); } catch (e) {} }
+  }
+
+  ll(lat, lon, r) {
+    const T = window.THREE, a = lat * Math.PI / 180, b = lon * Math.PI / 180;
+    return new T.Vector3(r * Math.cos(a) * Math.cos(b), r * Math.sin(a), -r * Math.cos(a) * Math.sin(b));
+  }
+
+  initThree() {
+    const T = window.THREE, cv = this.canvasRef.current;
+    if (!cv || !T) return;
+    const scene = new T.Scene();
+    const camera = new T.PerspectiveCamera(38, cv.clientWidth / Math.max(1, cv.clientHeight), 0.05, 400);
+    const renderer = new T.WebGLRenderer({ canvas:cv, antialias:true, alpha:false, powerPreference:'high-performance' });
+    renderer.setClearColor(0x04060A, 1);
+    this.scene = scene; this.camera = camera; this.renderer = renderer;
+    this.resize();
+    this._onResize = () => this.resize();
+    window.addEventListener('resize', this._onResize);
+
+    const sunDir = new T.Vector3(1, 0.34, 0.55).normalize();
+    this.sunDir = sunDir;
+
+    // stars
+    const sN = 2600, sp = new Float32Array(sN * 3), sc = new Float32Array(sN * 3);
+    for (let i = 0; i < sN; i++) {
+      const u = Math.random() * 2 - 1, th = Math.random() * Math.PI * 2, r = 90 * Math.pow(Math.random() * 0.4 + 0.6, 0.5);
+      const s = Math.sqrt(1 - u * u);
+      sp[i * 3] = Math.cos(th) * s * r; sp[i * 3 + 1] = u * r; sp[i * 3 + 2] = Math.sin(th) * s * r;
+      const w = 0.55 + Math.random() * 0.45;
+      sc[i * 3] = w; sc[i * 3 + 1] = w * (0.92 + Math.random() * 0.08); sc[i * 3 + 2] = w * (0.9 + Math.random() * 0.1);
+    }
+    const sg = new T.BufferGeometry();
+    sg.setAttribute('position', new T.BufferAttribute(sp, 3));
+    sg.setAttribute('color', new T.BufferAttribute(sc, 3));
+    scene.add(new T.Points(sg, new T.PointsMaterial({ size:0.42, vertexColors:true, sizeAttenuation:true, transparent:true, opacity:0.85 })));
+
+    // earth
+    const uni = {
+      dayMap:{ value:null }, lightsMap:{ value:null }, hasTex:{ value:0 },
+      sunDir:{ value:sunDir }, uTime:{ value:0 }, uBoost:{ value:0 },
+      uScanOn:{ value:0 }, uScanLat:{ value:0 }, uScanLon:{ value:0 }
+    };
+    this.uni = uni;
+    const earthMat = new T.ShaderMaterial({
+      uniforms:uni,
+      vertexShader:`varying vec3 vN; varying vec2 vUv; varying vec3 vP;
+        void main(){ vUv=uv; vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.0); vP=mv.xyz; gl_Position=projectionMatrix*mv; }`,
+      fragmentShader:`uniform sampler2D dayMap; uniform sampler2D lightsMap; uniform float hasTex; uniform vec3 sunDir; uniform float uTime; uniform float uBoost;
+        uniform float uScanOn; uniform float uScanLat; uniform float uScanLon;
+        varying vec3 vN; varying vec2 vUv; varying vec3 vP;
+        void main(){
+          vec3 N=normalize(vN); vec3 V=normalize(-vP);
+          vec3 L=normalize((viewMatrix*vec4(sunDir,0.0)).xyz);
+          float ndl=dot(N,L);
+          vec3 base=vec3(0.014,0.026,0.05);
+          vec3 col=base;
+          if(hasTex>0.5){
+            vec3 day=texture2D(dayMap,vUv).rgb;
+            float dayAmt=smoothstep(-0.22,0.30,ndl);
+            vec3 lit=day*(0.70+1.30*max(ndl,0.0));
+            vec3 nightSide=day*vec3(0.05,0.07,0.13);
+            col=mix(nightSide, lit, dayAmt);
+            float term=exp(-pow(ndl*5.2,2.0));
+            col+=term*vec3(0.30,0.14,0.05)*0.55;
+            vec4 lt=texture2D(lightsMap,vUv);
+            vec3 lights=pow(lt.rgb*lt.a, vec3(1.8));
+            float night=smoothstep(0.26,-0.10,ndl);
+            col+=lights*night*(1.3+uBoost*0.5)*vec3(1.0,0.76,0.44);
+          } else {
+            col=base+base*max(ndl,0.0)*2.0;
+            float grid=smoothstep(0.985,1.0,max(abs(sin(vUv.y*3.14159*18.0)),abs(sin(vUv.x*3.14159*36.0))));
+            col+=grid*vec3(0.05,0.10,0.16);
+          }
+          // orbital scan: one latitude sweep, one meridian sweep, plus a faint lattice
+          if(uScanOn>0.001){
+            float latBand=exp(-pow((vUv.y-uScanLat)*150.0,2.0));
+            float lonBand=exp(-pow(sin((vUv.x-uScanLon)*3.14159)*90.0,2.0));
+            float lattice=smoothstep(0.975,1.0,max(abs(sin(vUv.y*3.14159*30.0)),abs(sin(vUv.x*3.14159*60.0))));
+            col+=uScanOn*(latBand*vec3(0.30,0.85,1.10)*1.1
+                        + lonBand*vec3(0.55,0.80,1.00)*0.55
+                        + lattice*vec3(0.05,0.16,0.24)*0.9);
+          }
+          float fres=pow(1.0-max(dot(N,V),0.0),3.0);
+          col+=fres*vec3(0.10,0.24,0.55)*(0.9+uBoost);
+          // ShaderMaterial gets no automatic output color-space conversion: do it here.
+          gl_FragColor=vec4(pow(max(col,vec3(0.0)),vec3(0.4545)),1.0);
+        }`
+    });
+    const earth = new T.Mesh(new T.SphereGeometry(1, 96, 96), earthMat);
+    scene.add(earth);
+
+    // atmosphere
+    const atmo = new T.Mesh(new T.SphereGeometry(1.045, 64, 64), new T.ShaderMaterial({
+      uniforms:{ uBoost:{ value:0 } },
+      transparent:true, side:T.BackSide, blending:T.AdditiveBlending, depthWrite:false,
+      vertexShader:`varying vec3 vN; varying vec3 vP; void main(){ vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.0); vP=mv.xyz; gl_Position=projectionMatrix*mv; }`,
+      fragmentShader:`varying vec3 vN; varying vec3 vP; uniform float uBoost;
+        void main(){ float f=pow(0.72-max(dot(normalize(vN),normalize(-vP)),0.0),3.0); f=clamp(f,0.0,1.0);
+        gl_FragColor=vec4(pow(vec3(0.22,0.46,1.0)*f*(1.1+uBoost*0.8),vec3(0.4545)),1.0); }`
+    }));
+    this.atmoMat = atmo.material;
+    scene.add(atmo);
+
+    // clouds
+    const cloudUni = { cloudMap:{ value:null }, sunDir:{ value:sunDir }, uOn:{ value:0 } };
+    const clouds = new T.Mesh(new T.SphereGeometry(1.014, 64, 64), new T.ShaderMaterial({
+      uniforms:cloudUni, transparent:true, depthWrite:false,
+      vertexShader:`varying vec3 vN; varying vec2 vUv; void main(){ vUv=uv; vN=normalize(normalMatrix*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+      fragmentShader:`uniform sampler2D cloudMap; uniform vec3 sunDir; uniform float uOn; varying vec3 vN; varying vec2 vUv;
+        void main(){ vec4 c=texture2D(cloudMap,vUv); float a=c.a>0.0?c.a:dot(c.rgb,vec3(.33));
+          vec3 L=normalize((viewMatrix*vec4(sunDir,0.0)).xyz);
+          float ndl=dot(normalize(vN),L);
+          float lit=smoothstep(-0.25,0.35,ndl);
+          vec3 col=mix(vec3(0.06,0.09,0.15), vec3(1.0,0.99,0.97), lit);
+          gl_FragColor=vec4(pow(max(col,vec3(0.0)),vec3(0.4545)), a*uOn*(0.22+0.45*lit)); }`
+    }));
+    scene.add(clouds); this.clouds = clouds; this.cloudUni = cloudUni;
+
+    const base = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/textures/planets/';
+    const loader = new T.TextureLoader();
+    loader.setCrossOrigin('anonymous');
+    loader.load(base + 'earth_atmos_2048.jpg', (tex) => {
+      tex.colorSpace = T.SRGBColorSpace;
+      uni.dayMap.value = tex;
+      if (uni.lightsMap.value) uni.hasTex.value = 1;
+      this.buildDust(tex.image);
+    }, undefined, () => {});
+    loader.load(base + 'earth_lights_2048.png', (tex) => {
+      uni.lightsMap.value = tex;
+      if (uni.dayMap.value) uni.hasTex.value = 1;
+    }, undefined, () => {});
+    loader.load(base + 'earth_clouds_1024.png', (tex) => {
+      tex.wrapS = T.RepeatWrapping;
+      cloudUni.cloudMap.value = tex; cloudUni.uOn.value = 1;
+    }, undefined, () => {});
+
+    this.buildMarkers();
+    this.buildRoutes();
+
+    this.ray = new T.Raycaster();
+    this.pointer = new T.Vector2(-9, -9);
+    cv.addEventListener('pointermove', (e) => {
+      const r = cv.getBoundingClientRect();
+      this.pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+      if (this.drag) {
+        const dx = e.clientX - this.drag.x, dy = e.clientY - this.drag.y;
+        this.drag.x = e.clientX; this.drag.y = e.clientY;
+        this.drag.moved += Math.abs(dx) + Math.abs(dy);
+        this.focusLock = null;
+        this.userSpin = true;
+        this.cam.lon = ((this.cam.lon - dx * 0.28) + 540) % 360 - 180;
+        this.cam.lat = Math.max(-82, Math.min(82, this.cam.lat + dy * 0.22));
+        this.tgt.lat = this.cam.lat; this.tgt.lon = this.cam.lon; this.tgt.d = this.cam.d;
+      }
+      this.pointerPx = { x:e.clientX, y:e.clientY };
+    });
+    cv.addEventListener('pointerleave', () => { this.pointer.set(-9, -9); if (this.drag) { this.drag = null; cv.style.cursor = 'default'; } });
+    cv.addEventListener('pointerdown', (e) => {
+      const r = cv.getBoundingClientRect();
+      this.pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+      const u = this.pickAt();
+      if (u) { e.preventDefault(); this.openFocus(u.sig); return; }
+      this.skipIntro();
+      this.drag = { x:e.clientX, y:e.clientY, moved:0 };
+      cv.setPointerCapture && cv.setPointerCapture(e.pointerId);
+      cv.style.cursor = 'grabbing';
+    });
+    cv.addEventListener('pointerup', (e) => {
+      if (this.drag) { cv.releasePointerCapture && cv.releasePointerCapture(e.pointerId); this.drag = null; cv.style.cursor = 'default'; }
+    });
+    cv.addEventListener('wheel', (e) => {
+      if (!(e.ctrlKey || e.metaKey || e.altKey)) return;
+      e.preventDefault();
+      this.skipIntro();
+      this.focusLock = null;
+      const f = Math.exp(e.deltaY * 0.0012);
+      this.cam.d = Math.max(1.18, Math.min(6.2, this.cam.d * f));
+      this.tgt.d = this.cam.d;
+      this.userSpin = true;
+    }, { passive:false });
+
+    this.clock = new T.Clock();
+    this.loop();
+  }
+
+  buildDust(img) {
+    const T = window.THREE;
+    if (!img || this.dust) return;
+    const w = 256, h = 128, c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const ctx = c.getContext('2d', { willReadFrequently:true });
+    ctx.drawImage(img, 0, 0, w, h);
+    let data;
+    try { data = ctx.getImageData(0, 0, w, h).data; } catch (e) { return; }
+    const pts = [], phs = [];
+    for (let i = 0; i < 6000 && pts.length < 1400 * 3; i++) {
+      const x = Math.floor(Math.random() * w), y = Math.floor(Math.random() * h), k = (y * w + x) * 4;
+      const r = data[k], g = data[k + 1], b = data[k + 2];
+      if ((r + g) * 0.5 < b * 1.02) continue;
+      const lon = (x / w) * 360 - 180, lat = 90 - (y / h) * 180;
+      const v = this.ll(lat, lon, 1.004);
+      pts.push(v.x, v.y, v.z); phs.push(Math.random() * 6.283);
+    }
+    const g2 = new T.BufferGeometry();
+    g2.setAttribute('position', new T.BufferAttribute(new Float32Array(pts), 3));
+    g2.setAttribute('ph', new T.BufferAttribute(new Float32Array(phs), 1));
+    const m = new T.ShaderMaterial({
+      uniforms:{ uTime:{ value:0 }, uSize:{ value:2.0 } },
+      transparent:true, depthWrite:false, blending:T.AdditiveBlending,
+      vertexShader:`attribute float ph; uniform float uTime; uniform float uSize; varying float vA;
+        void main(){ vec4 mv=modelViewMatrix*vec4(position,1.0); float tw=0.35+0.65*pow(0.5+0.5*sin(uTime*0.9+ph),3.0);
+        vA=tw; gl_PointSize=clamp(uSize*tw*(9.0/-mv.z),0.6,3.2); gl_Position=projectionMatrix*mv; }`,
+      fragmentShader:`varying float vA; void main(){ vec2 d=gl_PointCoord-vec2(0.5); float a=smoothstep(0.5,0.0,length(d));
+        gl_FragColor=vec4(vec3(1.0,0.82,0.5)*a*vA*0.55,1.0); }`
+    });
+    this.dust = new T.Points(g2, m);
+    this.scene.add(this.dust);
+  }
+
+  buildMarkers() {
+    const T = window.THREE;
+    this.markers = [];
+    const grp = new T.Group();
+    this.markerGroup = grp;
+    const dot = new T.SphereGeometry(0.007, 10, 10);
+    const ringGeo = new T.RingGeometry(0.012, 0.0155, 40);
+    const pickGeo = new T.SphereGeometry(0.032, 8, 8);
+    CITIES.forEach((ci, i) => {
+      const col = TYPE_COLOR[ci.t];
+      const sig = this.signals[i];
+      const p = this.ll(ci.lat, ci.lon, 1.003);
+      const m = new T.Mesh(dot, new T.MeshBasicMaterial({ color:col, transparent:true, opacity:0 }));
+      m.position.copy(p);
+      m.userData = { city:ci, i, sig };
+      const pick = new T.Mesh(pickGeo, new T.MeshBasicMaterial({ transparent:true, opacity:0, depthWrite:false }));
+      pick.position.copy(p);
+      pick.userData = { city:ci, i, sig, pick:true };
+      grp.add(pick);
+      const ring = new T.Mesh(ringGeo, new T.MeshBasicMaterial({ color:col, transparent:true, opacity:0, side:T.DoubleSide, depthWrite:false, blending:T.AdditiveBlending }));
+      ring.position.copy(p);
+      ring.lookAt(p.clone().multiplyScalar(2));
+      const anchor = ci.t === 'anchor';
+      const size = anchor ? 1.8 : 0.7 + (sig.total / 100) * 1.1;
+      m.scale.setScalar(size);
+      grp.add(m); grp.add(ring);
+      this.markers.push({ m, ring, ci, sig, pick, size, delay:0.3 + i * 0.021, phase:Math.random() * 6.283,
+        speed:anchor ? 0.55 : 0.16 + (sig.total / 100) * 0.5, base:anchor ? 0.9 : 0.28 + (sig.total / 100) * 0.55 });
+    });
+    this.scene.add(grp);
+  }
+
+  makePlaneGeo() {
+    const T = window.THREE, s = 0.011;
+    const V = new Float32Array([
+      0,0, 2.0*s,   -0.20*s,0,-0.7*s,   0.20*s,0,-0.7*s,
+      -1.6*s,0,-0.15*s,  1.6*s,0,-0.15*s,  -0.20*s,0,-0.65*s,
+       1.6*s,0,-0.15*s,   0.20*s,0,-0.65*s,  -0.20*s,0,-0.65*s,
+      -0.65*s,0,-1.15*s,  0.65*s,0,-1.15*s,  -0.14*s,0,-1.45*s,
+       0.65*s,0,-1.15*s,  0.14*s,0,-1.45*s,  -0.14*s,0,-1.45*s
+    ]);
+    const g = new T.BufferGeometry();
+    g.setAttribute('position', new T.BufferAttribute(V, 3));
+    g.computeVertexNormals();
+    return g;
+  }
+
+  buildRoutes(anchorCity) {
+    const T = window.THREE;
+    if (this.routes && this.routes.length) {
+      this.routes.forEach(r => { this.scene.remove(r.line); this.scene.remove(r.plane); r.line.geometry.dispose(); r.mat.dispose(); r.plane.geometry.dispose(); r.plane.material.dispose(); });
+    }
+    const blr = anchorCity || this.routeAnchor || CITIES[0];
+    this.routeAnchor = blr;
+    this.routes = [];
+    const planeGeo = this.makePlaneGeo();
+    const codes = (blr.c === 'BLR') ? ROUTES
+      : CITIES.filter(x => x.c !== blr.c).map(x => ({ c:x.c, d:Math.hypot(x.lat-blr.lat, x.lon-blr.lon) }))
+          .sort((a,b) => a.d - b.d).slice(0, 8).map(x => x.c);
+    codes.forEach((code, i) => {
+      const c = CITIES.find(x => x.c === code);
+      if (!c) return;
+      const a = this.ll(blr.lat, blr.lon, 1.004), b = this.ll(c.lat, c.lon, 1.004);
+      const ang = a.angleTo(b);
+      const mid = a.clone().add(b).normalize().multiplyScalar(1 + 0.09 + ang * 0.19);
+      const curve = new T.QuadraticBezierCurve3(a, mid, b);
+      const N = 90, pos = new Float32Array(N * 3), tt = new Float32Array(N);
+      for (let k = 0; k < N; k++) {
+        const p = curve.getPoint(k / (N - 1));
+        pos[k * 3] = p.x; pos[k * 3 + 1] = p.y; pos[k * 3 + 2] = p.z; tt[k] = k / (N - 1);
+      }
+      const g = new T.BufferGeometry();
+      g.setAttribute('position', new T.BufferAttribute(pos, 3));
+      g.setAttribute('t', new T.BufferAttribute(tt, 1));
+      const mat = new T.ShaderMaterial({
+        uniforms:{ uHead:{ value:Math.random() }, uOpacity:{ value:0 }, uColor:{ value:new T.Color(0x7FD4FF) } },
+        transparent:true, depthWrite:false, blending:T.AdditiveBlending,
+        vertexShader:`attribute float t; varying float vT; void main(){ vT=t; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+        fragmentShader:`varying float vT; uniform float uHead; uniform float uOpacity; uniform vec3 uColor;
+          void main(){ float d=uHead-vT; if(d<0.0) d+=1.0; float trail=smoothstep(0.34,0.0,d);
+          float a=(0.09+trail*0.85)*uOpacity; gl_FragColor=vec4(uColor*(0.5+trail*1.6),a); }`
+      });
+      const line = new T.Line(g, mat);
+      this.scene.add(line);
+      const plane = new T.Mesh(planeGeo, new T.MeshBasicMaterial({ color:0xEAF6FF, transparent:true, opacity:0, side:T.DoubleSide }));
+      this.scene.add(plane);
+      this.routes.push({ curve, line, mat, plane, u:Math.random(), speed:0.017 + Math.random() * 0.012, delay:0.42 + i * 0.05 });
+    });
+  }
+
+  resize() {
+    const cv = this.canvasRef.current;
+    if (!cv || !this.renderer) return;
+    const w = cv.clientWidth || window.innerWidth, h = cv.clientHeight || window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, w > 1600 ? 1.4 : 1.75);
+    this.renderer.setPixelRatio(dpr);
+    this.renderer.setSize(w, h, false);
+    this.camera.aspect = w / Math.max(1, h);
+    this.camera.updateProjectionMatrix();
+    this.small = w < 820;
+    if (this.navRef.current) this.navRef.current.style.display = w < 1280 ? 'none' : 'flex';
+    if (this.volRef.current) this.volRef.current.style.display = w < 1360 ? 'none' : 'block';
+  }
+
+  loop() {
+    this._raf = requestAnimationFrame(() => this.loop());
+    const T = window.THREE;
+    const dt = Math.min(this.clock.getDelta(), 0.05), t = this.clock.elapsedTime;
+
+    let boost = 0;
+    if (!this.introDone) {
+      this.introT = Math.min(1, this.introT + dt / 8.6);
+      const e = 1 - Math.pow(1 - this.introT, 3);
+      this.tgt.d = 1.14 + (5.2 - 1.14) * e;
+      this.tgt.lat = 13.2 + (18 - 13.2) * e;
+      this.tgt.lon = 77.7 + (52 - 77.7) * e;
+      this.cam.d += (this.tgt.d - this.cam.d) * Math.min(1, dt * 3.4);
+      this.cam.lat += (this.tgt.lat - this.cam.lat) * Math.min(1, dt * 3.4);
+      this.cam.lon += (this.tgt.lon - this.cam.lon) * Math.min(1, dt * 3.4);
+    } else if (this.scanning) {
+      try { this.scanStep(dt); } catch (err) { if (!this._scanWarned) { this._scanWarned = 1; console.warn(err); } }
+      boost = this.boost || 0;
+    } else {
+      try { this.updateScroll(dt); } catch (err) { if (!this._warned) { this._warned = 1; console.warn(err); } }
+      boost = this.boost || 0;
+    }
+
+    if (this.uni) { this.uni.uTime.value = t; this.uni.uBoost.value = boost; }
+    if (this.atmoMat) this.atmoMat.uniforms.uBoost.value = boost;
+    if (this.clouds) this.clouds.rotation.y += dt * 0.006;
+    if (this.dust) {
+      this.dust.material.uniforms.uTime.value = t;
+      this.dust.material.uniforms.uSize.value = this.small ? 1.4 : 2.0;
+    }
+
+    const reveal = this.introDone ? 1 : this.introT;
+    this.markers.forEach((mk) => {
+      const on = reveal > mk.delay ? Math.min(1, (reveal - mk.delay) * 4) : 0;
+      const act = (this.hoverSig === mk.sig || (this.state.focus && this.state.focus === mk.sig)) ? 1 : 0;
+      mk.m.material.opacity = on * (0.72 + 0.28 * Math.sin(t * 2 + mk.phase)) * (1 + act * 0.5);
+      mk.m.scale.setScalar(mk.size * (1 + act * 0.9));
+      const f = ((t * mk.speed + mk.phase) % 1);
+      mk.ring.scale.setScalar((mk.ci.t === 'anchor' ? 1.4 : 1) * (1 + act * 0.4) * (1 + f * 2.6));
+      mk.ring.material.opacity = on * mk.base * (1 - f) * 0.9 * (1 + boost * 0.6 + act);
+      mk.ring.quaternion.copy(this.camera.quaternion);
+    });
+
+    this.routes.forEach((r) => {
+      const on = reveal > r.delay ? Math.min(1, (reveal - r.delay) * 2.2) : 0;
+      r.mat.uniforms.uOpacity.value = on * (0.85 + boost * 0.5);
+      r.u = (r.u + dt * r.speed) % 1;
+      r.mat.uniforms.uHead.value = r.u;
+      const p = r.curve.getPoint(r.u), n = r.curve.getPoint(Math.min(1, r.u + 0.01));
+      r.plane.position.copy(p);
+      r.plane.lookAt(n);
+      r.plane.material.opacity = on * 0.95;
+    });
+
+    const pos = this.ll(this.cam.lat, this.cam.lon, this.cam.d);
+    this.camera.position.copy(pos);
+    this.camera.up.set(0, 1, 0);
+    this.camera.lookAt(0, 0, 0);
+
+    if (this.introDone && this.ray && this.markerGroup) this.hover();
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  pickAt() {
+    if (!this.ray || !this.markerGroup) return null;
+    this.ray.setFromCamera(this.pointer, this.camera);
+    const hits = this.ray.intersectObjects(this.markerGroup.children, false);
+    for (const h of hits) {
+      const u = h.object.userData;
+      if (u && u.sig) {
+        // reject nodes on the far side of the globe
+        const toCam = this.camera.position.clone().sub(h.object.position);
+        if (h.object.position.dot(toCam) < -0.02) continue;
+        return u;
+      }
+    }
+    return null;
+  }
+
+  hover() {
+    const tip = this.tipRef.current;
+    if (!this.pointerPx || this.pointer.x < -1) {
+      this.hoverSig = null;
+      if (tip) tip.style.opacity = '0';
+      if (this.canvasRef.current && !this.drag) this.canvasRef.current.style.cursor = 'grab';
+      return;
+    }
+    const u = this.pickAt();
+    if (this.canvasRef.current && !this.drag) this.canvasRef.current.style.cursor = u ? 'pointer' : 'grab';
+    if (!u) { this.hoverSig = null; if (tip) tip.style.opacity = '0'; return; }
+    const s = u.sig;
+    if (tip && this.hoverSig !== s) {
+      this.hoverSig = s;
+      const top = s.src.slice(0, 3).map(x =>
+        '<div style="display:flex;justify-content:space-between;font-family:\'JetBrains Mono\',monospace;font-size:9.5px;letter-spacing:.12em;color:#8894A3;margin-top:5px;"><span style="color:' + x.color + '">' + x.name + '</span><span>' + x.pct + '</span></div>').join('');
+      tip.innerHTML =
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;"><span style="font-family:\'JetBrains Mono\',monospace;font-size:9.5px;letter-spacing:.24em;color:#F0B429;">' + s.ci.c + ' · RANK ' + String(s.rank).padStart(2, '0') + '</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.18em;color:#6E7A8A;">' + s.band + '</span></div>' +
+        '<div style="font-family:\'Instrument Serif\',serif;font-size:26px;line-height:1.05;color:#F4F0E8;margin:8px 0 2px;">' + s.ci.n.charAt(0) + s.ci.n.slice(1).toLowerCase() + '</div>' +
+        '<div style="font-size:13px;color:#C6CDD7;">' + s.brand + '</div>' +
+        '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.18em;color:#B98BFF;margin-top:4px;">' + s.cat + '</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;"><span style="font-family:\'Instrument Serif\',serif;font-size:34px;color:#F0B429;line-height:1;">' + s.total + '</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:9.5px;letter-spacing:.14em;color:#6FE3A8;">' + s.vel + ' · ' + s.men + ' MENTIONS</span></div>' +
+        top +
+        '<div style="display:flex;justify-content:space-between;font-family:\'JetBrains Mono\',monospace;font-size:9.5px;letter-spacing:.12em;margin-top:10px;border-top:1px solid rgba(255,255,255,.1);padding-top:9px;"><span style="color:#6FE3A8;">CFI ' + s.cfi + '</span><span style="color:#8894A3;">' + s.verdict + '</span></div>' +
+        '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.2em;color:#5C6675;margin-top:10px;">CLICK TO OPEN SIGNAL</div>';
+    }
+    if (tip) {
+      tip.style.left = this.pointerPx.x + 'px';
+      tip.style.top = this.pointerPx.y + 'px';
+      tip.style.opacity = '1';
+    }
+  }
+
+  openFocus(sig) {
+    if (!sig) return;
+    this.skipIntro();
+    this.focusLock = { lat:sig.ci.lat, lon:sig.ci.lon, d:1.62 };
+    this.userSpin = false;
+    try { this.buildRoutes(sig.ci); } catch (err) { console.warn(err); }
+    this.revealCity(sig);
+    this.setState({ focus:sig });
+    this.confirm();
+  }
+
+  revealCity(sig) {
+    const g = GREETINGS[sig.ci.c] || { g:'Hello ' + (sig.ci.n.charAt(0) + sig.ci.n.slice(1).toLowerCase()), lang:'en-GB' };
+    const cityPretty = sig.ci.n.charAt(0) + sig.ci.n.slice(1).toLowerCase();
+    const overlay = this.greetRef.current, txt = this.greetTextRef.current, sub = this.greetSubRef.current, kick = this.greetKickerRef.current;
+    if (overlay && txt && sub && kick) {
+      clearTimeout(this._greetT1); clearTimeout(this._greetT2); clearTimeout(this._greetT3);
+      txt.textContent = g.g;
+      sub.textContent = "Let\u2019s see what\u2019s buzzing in " + cityPretty;
+      kick.textContent = sig.ci.c + ' · ' + (COUNTRY[sig.ci.c] || '');
+      overlay.style.opacity = '1';
+      requestAnimationFrame(() => { kick.style.opacity = '1'; });
+      this._greetT1 = setTimeout(() => { if (sub) sub.style.opacity = '1'; }, 1400);
+      this._greetT3 = setTimeout(() => {
+        if (overlay) overlay.style.opacity = '0';
+        if (kick) kick.style.opacity = '0';
+        if (sub) sub.style.opacity = '0';
+      }, 3600);
+    }
+    this.armVoice();
+    this.speak(g.g + '.', { rate:0.82, pitch:1.04, lang:g.lang, reset:true });
+    this.speak('Let\u2019s see what\u2019s buzzing in ' + cityPretty + '.', { rate:0.9, pitch:1.02, lang:'en-GB' });
+  }
+
+  pickVoice(lang) {
+    if (!window.speechSynthesis) return null;
+    const vs = this._voices && this._voices.length ? this._voices : (window.speechSynthesis.getVoices() || []);
+    if (vs.length) this._voices = vs;
+    if (lang) {
+      const exact = vs.find(v => v.lang && v.lang.toLowerCase() === lang.toLowerCase());
+      if (exact) return exact;
+      const base = lang.split('-')[0].toLowerCase();
+      const near = vs.find(v => v.lang && v.lang.toLowerCase().startsWith(base));
+      if (near) return near;
+    }
+    const prefer = [/Samantha/i, /Google UK English Female/i, /Microsoft Aria/i, /Microsoft Jenny/i, /Serena/i, /Karen/i, /Moira/i, /Google US English/i, /en-GB/i, /en-US/i];
+    for (const p of prefer) { const v = vs.find(x => p.test(x.name) || p.test(x.lang)); if (v) return v; }
+    return vs.find(v => /en/i.test(v.lang)) || vs[0] || null;
+  }
+
+  speak(text, opts) {
+    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) return;
+    opts = opts || {};
+    try {
+      if (opts.reset) window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      const v = this.pickVoice(opts.lang);
+      if (v) { u.voice = v; u.lang = v.lang; }
+      else if (opts.lang) u.lang = opts.lang;
+      u.rate = opts.rate || 0.9;
+      u.pitch = opts.pitch || 1.02;
+      u.volume = opts.volume != null ? opts.volume : 1;
+      window.speechSynthesis.speak(u);
+    } catch (e) { console.warn('speak', e); }
+  }
+
+  armVoice() {
+    if (this._voiceArmed) return;
+    this._voiceArmed = true;
+    if (window.speechSynthesis) {
+      try {
+        this._voices = window.speechSynthesis.getVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+          window.speechSynthesis.onvoiceschanged = () => { this._voices = window.speechSynthesis.getVoices(); };
+        }
+      } catch (e) {}
+    }
+    this.speak('Welcome to the world of the latest trends.', { rate:0.86, pitch:1.04, lang:'en-GB' });
+    this.speak('Let\u2019s see what\u2019s happening around us.', { rate:0.88, pitch:1.02, lang:'en-GB' });
+  }
+
+  closeFocus() {
+    this.focusLock = null;
+    this.setState({ focus:null });
+    this.ping(392, 0.35);
+  }
+
+  smooth(a, b, x) { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+  updateScroll(dt) {
+    if (this.userSpin) { this.boost = 0.2; return; }
+    const track = this.trackRef.current;
+    if (!track) return;
+    const secs = track.children, H = secs[0] ? secs[0].offsetHeight : window.innerHeight;
+    const scrolled = Math.max(0, -track.getBoundingClientRect().top);
+    let acc = 0, idx = 0, frac = 0;
+    for (let i = 0; i < secs.length; i++) {
+      const h = secs[i].offsetHeight;
+      if (scrolled < acc + h || i === secs.length - 1) { idx = i; frac = Math.min(1, Math.max(0, (scrolled - acc) / h)); break; }
+      acc += h;
+    }
+    for (let i = 0; i < secs.length; i++) {
+      const panel = secs[i].firstElementChild;
+      if (!panel) continue;
+      let lp;
+      if (i < idx) lp = 1; else if (i > idx) lp = 0; else lp = frac;
+      let o;
+      if (i === idx) {
+        o = Math.min(i === 0 ? 1 : this.smooth(0.02, 0.2, lp), 1 - this.smooth(0.76, 0.98, lp));
+      } else o = 0;
+      panel.style.opacity = o.toFixed(3);
+      panel.style.transform = 'translateY(' + ((0.5 - (i === idx ? lp : 0.5)) * 34).toFixed(1) + 'px)';
+      panel.style.filter = o < 0.02 ? 'blur(6px)' : 'none';
+    }
+    if (this.focusLock) {
+      const k2 = Math.min(1, dt * 1.6);
+      this.tgt.lat = this.focusLock.lat; this.tgt.d = this.focusLock.d;
+      let fd = this.focusLock.lon - this.cam.lon;
+      if (fd > 180) fd -= 360; if (fd < -180) fd += 360;
+      this.cam.lat += (this.tgt.lat - this.cam.lat) * k2;
+      this.cam.lon += fd * k2;
+      this.cam.d += (this.tgt.d - this.cam.d) * k2;
+      this.boost = 0.7;
+      return;
+    }
+    const a = SCENES[Math.min(idx, SCENES.length - 1)], b = SCENES[Math.min(idx + 1, SCENES.length - 1)];
+    const e = frac * frac * (3 - 2 * frac);
+    let dlon = b.lon - a.lon;
+    if (dlon > 180) dlon -= 360; if (dlon < -180) dlon += 360;
+    this.tgt.lat = a.lat + (b.lat - a.lat) * e;
+    this.tgt.lon = a.lon + dlon * e;
+    this.tgt.d = a.d + (b.d - a.d) * e;
+    const k = Math.min(1, dt * 1.9);
+    this.cam.lat += (this.tgt.lat - this.cam.lat) * k;
+    let cd = this.tgt.lon - this.cam.lon;
+    if (cd > 180) cd -= 360; if (cd < -180) cd += 360;
+    this.cam.lon += cd * k;
+    this.cam.d += (this.tgt.d - this.cam.d) * k;
+    this.boost = (idx >= 12 ? 0.9 : idx >= 11 ? 0.5 : idx >= 6 ? 0.25 : 0) * 1;
+    if (this.sceneLabelRef.current && this._lastIdx !== idx) {
+      this._lastIdx = idx;
+      this.sceneLabelRef.current.textContent = a.label;
+      this.sceneNumRef.current.textContent = String(idx + 1).padStart(2, '0');
+      if (this.soundOn) this.ping(idx >= 12 ? 174 : 392, 0.5);
+    }
+  }
+
+  scrollToScene(i) {
+    const track = this.trackRef.current;
+    if (!track) return;
+    let top = track.offsetTop;
+    for (let k = 0; k < i && k < track.children.length; k++) top += track.children[k].offsetHeight;
+    const h = track.children[Math.min(i, track.children.length - 1)].offsetHeight;
+    window.scrollTo({ top:top + h * 0.3, behavior:'smooth' });
+  }
+
+  skipIntro() {
+    if (this.introDone) return;
+    this.introDone = true;
+    this.introT = 1;
+    clearTimeout(this._unlock);
+    document.documentElement.style.overflow = '';
+    const el = this.introRef.current;
+    if (el) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; setTimeout(() => { if (el) el.style.display = 'none'; }, 1300); }
+  }
+
+  ensureAudio() {
+    if (this.audio) return this.audio;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    const ctx = new AC();
+    const master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    // Atmospheric drone: two detuned low sines under a slow-breathing lowpass. No buzz.
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 210; lp.Q.value = 0.4; lp.connect(master);
+    [55, 82.4].forEach((f, i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f + i * 0.25;
+      const g = ctx.createGain(); g.gain.value = 0.09 / (i + 1);
+      o.connect(g); g.connect(lp); o.start();
+    });
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.035;
+    const lg = ctx.createGain(); lg.gain.value = 55;
+    lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
+    this.voiceBus = ctx.createGain(); this.voiceBus.gain.value = 1; this.voiceBus.connect(master);
+    this.audio = ctx; this.master = master;
+    return ctx;
+  }
+
+  ping(freq, gain) {
+    if (!this.soundOn || !this.audio) return;
+    const ctx = this.audio, o = ctx.createOscillator(), g = ctx.createGain();
+    const f2 = ctx.createBiquadFilter(); f2.type = 'lowpass'; f2.frequency.value = 1800;
+    o.type = 'triangle'; o.frequency.value = freq;
+    const t0 = ctx.currentTime;
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(0.035 * (gain || 1), t0 + 0.05);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.2);
+    o.connect(f2); f2.connect(g); g.connect(this.voiceBus || ctx.destination);
+    o.start(t0); o.stop(t0 + 2.3);
+  }
+
+  confirm() {
+    this.ping(523.25, 0.55);
+    setTimeout(() => this.ping(784, 0.32), 130);
+  }
+
+  // -------------------------------------------------------------------------
+  // CINEMATIC SCAN: orbital sweep + particle bursts + holographic buzzwords,
+  // choreographed against the same clock that drives the telemetry log.
+  // -------------------------------------------------------------------------
+  buildBursts() {
+    const T = window.THREE;
+    if (this.bursts || !this.scene) return;
+    const cities = this.signals.slice().sort((a, b) => b.cfi - a.cfi).slice(0, 10);
+    this.burstCities = cities;
+    const PER = 70, N = cities.length * PER;
+    const pos = new Float32Array(N * 3), dir = new Float32Array(N * 3), col = new Float32Array(N * 3), del = new Float32Array(N);
+    cities.forEach((s, ci) => {
+      const o = this.ll(s.ci.lat, s.ci.lon, 1.006);
+      const up = o.clone().normalize();
+      const c = new T.Color(TYPE_COLOR[s.ci.t] || 0xF0B429);
+      for (let k = 0; k < PER; k++) {
+        const i = ci * PER + k;
+        pos[i * 3] = o.x; pos[i * 3 + 1] = o.y; pos[i * 3 + 2] = o.z;
+        const rnd = new T.Vector3(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1).normalize();
+        const d = up.clone().multiplyScalar(0.55 + Math.random() * 0.9).add(rnd.multiplyScalar(0.75)).normalize();
+        dir[i * 3] = d.x; dir[i * 3 + 1] = d.y; dir[i * 3 + 2] = d.z;
+        col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+        del[i] = 4.2 + ci * 0.34 + Math.random() * 0.5;
+      }
+    });
+    const g = new T.BufferGeometry();
+    g.setAttribute('position', new T.BufferAttribute(pos, 3));
+    g.setAttribute('aDir', new T.BufferAttribute(dir, 3));
+    g.setAttribute('aColor', new T.BufferAttribute(col, 3));
+    g.setAttribute('aDelay', new T.BufferAttribute(del, 1));
+    const m = new T.ShaderMaterial({
+      uniforms:{ uT:{ value:-1 }, uSize:{ value:2.6 } },
+      transparent:true, depthWrite:false, blending:T.AdditiveBlending,
+      vertexShader:`attribute vec3 aDir; attribute vec3 aColor; attribute float aDelay;
+        uniform float uT; uniform float uSize; varying float vA; varying vec3 vC;
+        void main(){
+          float life=(uT-aDelay)/2.4;
+          vA = (life>0.0 && life<1.0) ? pow(1.0-life,1.6) : 0.0;
+          float e=1.0-pow(1.0-clamp(life,0.0,1.0),3.0);
+          vec3 p=position+aDir*e*0.40;
+          vC=aColor;
+          vec4 mv=modelViewMatrix*vec4(p,1.0);
+          gl_PointSize=clamp(uSize*(9.0/-mv.z),1.0,6.0);
+          gl_Position=projectionMatrix*mv;
+        }`,
+      fragmentShader:`varying float vA; varying vec3 vC;
+        void main(){ float a=smoothstep(0.5,0.0,length(gl_PointCoord-vec2(0.5)));
+          gl_FragColor=vec4(pow(vC,vec3(0.4545))*a*vA,1.0); }`
+    });
+    this.bursts = new T.Points(g, m);
+    this.bursts.frustumCulled = false;
+    this.scene.add(this.bursts);
+  }
+
+  logLine(agent, text, tone) {
+    const box = this.logRef.current;
+    if (!box) return;
+    const now = new Date();
+    const stamp = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+    const row = document.createElement('div');
+    row.style.cssText = 'display:grid;grid-template-columns:58px 1fr;gap:8px;padding:4px 0;font-family:"JetBrains Mono",monospace;font-size:9.5px;line-height:1.5;letter-spacing:.04em;animation:is-fade .3s ease both;';
+    row.innerHTML = '<span style="color:#3F4A59;">' + stamp + '</span><span style="color:' + (tone || '#8894A3') + ';"><span style="color:#5C6675;">' + agent + ' › </span>' + text + '</span>';
+    box.appendChild(row);
+    while (box.children.length > 60) box.removeChild(box.firstChild);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  setAgent(key, state, color) {
+    const el = this.hudRef.current && this.hudRef.current.querySelector('[data-agent="' + key + '"] [data-state]');
+    if (el) { el.textContent = state; el.style.color = color; }
+  }
+
+  spawnWords() {
+    const layer = this.wordsRef.current;
+    if (!layer) return;
+    layer.innerHTML = '';
+    this.words = BUZZWORDS.map((w, i) => {
+      const el = document.createElement('div');
+      el.textContent = w;
+      el.style.cssText = 'position:absolute;left:0;top:0;transform:translate(-50%,-50%);white-space:nowrap;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.18em;color:#9FE4FF;text-shadow:0 0 18px rgba(90,200,255,.55);opacity:0;padding:4px 8px;border:1px solid rgba(127,212,255,.28);background:rgba(6,16,26,.42);';
+      layer.appendChild(el);
+      return { el, a:(i / BUZZWORDS.length) * Math.PI * 2, tilt:(i % 3 - 1) * 0.42, r:1.46 + (i % 4) * 0.07, birth:4.6 + i * 0.3 };
+    });
+  }
+
+  startScan() {
+    if (this.scanning) return;
+    this.skipIntro();
+    this.focusLock = null;
+    this.setState({ focus:null });
+    this.buildBursts();
+    this.spawnWords();
+    this.scanning = true;
+    this.scanT = 0;
+    this.logCursor = 0;
+    const hud = this.hudRef.current;
+    if (hud) { hud.style.display = 'flex'; requestAnimationFrame(() => { hud.style.transform = 'translateX(0)'; hud.style.opacity = '1'; }); }
+    if (this.logRef.current) this.logRef.current.innerHTML = '';
+    if (this.summaryRef.current) this.summaryRef.current.style.display = 'none';
+    ['scraper', 'semantic', 'quant', 'qa'].forEach(k => this.setAgent(k, 'IDLE', '#5C6675'));
+    this.schedule = [
+      [0.1, 'SUPERVISOR', 'Graph compiled · 4 nodes · tenant_001_BIAL', '#F0B429'],
+      [0.5, 'SCRAPER', 'Swarm dispatched · 6 workers · proxy pool warm', '#7FD4FF'],
+      [1.4, 'SCRAPER', 'instagram.com · 2,140 posts in bbox IN+SEA', null],
+      [2.2, 'SCRAPER', 'moodiedavittreport.com · 38 articles parsed', null],
+      [3.0, 'SCRAPER', 'places api · 412 storefronts geocoded', null],
+      [3.9, 'SCRAPER', 'linkedin.com · 96 expansion posts flagged', null],
+      [4.6, 'SEMANTIC', 'Embedding 412 entities · text-embedding-3-small', '#B98BFF'],
+      [5.5, 'SEMANTIC', 'pgvector match vs blr_inventory · 96 duplicates collapsed', null],
+      [6.4, 'SEMANTIC', '7 white-space gaps · cosine dist > 0.38', '#6FE3A8'],
+      [7.2, 'QUANT', 'TVS · ΔSPP · gap severity · space yield', '#F0B429'],
+      [8.1, 'QUANT', 'Penetration growth gate 1.68× · 22 pass, 4 fail', null],
+      [9.0, 'QUANT', 'Net sales growth benchmark 65% applied', null],
+      [9.9, 'QA', 'Cross-referencing 26 brands against live search', '#FF7A45'],
+      [10.8, 'QA', '2 entities discarded · no resolvable evidence url', null],
+      [11.6, 'QA', '24 verified · every claim carries a source', '#6FE3A8'],
+      [12.4, 'SUPERVISOR', 'Scene plan emitted · 24 pins · CFI ranked', '#F0B429']
+    ];
+    if (this.soundOn) this.confirm();
+  }
+
+  scanStep(dt) {
+    if (!this.scanning) return;
+    const t = this.scanT += dt;
+    const DUR = 14;
+
+    if (this.uni) {
+      const on = t < 1 ? t : t > 12.6 ? Math.max(0, (DUR - t) / 1.4) : 1;
+      this.uni.uScanOn.value = on * 0.95;
+      this.uni.uScanLat.value = (t * 0.42) % 1;
+      this.uni.uScanLon.value = (t * 0.26) % 1;
+    }
+    // rapid spin, easing out as the harvest begins
+    const spin = t < 4.4 ? 108 * Math.min(1, t / 0.7) * (1 - Math.pow(t / 4.4, 2.2)) : 0;
+    this.cam.lon = (this.cam.lon + spin * dt + 540) % 360 - 180;
+    if (t < 4.4) this.cam.d += ((3.4) - this.cam.d) * Math.min(1, dt * 1.4);
+
+    if (this.bursts) this.bursts.material.uniforms.uT.value = t;
+    this.boost = t > 4 ? 0.8 : 0.3;
+
+    while (this.schedule && this.logCursor < this.schedule.length && this.schedule[this.logCursor][0] <= t) {
+      const [, agent, text, tone] = this.schedule[this.logCursor++];
+      this.logLine(agent, text, tone);
+      if (agent === 'SCRAPER') this.setAgent('scraper', 'HARVESTING', '#7FD4FF');
+      if (agent === 'SEMANTIC') { this.setAgent('scraper', 'COMPLETE', '#6FE3A8'); this.setAgent('semantic', 'MATCHING', '#B98BFF'); }
+      if (agent === 'QUANT') { this.setAgent('semantic', 'COMPLETE', '#6FE3A8'); this.setAgent('quant', 'SCORING', '#F0B429'); }
+      if (agent === 'QA') { this.setAgent('quant', 'COMPLETE', '#6FE3A8'); this.setAgent('qa', 'VERIFYING', '#FF7A45'); }
+      if (this.soundOn && tone) this.ping(392, 0.22);
+    }
+    if (this.phaseRef.current) {
+      const phase = t < 1.2 ? 'SPIN-UP' : t < 4.2 ? 'ORBITAL SWEEP' : t < 7 ? 'HARVEST' : t < 9.6 ? 'RESOLVE' : t < 12.2 ? 'QUANT + QA' : 'COMPLETE';
+      if (this.phaseRef.current.textContent !== phase) this.phaseRef.current.textContent = phase;
+    }
+
+    // holographic buzzwords on a tilted orbit, projected to screen space
+    if (this.words) {
+      const T = window.THREE, w = window.innerWidth, h = window.innerHeight;
+      this.words.forEach((wd) => {
+        const life = t - wd.birth;
+        if (life < 0) { wd.el.style.opacity = '0'; return; }
+        const ang = wd.a + t * 0.34;
+        const v = new T.Vector3(Math.cos(ang) * wd.r, Math.sin(ang * 0.9) * wd.tilt, Math.sin(ang) * wd.r);
+        const p = v.clone().project(this.camera);
+        const front = p.z < 1;
+        const fade = Math.min(1, life / 0.8) * (t > 12.4 ? Math.max(0, (DUR - t) / 1.6) : 1);
+        wd.el.style.opacity = front ? String(0.85 * fade * (0.45 + 0.55 * (1 - Math.abs(p.z)))) : '0';
+        wd.el.style.transform = 'translate(-50%,-50%) scale(' + (0.85 + 0.25 * (1 - Math.abs(p.z))).toFixed(3) + ')';
+        wd.el.style.left = ((p.x * 0.5 + 0.5) * w).toFixed(1) + 'px';
+        wd.el.style.top = ((-p.y * 0.5 + 0.5) * h).toFixed(1) + 'px';
+      });
+    }
+
+    if (t >= DUR) this.endScan();
+  }
+
+  endScan() {
+    this.scanning = false;
+    this.setAgent('qa', 'COMPLETE', '#6FE3A8');
+    if (this.uni) this.uni.uScanOn.value = 0;
+    if (this.bursts) this.bursts.material.uniforms.uT.value = -1;
+    if (this.wordsRef.current) this.wordsRef.current.innerHTML = '';
+    this.words = null;
+    if (this.phaseRef.current) this.phaseRef.current.textContent = 'COMPLETE';
+    this.logLine('SUPERVISOR', 'Scan complete · top opportunities ranked by CFI', '#6FE3A8');
+    const top = this.signals.slice().sort((a, b) => b.cfi - a.cfi).slice(0, 3);
+    const box = this.summaryRef.current;
+    if (box) {
+      box.style.display = 'block';
+      box.innerHTML = '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.28em;color:#6FE3A8;margin-bottom:10px;">SCAN RESULT · TOP 3 BY CFI</div>' +
+        top.map(s => '<div data-open="' + s.ci.c + '" style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;">' +
+          '<span><span style="font-size:13px;color:#F4F0E8;">' + s.brand + '</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.16em;color:#5C6675;margin-left:8px;">' + s.ci.c + '</span></span>' +
+          '<span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;color:#6FE3A8;">' + s.cfi + '</span></div>').join('');
+      box.querySelectorAll('[data-open]').forEach((el) => {
+        el.addEventListener('click', () => {
+          const s = this.signals.find(x => x.ci.c === el.getAttribute('data-open'));
+          if (s) this.openFocus(s);
+        });
+      });
+    }
+    if (this.soundOn) this.confirm();
+  }
+
+  closeHud() {
+    const hud = this.hudRef.current;
+    if (!hud) return;
+    hud.style.transform = 'translateX(110%)';
+    hud.style.opacity = '0';
+    setTimeout(() => { if (hud) hud.style.display = 'none'; }, 600);
+  }
+
+  renderVals() {
+    const ans = this.state.answer;
+    const f = this.state.focus;
+    const fv = f ? {
+      focused:true, fWin:'7-DAY WINDOW',
+      fGreet:(GREETINGS[f.ci.c] || {}).g || ('Hello ' + (f.ci.n.charAt(0) + f.ci.n.slice(1).toLowerCase())),
+      fCityUp:f.ci.n,
+      fCity:f.ci.n.charAt(0) + f.ci.n.slice(1).toLowerCase(), fCountry:COUNTRY[f.ci.c] || '', fCode:f.ci.c,
+      fDet:f.days <= 1 ? 'TODAY' : f.days + ' DAYS AGO',
+      fBrand:f.brand, fCat:f.cat, fEvent:f.event,
+      fMen:f.men, fVel:f.vel, fConf:f.conf,
+      fWhy:f.why, fSrc:f.src, fTotal:f.total, fBand:f.band + ' · RANK ' + String(f.rank).padStart(2, '0') + ' OF ' + CITIES.length,
+      fParts:f.parts, fEvid:f.evid,
+      fExplain:'Score is the sum of nine weighted components. ' + f.parts.slice().sort((a, b) => (b.v / b.max) - (a.v / a.max)).slice(0, 2).map(p => p.k.toLowerCase()).join(' and ') +
+        ' carry this signal; ' + f.parts.slice().sort((a, b) => (a.v / a.max) - (b.v / b.max))[0].k.toLowerCase() + ' is the weakest input.',
+      fRel:f.rel, fGap:f.gap, fAir:f.air, fOpp:f.opp, fBlrWhy:f.blrWhy,
+      fCfi:f.cfi, fCfiParts:f.cfiParts, fTvs:f.tvs, fGapScore:f.gapScore,
+      fDspp:f.dspp, fRevenue:f.revenue, fAtv:f.atv, fPaxShare:f.paxShare, fPen:f.penGrowth,
+      fVerdict:f.verdict, fVerdictColor:f.verdictColor, fMath:f.mathLines
+    } : { focused:false, fWhy:[], fSrc:[], fParts:[], fEvid:[], fCfiParts:[], fMath:[] };
+    return Object.assign(fv, {
+      volRef:this.volRef, hudRef:this.hudRef, logRef:this.logRef,
+      phaseRef:this.phaseRef, summaryRef:this.summaryRef, wordsRef:this.wordsRef,
+      runScan:() => this.startScan(),
+      closeHud:() => this.closeHud(),
+      onVolume:(e) => {
+        this.vol = Math.max(0, Math.min(1, (parseFloat(e.target.value) || 0) / 100));
+        if (this.audio && this.master) this.master.gain.setTargetAtTime(this.soundOn ? this.vol * 0.34 : 0, this.audio.currentTime, 0.25);
+      },
+      closeFocus:() => this.closeFocus(),
+      topSignals:this.signals.slice().sort((a, b) => b.total - a.total).slice(0, 8).map(s => ({
+        code:s.ci.c, city:s.ci.n, brand:s.brand,
+        cat:s.cat, score:String(s.total), vel:s.vel,
+        dir:s.total >= 85 ? '▲▲▲' : s.total >= 70 ? '▲▲' : s.total >= 55 ? '▲' : '■',
+        color:s.total >= 85 ? '#F0B429' : s.total >= 70 ? '#6FE3A8' : '#8894A3',
+        cityColor:s.ci.c === 'BLR' ? '#FF7A45' : '#6E7A8A',
+        open:() => this.openFocus(s)
+      })),
+      canvasRef:this.canvasRef, introRef:this.introRef, trackRef:this.trackRef, tipRef:this.tipRef,
+      greetRef:this.greetRef, greetTextRef:this.greetTextRef, greetSubRef:this.greetSubRef, greetKickerRef:this.greetKickerRef,
+      paperRef:this.paperRef, askRef:this.askRef, soundDotRef:this.soundDotRef,
+      sceneLabelRef:this.sceneLabelRef, sceneNumRef:this.sceneNumRef, scoreRef:this.scoreRef, navRef:this.navRef,
+      answer:!!ans, answerTitle:ans ? ans.title : '', answerItems:ans ? ans.items : [],
+      clearAnswer:() => this.setState({ answer:null }),
+      skipIntro:() => this.skipIntro(),
+      goWorld:() => { this.skipIntro(); this.scrollToScene(0); },
+      goIndia:() => { this.skipIntro(); this.scrollToScene(3); },
+      goGlobal:() => { this.skipIntro(); this.scrollToScene(5); },
+      goTrends:() => { this.skipIntro(); this.scrollToScene(6); },
+      goBrands:() => { this.skipIntro(); this.scrollToScene(7); },
+      goAirports:() => { this.skipIntro(); this.scrollToScene(9); },
+      goOpps:() => { this.skipIntro(); this.scrollToScene(12); },
+      toggleDaily:() => {
+        this.paperOpen = !this.paperOpen;
+        const el = this.paperRef.current;
+        if (el) el.style.display = this.paperOpen ? 'block' : 'none';
+        if (this.paperOpen) this.ping(523, 0.6);
+      },
+      toggleSound:() => {
+        const ctx = this.ensureAudio();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        this.soundOn = !this.soundOn;
+        this.master.gain.setTargetAtTime(this.soundOn ? this.vol * 0.34 : 0, ctx.currentTime, 1.2);
+        if (this.soundDotRef.current) this.soundDotRef.current.style.background = this.soundOn ? '#F0B429' : '#3A4452';
+        if (this.soundOn) this.ping(330, 0.4);
+      },
+      onAsk:(e) => {
+        e.preventDefault();
+        this.skipIntro();
+        const q = (this.askRef.current && this.askRef.current.value || 'What should BLR bring next?').toLowerCase();
+        let key = 'default';
+        if (/next|bring|blr should|recommend/.test(q)) key = 'next';
+        else if (/beauty|cosmetic|skin/.test(q)) key = 'beauty';
+        else if (/f&b|food|dining|restaurant|coffee/.test(q)) key = 'food';
+        else if (/brand|expand|store/.test(q)) key = 'brand';
+        else if (/dxb|gap|not at|absent/.test(q)) key = 'gap';
+        else if (/duty|free/.test(q)) key = 'duty';
+        this.setState({ answer:ANSWERS[key] });
+        this.ping(261, 0.8);
+        setTimeout(() => this.ping(392, 0.6), 240);
+        this.scrollToScene(key === 'next' ? 12 : 6);
+      }
+    });
+  }
+}
+
+
+
+
+const COUNTRY = { BLR:'INDIA', DEL:'INDIA', BOM:'INDIA', HYD:'INDIA', MAA:'INDIA', CCU:'INDIA', PNQ:'INDIA', AMD:'INDIA', COK:'INDIA', GOI:'INDIA', JAI:'INDIA', ICN:'SOUTH KOREA', DXB:'UAE', SIN:'SINGAPORE', NRT:'JAPAN', LHR:'UNITED KINGDOM', CDG:'FRANCE', BKK:'THAILAND', HKG:'HONG KONG SAR', DOH:'QATAR', JFK:'UNITED STATES', SYD:'AUSTRALIA', IST:'TURKIYE', KUL:'MALAYSIA', SFO:'UNITED STATES', AMS:'NETHERLANDS' };
+
+const SRC_COLOR = { INSTAGRAM:'#B98BFF', 'NEWS WIRES':'#7FD4FF', TIKTOK:'#FF7A45', 'TRADE PRESS':'#EDE9E1', REVIEWS:'#6FE3A8', FORUMS:'#F0B429', 'STORE LOCATORS':'#7FD4FF', 'AIRPORT RELEASES':'#7FD4FF', YOUTUBE:'#FF7A45', LINKEDIN:'#B98BFF' };
+
+// Raw signal records. Metrics are the scoring engine's inputs, not display strings.
+const SIG = {
+  ICN: { b:'Olive Young', cat:'BEAUTY · TRAVEL RETAIL', ev:'Airside beauty concession extended to two further piers, with travel-legal assortment and gifting sets replacing full-size ranges.',
+    men:48200, vel:112, eng:88, days:3, pub:11, geo:6, sent:0.86, brand:0.95, fit:0.7,
+    src:[['INSTAGRAM',41,'HIGH'],['NEWS WIRES',22,'HIGH'],['TIKTOK',18,'MED'],['TRADE PRESS',12,'HIGH'],['REVIEWS',7,'MED']],
+    why:['Mention volume up 112% week-on-week across eleven distinct publishers.','Format has compressed from mall-scale to 40–60 sqm — airport-viable.','Signal appears in six markets simultaneously, not one.','Sentiment is routine-led, not discount-led — durable demand.'],
+    evid:[['KOREA HERALD','3 DAYS AGO','TRADE PRESS','0.91','Concession footprint at Incheon extends airside as travel-retail exclusives outpace domestic SKUs.'],
+          ['MOODIE DAVITT','9 DAYS AGO','TRADE PRESS','0.88','Korean beauty is now the fastest-growing travel-retail category by square-metre yield in North Asia.']],
+    rel:'HIGH', gap:'HIGH', air:'DXB · SIN · ICN', opp:'88 / 100',
+    blrWhy:'Bengaluru\u2019s outbound mix into Seoul, Singapore and the Gulf is the youngest of the top five Indian hubs. The category already converts for those passengers abroad; BLR is the last major hub without a dedicated format.' },
+  DXB: { b:'Multiple operators', cat:'PREMIUM F&B', ev:'Two chef-led dining formats opened airside this quarter, both replacing legacy duty-free adjacency with seated service.',
+    men:31400, vel:74, eng:79, days:5, pub:9, geo:5, sent:0.81, brand:0.8, fit:0.65,
+    src:[['NEWS WIRES',34,'HIGH'],['INSTAGRAM',28,'MED'],['REVIEWS',18,'HIGH'],['TRADE PRESS',13,'HIGH'],['FORUMS',7,'LOW']],
+    why:['Dwell-time spend is shifting from duty-free to food and self-care.','Two operator announcements inside 30 days in the same terminal.','Review sentiment strong on provenance, weak on price.'],
+    evid:[['GULF BUSINESS','5 DAYS AGO','NEWS','0.86','Concourse redevelopment allocates additional floor area to seated dining over packaged goods.'],
+          ['THE MOODIE REPORT','12 DAYS AGO','TRADE PRESS','0.84','Food and beverage overtakes fragrance in per-passenger spend across the Gulf hub set.']],
+    rel:'HIGH', gap:'HIGH', air:'DXB · SIN', opp:'74 / 100',
+    blrWhy:'BLR\u2019s international departures carry the dwell time but not the format. Chef-led dining is the second-strongest open gap in the model.' },
+  SIN: { b:'Changi retail programme', cat:'EXPERIENTIAL RETAIL', ev:'A duty-free bay converted to rotating brand-experience space with a six-week tenancy cycle.',
+    men:26800, vel:61, eng:74, days:6, pub:8, geo:4, sent:0.78, brand:0.75, fit:0.6,
+    src:[['NEWS WIRES',31,'HIGH'],['INSTAGRAM',27,'MED'],['TRADE PRESS',20,'HIGH'],['YOUTUBE',13,'MED'],['FORUMS',9,'LOW']],
+    why:['Short-tenancy model raises space productivity without capex per brand.','Copied into two other Asian hubs within nine months.','Strong creator coverage — discovery happens before the flight.'],
+    evid:[['STRAITS TIMES','6 DAYS AGO','NEWS','0.87','Rotating retail bay replaces a fixed duty-free concession in the transit hall.'],
+          ['TRBUSINESS','18 DAYS AGO','TRADE PRESS','0.82','Short-cycle tenancies deliver higher sales density than long-lease packaged goods.']],
+    rel:'MED', gap:'PARTIAL', air:'SIN · ICN · DXB', opp:'71 / 100',
+    blrWhy:'A rotation model suits BLR\u2019s tenant pipeline: it tests categories without committing terminal floor area to a single brand.' },
+  NRT: { b:'Convenience-craft operators', cat:'CONVENIENCE CRAFT', ev:'Grab-and-go quality bar raised across terminals — chilled prepared food at specialty-retail standard.',
+    men:19600, vel:52, eng:68, days:8, pub:7, geo:3, sent:0.8, brand:0.7, fit:0.55,
+    src:[['INSTAGRAM',33,'MED'],['REVIEWS',24,'HIGH'],['NEWS WIRES',19,'HIGH'],['FORUMS',14,'LOW'],['TIKTOK',10,'MED']],
+    why:['Quality expectation for packaged food is being reset in transit.','Repeat-purchase behaviour visible in review cadence.','Low capex, high frequency — transfers well to Indian hubs.'],
+    evid:[['NIKKEI ASIA','8 DAYS AGO','NEWS','0.83','Terminal operators upgrade chilled prepared ranges to compete with city-side specialty retail.'],
+          ['JAPAN TIMES','21 DAYS AGO','NEWS','0.79','Convenience formats absorb spend previously captured by sit-down dining.']],
+    rel:'MED', gap:'PARTIAL', air:'NRT · HKG', opp:'63 / 100',
+    blrWhy:'BLR already has the passenger frequency. The gap is assortment standard, not footprint.' },
+  LHR: { b:'Luxury wellness operators', cat:'LUXURY WELLNESS', ev:'Airside wellness suites expanded with treatment booking sold as part of the fare bundle.',
+    men:14200, vel:38, eng:61, days:11, pub:7, geo:3, sent:0.74, brand:0.72, fit:0.45,
+    src:[['NEWS WIRES',36,'HIGH'],['INSTAGRAM',22,'MED'],['TRADE PRESS',18,'HIGH'],['LINKEDIN',14,'MED'],['REVIEWS',10,'MED']],
+    why:['Wellness is being bundled with premium cabins rather than sold at the door.','Growth is steady rather than spiking — a structural, not viral, signal.'],
+    evid:[['FINANCIAL TIMES','11 DAYS AGO','NEWS','0.85','Airside wellness capacity grows as carriers bundle treatments into premium fares.'],
+          ['TRBUSINESS','29 DAYS AGO','TRADE PRESS','0.76','Treatment booking shifts from walk-up to pre-purchase.']],
+    rel:'MED', gap:'HIGH', air:'LHR · DXB', opp:'58 / 100',
+    blrWhy:'Premium cabin share at BLR is rising faster than terminal service capacity. Watch, do not act yet.' },
+  BOM: { b:'Mokobara', cat:'TRAVEL GOODS · D2C', ev:'Two premium mall stores opened inside three weeks, both in catchments that feed international departures.',
+    men:22400, vel:83, eng:76, days:4, pub:8, geo:3, sent:0.84, brand:0.72, fit:0.85,
+    src:[['INSTAGRAM',48,'MED'],['NEWS WIRES',21,'HIGH'],['TIKTOK',14,'MED'],['STORE LOCATORS',10,'HIGH'],['FORUMS',7,'LOW']],
+    why:['Store-locator diff shows two net-new premium locations this month.','Category is travel — direct airport adjacency, no translation needed.','Creator coverage concentrated in the 24–34 metro cohort.'],
+    evid:[['ECONOMIC TIMES','4 DAYS AGO','NEWS','0.88','Direct-to-consumer travel-goods brand adds premium mall locations in western India.'],
+          ['BRAND STORE LOCATOR','2 DAYS AGO','CRAWL','0.94','Two new store records appeared in the brand\u2019s own location feed.']],
+    rel:'HIGH', gap:'HIGH', air:'BOM · DEL', opp:'61 / 100',
+    blrWhy:'A travel brand with proven metro demand and no airport presence anywhere in India. First-mover terms are available now.' },
+  BLR: { b:'Blue Tokai and peers', cat:'SPECIALTY COFFEE · SERVICES', ev:'Transit-format coffee bar trials in two Indian metros, with compact footprints designed for dwell-time queues.',
+    men:17800, vel:57, eng:71, days:6, pub:7, geo:2, sent:0.82, brand:0.66, fit:0.95,
+    src:[['INSTAGRAM',38,'MED'],['REVIEWS',24,'HIGH'],['NEWS WIRES',18,'HIGH'],['FORUMS',12,'LOW'],['STORE LOCATORS',8,'HIGH']],
+    why:['Local affinity for specialty coffee is the highest in the country.','Compact transit format already trialled off-airport.','Repeat behaviour, not novelty — reviews show returning customers.'],
+    evid:[['MINT','6 DAYS AGO','NEWS','0.86','Specialty coffee chains trial compact transit formats aimed at commuter and traveller queues.'],
+          ['CUSTOMER REVIEWS','5 DAYS AGO','AGGREGATE','0.81','Repeat-visit language dominates recent review text for compact-format outlets.']],
+    rel:'HIGH', gap:'PARTIAL', air:'BLR · BOM', opp:'64 / 100',
+    blrWhy:'This is the home-market signal. Conversion risk is lowest here and the brand relationship already exists in the city.' },
+  DEL: { b:'Luxury beauty counters', cat:'BEAUTY · DUTY-FREE', ev:'Duty-free beauty bays expanded with a premium skew and dedicated fragrance consultation.',
+    men:13600, vel:44, eng:63, days:9, pub:6, geo:2, sent:0.76, brand:0.7, fit:0.8,
+    src:[['NEWS WIRES',33,'HIGH'],['INSTAGRAM',26,'MED'],['TRADE PRESS',19,'HIGH'],['REVIEWS',13,'MED'],['FORUMS',9,'LOW']],
+    why:['Domestic proof that premium beauty converts in Indian transit.','Expansion is bay-level, not pop-up — operator confidence is high.'],
+    evid:[['BUSINESS STANDARD','9 DAYS AGO','NEWS','0.84','Duty-free operator reallocates floor area toward premium beauty and fragrance.'],
+          ['TRADE BULLETIN','24 DAYS AGO','TRADE PRESS','0.78','Beauty outperforms liquor on per-square-metre yield at the northern hub.']],
+    rel:'HIGH', gap:'MED', air:'DEL · BOM', opp:'57 / 100',
+    blrWhy:'The nearest domestic comparable. If it works at DEL with an older passenger mix, it works at BLR.' },
+  BKK: { b:'Street-format licensors', cat:'FOOD CONCEPTS', ev:'Street food operators licensing branded compact formats into transit and mall environments.',
+    men:15900, vel:66, eng:72, days:7, pub:7, geo:4, sent:0.83, brand:0.6, fit:0.5,
+    src:[['TIKTOK',34,'MED'],['INSTAGRAM',27,'MED'],['NEWS WIRES',18,'HIGH'],['REVIEWS',13,'HIGH'],['FORUMS',8,'LOW']],
+    why:['Licensing structure makes the format portable across borders.','Short-form video is the discovery engine — travels ahead of the brand.'],
+    evid:[['BANGKOK POST','7 DAYS AGO','NEWS','0.8','Established street vendors license compact branded units to mall and terminal operators.'],
+          ['CREATOR AGGREGATE','3 DAYS AGO','SOCIAL','0.68','Short-form coverage of licensed units outpaces the original vendor locations.']],
+    rel:'MED', gap:'HIGH', air:'BKK · SIN', opp:'59 / 100',
+    blrWhy:'Regional Indian equivalents exist but none has been licensed into a transit format. An origination opportunity rather than a tenancy one.' },
+  HYD: { b:'Fine jewellery ateliers', cat:'CRAFT JEWELLERY', ev:'Regional ateliers opening metro flagships, moving from commission work to retail assortment.',
+    men:9800, vel:41, eng:58, days:12, pub:5, geo:2, sent:0.79, brand:0.58, fit:0.75,
+    src:[['INSTAGRAM',43,'MED'],['NEWS WIRES',22,'HIGH'],['STORE LOCATORS',15,'HIGH'],['FORUMS',11,'LOW'],['REVIEWS',9,'MED']],
+    why:['Gifting-led, provenance-led purchase — matches return-leg behaviour.','Assortment retail is new for these makers; airport terms are winnable.'],
+    evid:[['THE HINDU','12 DAYS AGO','NEWS','0.82','Regional jewellery houses open metro flagships with ready-to-buy assortment.'],
+          ['BRAND LOCATOR','8 DAYS AGO','CRAWL','0.9','New flagship addresses recorded in three southern metros.']],
+    rel:'MED', gap:'LOW', air:'SIN · DXB', opp:'69 / 100',
+    blrWhy:'BLR already carries craft jewellery. The signal here is upgrade, not entry.' },
+  JAI: { b:'Craft luxury workshops', cat:'CRAFT LUXURY', ev:'Jaipur workshops expanding beyond the city into metro flagships and export-led collections.',
+    men:7400, vel:36, eng:54, days:14, pub:5, geo:2, sent:0.8, brand:0.55, fit:0.7,
+    src:[['INSTAGRAM',45,'MED'],['NEWS WIRES',20,'HIGH'],['TRADE PRESS',15,'MED'],['STORE LOCATORS',12,'HIGH'],['FORUMS',8,'LOW']],
+    why:['Provenance story is stronger than any imported equivalent.','Export interest is pulling the category upmarket.'],
+    evid:[['MINT','14 DAYS AGO','NEWS','0.79','Craft workshops move from wholesale supply to own-brand metro retail.'],
+          ['EXPORT BULLETIN','26 DAYS AGO','TRADE PRESS','0.72','Overseas orders for craft luxury lines grow across the western cluster.']],
+    rel:'MED', gap:'LOW', air:'BLR · DEL', opp:'52 / 100',
+    blrWhy:'Useful as an assortment upgrade for an existing craft tenancy rather than a new category.' },
+  HKG: { b:'Travel retail operators', cat:'TRAVEL RETAIL', ev:'Assortment rationalisation — fewer SKUs, more category depth per bay.',
+    men:11200, vel:22, eng:49, days:16, pub:6, geo:3, sent:0.66, brand:0.62, fit:0.4,
+    src:[['NEWS WIRES',38,'HIGH'],['TRADE PRESS',24,'HIGH'],['FORUMS',16,'LOW'],['INSTAGRAM',13,'MED'],['REVIEWS',9,'MED']],
+    why:['Rationalisation, not growth — a stability signal worth tracking.'],
+    evid:[['SCMP','16 DAYS AGO','NEWS','0.8','Operators cut SKU counts to deepen category assortment in transit halls.'],
+          ['TRBUSINESS','33 DAYS AGO','TRADE PRESS','0.74','Fewer, larger bays replace fragmented concessions.']],
+    rel:'LOW', gap:'LOW', air:'HKG · SIN', opp:'44 / 100',
+    blrWhy:'Operational learning for concession planning. Not an opportunity in itself.' },
+  DOH: { b:'Luxury transit operators', cat:'LUXURY TRANSIT', ev:'Luxury maison formats extending into transit with appointment-based service.',
+    men:12900, vel:47, eng:60, days:10, pub:6, geo:3, sent:0.75, brand:0.85, fit:0.42,
+    src:[['NEWS WIRES',35,'HIGH'],['TRADE PRESS',22,'HIGH'],['INSTAGRAM',21,'MED'],['LINKEDIN',12,'MED'],['FORUMS',10,'LOW']],
+    why:['Appointment retail raises basket size without more floor area.','Gulf hubs are setting the premium service benchmark for Asia.'],
+    evid:[['GULF TIMES','10 DAYS AGO','NEWS','0.83','Maison boutiques introduce appointment service inside the transit terminal.'],
+          ['TRADE PRESS','27 DAYS AGO','TRADE PRESS','0.75','Premium transit retail shifts from footfall to booked service.']],
+    rel:'MED', gap:'HIGH', air:'DOH · DXB', opp:'55 / 100',
+    blrWhy:'Relevant to BLR\u2019s premium cabin growth, but the passenger base is two to three years short of the threshold.' },
+  CDG: { b:'Beauty flagships', cat:'BEAUTY FLAGSHIPS', ev:'Flagship beauty formats with in-terminal services replacing shelf-only assortment.',
+    men:10600, vel:33, eng:57, days:13, pub:6, geo:3, sent:0.73, brand:0.78, fit:0.44,
+    src:[['NEWS WIRES',34,'HIGH'],['INSTAGRAM',25,'MED'],['TRADE PRESS',20,'HIGH'],['REVIEWS',12,'MED'],['FORUMS',9,'LOW']],
+    why:['Service attach converts browsers into buyers at premium price points.'],
+    evid:[['LE FIGARO','13 DAYS AGO','NEWS','0.79','Terminal beauty flagships add treatment counters alongside retail shelving.'],
+          ['TRBUSINESS','31 DAYS AGO','TRADE PRESS','0.71','Service attach lifts average basket in airside beauty.']],
+    rel:'LOW', gap:'MED', air:'CDG · LHR', opp:'48 / 100',
+    blrWhy:'Format reference for the K-beauty concept rather than a standalone opportunity.' }
+};
+
+const SIG_DEFAULT = {
+  MAA:{ b:'Regional QSR operators', cat:'REGIONAL QSR', men:6800, vel:29, eng:47, days:15, pub:4, geo:1, sent:0.74, brand:0.5, fit:0.6 },
+  CCU:{ b:'Craft retail collectives', cat:'CRAFT RETAIL', men:5200, vel:14, eng:41, days:19, pub:4, geo:1, sent:0.7, brand:0.45, fit:0.5 },
+  PNQ:{ b:'Fashion D2C labels', cat:'FASHION', men:7100, vel:34, eng:52, days:13, pub:5, geo:1, sent:0.76, brand:0.5, fit:0.55 },
+  AMD:{ b:'Jewellery houses', cat:'JEWELLERY', men:6400, vel:31, eng:48, days:16, pub:4, geo:1, sent:0.75, brand:0.5, fit:0.55 },
+  COK:{ b:'Wellness operators', cat:'WELLNESS', men:4900, vel:27, eng:45, days:18, pub:4, geo:1, sent:0.77, brand:0.45, fit:0.5 },
+  GOI:{ b:'Travel retail pilots', cat:'TRAVEL RETAIL', men:5600, vel:32, eng:50, days:14, pub:4, geo:1, sent:0.78, brand:0.48, fit:0.52 },
+  JFK:{ b:'Brand headquarters', cat:'BRAND HQ SIGNALS', men:9200, vel:18, eng:44, days:17, pub:6, geo:3, sent:0.65, brand:0.7, fit:0.3 },
+  SYD:{ b:'Wellness retail', cat:'WELLNESS RETAIL', men:6100, vel:21, eng:46, days:20, pub:5, geo:2, sent:0.72, brand:0.55, fit:0.32 },
+  IST:{ b:'Hub expansion programme', cat:'HUB EXPANSION', men:8700, vel:39, eng:53, days:12, pub:5, geo:3, sent:0.7, brand:0.6, fit:0.38 },
+  KUL:{ b:'Halal premium brands', cat:'HALAL PREMIUM', men:7900, vel:43, eng:55, days:11, pub:5, geo:3, sent:0.76, brand:0.55, fit:0.45 },
+  SFO:{ b:'Concept originators', cat:'CONCEPT ORIGIN', men:8400, vel:24, eng:48, days:15, pub:6, geo:2, sent:0.68, brand:0.68, fit:0.34 },
+  AMS:{ b:'Format innovators', cat:'FORMAT INNOVATION', men:7600, vel:35, eng:51, days:12, pub:5, geo:3, sent:0.72, brand:0.58, fit:0.4 }
+};
+
+function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+
+// ---------------------------------------------------------------------------
+// COMMERCIAL MATH ENGINE
+// Mirrors the Analytics Agent (backend/agents/analytics_agent.py). Airport
+// constants are BIAL planning figures; category economics are per-category
+// travel-retail assumptions. Every displayed number is derived here.
+// ---------------------------------------------------------------------------
+const AIRPORT = { pax:41900000, intlShare:0.28, currency:'\u20B9' };
+
+// atv = average transaction value (INR), share = target pax share of total PAX,
+// pen = penetration growth (fraction of that share converted), yield = space yield index 0..1
+const ECON = {
+  'BEAUTY · TRAVEL RETAIL':      { atv:2400,  share:0.34, pen:0.045, yield:0.86 },
+  'BEAUTY · DUTY-FREE':          { atv:2600,  share:0.30, pen:0.030, yield:0.80 },
+  'BEAUTY FLAGSHIPS':            { atv:2500,  share:0.24, pen:0.022, yield:0.66 },
+  'PREMIUM F&B':                 { atv:950,   share:0.52, pen:0.060, yield:0.72 },
+  'FOOD CONCEPTS':               { atv:620,   share:0.44, pen:0.050, yield:0.68 },
+  'CONVENIENCE CRAFT':           { atv:420,   share:0.61, pen:0.050, yield:0.70 },
+  'SPECIALTY COFFEE · SERVICES': { atv:380,   share:0.48, pen:0.055, yield:0.75 },
+  'EXPERIENTIAL RETAIL':         { atv:1800,  share:0.22, pen:0.030, yield:0.64 },
+  'TRAVEL GOODS · D2C':          { atv:4200,  share:0.11, pen:0.025, yield:0.60 },
+  'TRAVEL RETAIL':               { atv:1900,  share:0.20, pen:0.020, yield:0.60 },
+  'LUXURY WELLNESS':             { atv:3200,  share:0.09, pen:0.020, yield:0.55 },
+  'LUXURY TRANSIT':              { atv:26000, share:0.02, pen:0.008, yield:0.50 },
+  'CRAFT JEWELLERY':             { atv:12500, share:0.05, pen:0.015, yield:0.58 },
+  'CRAFT LUXURY':                { atv:9800,  share:0.04, pen:0.012, yield:0.52 },
+  'JEWELLERY':                   { atv:9200,  share:0.05, pen:0.014, yield:0.56 },
+  'FASHION':                     { atv:3400,  share:0.10, pen:0.018, yield:0.58 },
+  'WELLNESS':                    { atv:1600,  share:0.12, pen:0.020, yield:0.56 },
+  'WELLNESS RETAIL':             { atv:1500,  share:0.11, pen:0.018, yield:0.55 },
+  'REGIONAL QSR':                { atv:480,   share:0.46, pen:0.040, yield:0.66 },
+  'CRAFT RETAIL':                { atv:1400,  share:0.09, pen:0.014, yield:0.52 },
+  'HALAL PREMIUM':               { atv:1100,  share:0.08, pen:0.014, yield:0.54 },
+  'HUB EXPANSION':               { atv:900,   share:0.10, pen:0.012, yield:0.50 },
+  'FORMAT INNOVATION':           { atv:1200,  share:0.12, pen:0.015, yield:0.55 },
+  'CONCEPT ORIGIN':              { atv:1000,  share:0.08, pen:0.010, yield:0.50 },
+  'BRAND HQ SIGNALS':            { atv:900,   share:0.06, pen:0.008, yield:0.48 },
+  'GENERAL':                     { atv:900,   share:0.18, pen:0.020, yield:0.55 }
+};
+
+// Baseline Agent output: what BLR carries today. 0 absent · 0.5 partial · 1 present.
+// peers = competitor hubs (of DXB/SIN/ICN) carrying a dedicated format.
+const BLR_BASELINE = {
+  'BEAUTY · TRAVEL RETAIL':      { present:0,   peers:3 },
+  'BEAUTY · DUTY-FREE':          { present:0.5, peers:3 },
+  'BEAUTY FLAGSHIPS':            { present:0.5, peers:2 },
+  'PREMIUM F&B':                 { present:0,   peers:2 },
+  'FOOD CONCEPTS':               { present:0.5, peers:2 },
+  'CONVENIENCE CRAFT':           { present:0.5, peers:2 },
+  'SPECIALTY COFFEE · SERVICES': { present:0.5, peers:1 },
+  'EXPERIENTIAL RETAIL':         { present:0.5, peers:3 },
+  'TRAVEL GOODS · D2C':          { present:0,   peers:1 },
+  'TRAVEL RETAIL':               { present:1,   peers:3 },
+  'LUXURY WELLNESS':             { present:0,   peers:2 },
+  'LUXURY TRANSIT':              { present:0.5, peers:2 },
+  'CRAFT JEWELLERY':             { present:1,   peers:2 },
+  'CRAFT LUXURY':                { present:1,   peers:1 }
+};
+
+// TVS = w1·ln(V+1) + w2·(ΔV/Δt) + w3·S_sentiment   (w1=0.4, w2=0.4, w3=0.2)
+// Terms are normalised to 0..1 before weighting so TVS reports on a 0..100 scale.
+function trendVelocityScore(s) {
+  const vol = clamp01(Math.log(s.men + 1) / Math.log(50001));
+  const dvdt = clamp01((s.vel / 100) / 1.2);
+  const sent = clamp01(s.sent);
+  const tvs = 100 * (0.4 * vol + 0.4 * dvdt + 0.2 * sent);
+  return { tvs, vol, dvdt, sent };
+}
+
+// ΔSPP = target pax share × penetration growth × ATV  (INR per passenger)
+function sppUplift(e) { return e.share * e.pen * e.atv; }
+
+function categoryGap(cat) {
+  const b = BLR_BASELINE[cat] || { present:0.5, peers:1 };
+  return 100 * (1 - b.present) * (0.6 + 0.4 * clamp01(b.peers / 3));
+}
+
+// CFI = 0.35·TVS + 0.30·CategoryGap + 0.20·ProjectedSPP + 0.15·SpaceYield
+function commercialFeasibility(s, cat) {
+  const t = trendVelocityScore(s);
+  const e = ECON[cat] || ECON['GENERAL'];
+  const dspp = sppUplift(e);
+  const gap = categoryGap(cat);
+  const sppScore = 100 * clamp01(dspp / 60);      // ₹60/pax uplift = ceiling
+  const yieldScore = 100 * clamp01(e.yield);
+  const cfi = 0.35 * t.tvs + 0.30 * gap + 0.20 * sppScore + 0.15 * yieldScore;
+  const revenue = dspp * AIRPORT.pax;              // annual INR at full penetration
+  return {
+    cfi:Math.round(cfi), tvs:Math.round(t.tvs), gap:Math.round(gap), dspp,
+    sppScore:Math.round(sppScore), yieldScore:Math.round(yieldScore), revenue, econ:e, terms:t,
+    parts:[
+      { k:'TREND VELOCITY · 0.35', v:Math.round(0.35 * t.tvs), max:35, w:Math.round(t.tvs) + '%', label:Math.round(0.35 * t.tvs) + '/35' },
+      { k:'CATEGORY GAP · 0.30', v:Math.round(0.30 * gap), max:30, w:Math.round(gap) + '%', label:Math.round(0.30 * gap) + '/30' },
+      { k:'PROJECTED SPP · 0.20', v:Math.round(0.20 * sppScore), max:20, w:Math.round(sppScore) + '%', label:Math.round(0.20 * sppScore) + '/20' },
+      { k:'SPACE YIELD · 0.15', v:Math.round(0.15 * yieldScore), max:15, w:Math.round(yieldScore) + '%', label:Math.round(0.15 * yieldScore) + '/15' }
+    ]
+  };
+}
+
+function inr(v) {
+  if (v >= 1e7) return AIRPORT.currency + (v / 1e7).toFixed(1) + ' Cr';
+  if (v >= 1e5) return AIRPORT.currency + (v / 1e5).toFixed(1) + ' L';
+  return AIRPORT.currency + Math.round(v).toLocaleString('en-IN');
+}
+
+// The scoring engine. Nine explainable components, 100 points total.
+const WEIGHTS = [
+  ['RECENCY', 20, s => clamp01(1 - s.days / 30)],
+  ['VOLUME', 15, s => clamp01(Math.log10(Math.max(10, s.men)) / Math.log10(50000))],
+  ['VELOCITY', 15, s => clamp01(s.vel / 120)],
+  ['ENGAGEMENT', 15, s => clamp01(s.eng / 100)],
+  ['SOURCE DIVERSITY', 10, s => clamp01(s.pub / 12)],
+  ['SENTIMENT', 10, s => clamp01(s.sent)],
+  ['GEO SPREAD', 5, s => clamp01(s.geo / 6)],
+  ['BRAND STRENGTH', 5, s => clamp01(s.brand)],
+  ['BLR RELEVANCE', 5, s => clamp01(s.fit)]
+];
+
+function scoreSignal(s) {
+  const parts = WEIGHTS.map(([k, max, f]) => {
+    const v = Math.round(f(s) * max);
+    return { k, v, max, w:Math.round((v / max) * 100) + '%', label:v + '/' + max };
+  });
+  const total = parts.reduce((a, p) => a + p.v, 0);
+  return { parts, total };
+}
+
+function bandOf(t) { return t >= 85 ? 'CRITICAL SIGNAL' : t >= 70 ? 'STRONG SIGNAL' : t >= 55 ? 'EMERGING' : 'WATCHLIST'; }
+
+function signalFor(ci) {
+  const raw = SIG[ci.c] || SIG_DEFAULT[ci.c] || { b:ci.n + ' market', cat:'GENERAL', men:4000, vel:18, eng:40, days:20, pub:4, geo:1, sent:0.7, brand:0.45, fit:0.4 };
+  const s = Object.assign({}, raw);
+  const { parts, total } = scoreSignal(s);
+  const cm = commercialFeasibility(s, s.cat);
+  const top = (s.src || [['NEWS WIRES', 40, 'HIGH'], ['INSTAGRAM', 30, 'MED'], ['TRADE PRESS', 18, 'HIGH'], ['FORUMS', 12, 'LOW']]);
+  return {
+    ci, total, band:bandOf(total), parts,
+    cfi:cm.cfi, cfiParts:cm.parts, tvs:cm.tvs, gapScore:cm.gap,
+    dspp:AIRPORT.currency + cm.dspp.toFixed(2), revenue:inr(cm.revenue),
+    atv:inr(cm.econ.atv), paxShare:(cm.econ.share * 100).toFixed(0) + '%',
+    penGrowth:(cm.econ.pen * 100).toFixed(1) + '%',
+    verdict:cm.cfi >= 70 ? 'BRING TO TERMINAL' : cm.cfi >= 55 ? 'PILOT / POP-UP' : cm.cfi >= 40 ? 'WATCH' : 'HOLD',
+    verdictColor:cm.cfi >= 70 ? '#6FE3A8' : cm.cfi >= 55 ? '#F0B429' : '#8894A3',
+    mathLines:[
+      'TVS = 0.4·ln(' + s.men + '+1) + 0.4·(' + (s.vel / 100).toFixed(2) + ') + 0.2·(' + s.sent.toFixed(2) + ') → ' + cm.tvs,
+      '\u0394SPP = ' + (cm.econ.share * 100).toFixed(0) + '% pax share × ' + (cm.econ.pen * 100).toFixed(1) + '% penetration × ' + inr(cm.econ.atv) + ' ATV → ' + AIRPORT.currency + cm.dspp.toFixed(2) + '/pax',
+      'Revenue = \u0394SPP × ' + (AIRPORT.pax / 1e6).toFixed(1) + 'M PAX → ' + inr(cm.revenue) + ' p.a.',
+      'CFI = 0.35(' + cm.tvs + ') + 0.30(' + cm.gap + ') + 0.20(' + cm.sppScore + ') + 0.15(' + cm.yieldScore + ') → ' + cm.cfi
+    ],
+    brand:s.b, cat:s.cat,
+    event:s.ev || (s.cat.charAt(0) + s.cat.slice(1).toLowerCase() + ' activity detected in ' + ci.n.charAt(0) + ci.n.slice(1).toLowerCase() + ' across store openings, coverage and public discussion.'),
+    men:s.men >= 1000 ? (s.men / 1000).toFixed(1) + 'K' : String(s.men),
+    vel:'+' + s.vel + '%', conf:(0.55 + clamp01(s.pub / 12) * 0.4).toFixed(2), days:s.days,
+    why:s.why || ['Coverage is consistent across ' + s.pub + ' publishers.', 'Velocity of +' + s.vel + '% week-on-week clears the tracking threshold.'],
+    src:top.map(([name, pct, q]) => ({ name, q, pct:pct + '%', w:pct + '%', color:SRC_COLOR[name] || '#8894A3' })),
+    evid:(s.evid || [['AGGREGATED CRAWL', s.days + ' DAYS AGO', 'CRAWL', '0.7', 'Signal assembled from ' + s.pub + ' publisher records and public discussion, deduplicated to a single entity.']])
+      .map(([sname, d, t, q, x]) => ({ s:sname, d, t, q, x, qc:parseFloat(q) >= 0.85 ? '#6FE3A8' : parseFloat(q) >= 0.75 ? '#F0B429' : '#8894A3' })),
+    rel:s.rel || (s.fit >= 0.7 ? 'HIGH' : s.fit >= 0.45 ? 'MED' : 'LOW'),
+    gap:s.gap || 'UNSCORED', air:s.air || ci.c, opp:s.opp || Math.round(total * 0.82) + ' / 100',
+    blrWhy:s.blrWhy || 'Held on the watchlist: the signal is real but has not yet cleared the passenger-relevance threshold for Bengaluru.'
+  };
+}
+</script>
+</body>
+</html>
