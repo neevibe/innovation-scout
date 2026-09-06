@@ -228,7 +228,7 @@ window.dispatchEvent(new Event('three-ready'));
           <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(34px,3.8vw,54px); line-height:1.04; margin:12px 0 24px; color:#F4F0E8;">Detected this week</h2>
           <div data-r="3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
             <article style="border:1px solid rgba(255,255,255,.09); background:rgba(7,10,16,.7); backdrop-filter:blur(12px);">
-              <div style="position:relative; height:190px;"><image-slot id="scout-brand-1" shape="rect" placeholder="Mokobara store — drop image"></image-slot></div>
+              <div style="position:relative; height:190px;"><image-slot id="scout-brand-1" shape="rect" fit="cover" src="/scout-globe/brand-img/mokobara.jpg" placeholder="Mokobara store — drop image"></image-slot></div>
               <div style="padding:16px 18px 18px;">
                 <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#6FE3A8;">NEW STORE DETECTED</div>
                 <div style="font-family:'Instrument Serif',serif; font-size:26px; color:#F4F0E8; margin:6px 0 2px;">Mokobara</div>
@@ -237,7 +237,7 @@ window.dispatchEvent(new Event('three-ready'));
               </div>
             </article>
             <article style="border:1px solid rgba(255,255,255,.09); background:rgba(7,10,16,.7); backdrop-filter:blur(12px);">
-              <div style="position:relative; height:190px;"><image-slot id="scout-brand-2" shape="rect" placeholder="K-beauty counter — drop image"></image-slot></div>
+              <div style="position:relative; height:190px;"><image-slot id="scout-brand-2" shape="rect" fit="cover" src="/scout-globe/brand-img/oliveyoung.png" placeholder="K-beauty counter — drop image"></image-slot></div>
               <div style="padding:16px 18px 18px;">
                 <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#F0B429;">AIRPORT ENTRY</div>
                 <div style="font-family:'Instrument Serif',serif; font-size:26px; color:#F4F0E8; margin:6px 0 2px;">Olive Young</div>
@@ -246,7 +246,7 @@ window.dispatchEvent(new Event('three-ready'));
               </div>
             </article>
             <article style="border:1px solid rgba(255,255,255,.09); background:rgba(7,10,16,.7); backdrop-filter:blur(12px);">
-              <div style="position:relative; height:190px;"><image-slot id="scout-brand-3" shape="rect" placeholder="Specialty coffee bar — drop image"></image-slot></div>
+              <div style="position:relative; height:190px;"><image-slot id="scout-brand-3" shape="rect" fit="cover" src="/scout-globe/brand-img/bluetokai.jpg" placeholder="Specialty coffee bar — drop image"></image-slot></div>
               <div style="padding:16px 18px 18px;">
                 <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:#7FD4FF;">MARKET EXPANSION</div>
                 <div style="font-family:'Instrument Serif',serif; font-size:26px; color:#F4F0E8; margin:6px 0 2px;">Blue Tokai</div>
@@ -422,7 +422,7 @@ window.dispatchEvent(new Event('three-ready'));
         <article>
           <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#F0B429;">TOP STORY</div>
           <h3 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(30px,3.6vw,52px); line-height:1.04; margin:10px 0 16px; color:#F4F0E8;">K-Beauty is moving into airport retail — and India is the last major gap</h3>
-          <div style="position:relative; height:320px; margin-bottom:18px;"><image-slot id="scout-daily-hero" shape="rect" placeholder="Top story image — drop here"></image-slot></div>
+          <div style="position:relative; height:320px; margin-bottom:18px;"><image-slot id="scout-daily-hero" shape="rect" fit="cover" src="/scout-globe/brand-img/kbeauty-hero.jpg" placeholder="Top story image — drop here"></image-slot></div>
           <div data-cols="2" style="columns:2; column-gap:28px; font-size:14.5px; line-height:1.75; color:#B4BDC8;">
             <p style="margin:0 0 14px;">Three of the four highest-spend transit hubs in Asia and the Gulf now carry a dedicated Korean beauty format in departures. Footprints have compressed from mall-scale to 40–60 square metres, and assortment has narrowed to travel-legal sizes and gifting sets.</p>
             <p style="margin:0 0 14px;">Bengaluru's outbound passenger mix into Seoul, Singapore and the Gulf skews younger than any other Indian metro hub, and the category already converts for those passengers on the outbound leg.</p>
@@ -1081,6 +1081,11 @@ class Component extends DCLogic {
     if (this.routes && this.routes.length) {
       this.routes.forEach(r => { this.scene.remove(r.line); this.scene.remove(r.plane); r.line.geometry.dispose(); r.mat.dispose(); r.plane.geometry.dispose(); r.plane.material.dispose(); });
     }
+    // Flight-route arcs + planes disabled — they cluttered the globe.
+    this.routeAnchor = anchorCity || this.routeAnchor || CITIES[0];
+    this.routes = [];
+    return;
+    // eslint-disable-next-line no-unreachable
     const blr = anchorCity || this.routeAnchor || CITIES[0];
     this.routeAnchor = blr;
     this.routes = [];
