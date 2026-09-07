@@ -268,6 +268,12 @@ export interface ScoutConfig {
   monitoringFrequencyHours: number;
   mode: "offline" | "live";
   lastRefreshAt?: string;
+  /** Provider ids to fan out across in live mode. Unset/empty = all providers
+   *  (see collector.ts activeProviders()). Scope this down for reliability —
+   *  keyless providers (GDELT/GoogleNews/Reddit) are frequently blocked, and
+   *  the full 7-provider fan-out across all cities can exceed serverless
+   *  function timeouts. */
+  enabledProviders?: string[];
 }
 
 // --- Store shape ----------------------------------------------------------

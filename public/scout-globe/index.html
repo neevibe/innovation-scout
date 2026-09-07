@@ -1555,24 +1555,30 @@ class Component extends DCLogic {
     if (this.logRef.current) this.logRef.current.innerHTML = '';
     if (this.summaryRef.current) this.summaryRef.current.style.display = 'none';
     ['scraper', 'semantic', 'quant', 'qa'].forEach(k => this.setAgent(k, 'IDLE', '#5C6675'));
+    // Honest in-flight log — no fabricated counts. Real numbers get appended
+    // to this.schedule the moment the live /api/refresh call resolves below.
     this.schedule = [
-      [0.1, 'SUPERVISOR', 'Graph compiled · 4 nodes · tenant_001_BIAL', '#F0B429'],
-      [0.5, 'SCRAPER', 'Swarm dispatched · 6 workers · proxy pool warm', '#7FD4FF'],
-      [1.4, 'SCRAPER', 'instagram.com · 2,140 posts in bbox IN+SEA', null],
-      [2.2, 'SCRAPER', 'moodiedavittreport.com · 38 articles parsed', null],
-      [3.0, 'SCRAPER', 'places api · 412 storefronts geocoded', null],
-      [3.9, 'SCRAPER', 'linkedin.com · 96 expansion posts flagged', null],
-      [4.6, 'SEMANTIC', 'Embedding 412 entities · text-embedding-3-small', '#B98BFF'],
-      [5.5, 'SEMANTIC', 'pgvector match vs blr_inventory · 96 duplicates collapsed', null],
-      [6.4, 'SEMANTIC', '7 white-space gaps · cosine dist > 0.38', '#6FE3A8'],
-      [7.2, 'QUANT', 'TVS · ΔSPP · gap severity · space yield', '#F0B429'],
-      [8.1, 'QUANT', 'Penetration growth gate 1.68× · 22 pass, 4 fail', null],
-      [9.0, 'QUANT', 'Net sales growth benchmark 65% applied', null],
-      [9.9, 'QA', 'Cross-referencing 26 brands against live search', '#FF7A45'],
-      [10.8, 'QA', '2 entities discarded · no resolvable evidence url', null],
-      [11.6, 'QA', '24 verified · every claim carries a source', '#6FE3A8'],
-      [12.4, 'SUPERVISOR', 'Scene plan emitted · 24 pins · CFI ranked', '#F0B429']
+      [0.1, 'SUPERVISOR', 'Dispatching live research pass · tenant_001_BIAL', '#F0B429'],
+      [0.6, 'SCRAPER', 'Live query fan-out → Tavily Search API', '#7FD4FF'],
+      [2.5, 'SCRAPER', 'Awaiting sourced results…', null],
+      [5.5, 'SEMANTIC', 'Dedupe + classification in progress…', '#B98BFF'],
+      [8.5, 'QUANT', 'Scoring + mastery convergence…', '#F0B429']
     ];
+    this.liveResult = null;
+    this.liveTop = null;
+    this.liveError = null;
+    this._waitLogged = false;
+    // REAL pipeline call — not simulated. Runs live web collection (Tavily)
+    // through the same /api/refresh route a cron refresh would hit, then
+    // pulls the actual top-ranked signals for the result panel below.
+    this.liveFetch = fetch('/api/refresh', { method: 'POST' })
+      .then(r => { if (!r.ok) throw new Error('refresh HTTP ' + r.status); return r.json(); })
+      .then(data => {
+        this.liveResult = (data && data.entry) || null;
+        return fetch('/api/mastery?limit=3').then(r => r.json());
+      })
+      .then(mastery => { this.liveTop = (mastery && mastery.entries) || []; })
+      .catch(err => { this.liveError = String((err && err.message) || err); });
     if (this.soundOn) this.confirm();
   }
 
@@ -1627,32 +1633,59 @@ class Component extends DCLogic {
       });
     }
 
-    if (t >= DUR) this.endScan();
+    if (t >= DUR) {
+      if (this.liveResult || this.liveError) {
+        this.endScan();
+      } else if (!this._waitLogged) {
+        this._waitLogged = true;
+        this.logLine('SUPERVISOR', 'Live sources still resolving — holding for real results…', '#F0B429');
+      }
+    }
   }
 
   endScan() {
     this.scanning = false;
-    this.setAgent('qa', 'COMPLETE', '#6FE3A8');
     if (this.uni) this.uni.uScanOn.value = 0;
     if (this.bursts) this.bursts.material.uniforms.uT.value = -1;
     if (this.wordsRef.current) this.wordsRef.current.innerHTML = '';
     this.words = null;
     if (this.phaseRef.current) this.phaseRef.current.textContent = 'COMPLETE';
-    this.logLine('SUPERVISOR', 'Scan complete · top opportunities ranked by CFI', '#6FE3A8');
-    const top = this.signals.slice().sort((a, b) => b.cfi - a.cfi).slice(0, 3);
+
+    // Everything below is real: r comes straight from /api/refresh, which ran
+    // a live Tavily collection pass through the actual pipeline (collector →
+    // dedupe → mastery scoring). No fabricated numbers.
+    const r = this.liveResult;
+    if (this.liveError) {
+      this.setAgent('scraper', 'ERROR', '#FF7A45');
+      this.logLine('SUPERVISOR', 'Live pass failed: ' + this.liveError, '#FF7A45');
+    } else if (r) {
+      this.setAgent('scraper', 'COMPLETE', '#6FE3A8');
+      this.logLine('SCRAPER', r.notes || ('Live pass · ' + r.signalsScanned + ' signals scanned'), '#7FD4FF');
+      this.setAgent('semantic', 'COMPLETE', '#6FE3A8');
+      this.logLine('SEMANTIC', r.duplicatesConsolidated + ' duplicate stories consolidated', '#B98BFF');
+      this.setAgent('quant', 'COMPLETE', '#6FE3A8');
+      this.logLine('QUANT', r.opportunitiesUpdated + ' opportunities re-scored', '#F0B429');
+      this.setAgent('qa', 'COMPLETE', '#6FE3A8');
+      this.logLine('QA', r.signalsNew + ' new signals captured with source URLs', '#6FE3A8');
+    }
+    this.logLine('SUPERVISOR', this.liveError ? 'Scan ended — no live data available' : 'Scan complete · real signals ranked by mastery score', '#6FE3A8');
+
     const box = this.summaryRef.current;
     if (box) {
       box.style.display = 'block';
-      box.innerHTML = '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.28em;color:#6FE3A8;margin-bottom:10px;">SCAN RESULT · TOP 3 BY CFI</div>' +
-        top.map(s => '<div data-open="' + s.ci.c + '" style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;">' +
-          '<span><span style="font-size:13px;color:#F4F0E8;">' + s.brand + '</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.16em;color:#5C6675;margin-left:8px;">' + s.ci.c + '</span></span>' +
-          '<span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;color:#6FE3A8;">' + s.cfi + '</span></div>').join('');
-      box.querySelectorAll('[data-open]').forEach((el) => {
-        el.addEventListener('click', () => {
-          const s = this.signals.find(x => x.ci.c === el.getAttribute('data-open'));
-          if (s) this.openFocus(s);
-        });
-      });
+      const top = (this.liveTop || []).slice(0, 3);
+      if (top.length === 0) {
+        box.innerHTML = '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.28em;color:#FF7A45;margin-bottom:10px;">NO LIVE RESULTS' + (this.liveError ? ' · ' + this.liveError : '') + '</div>';
+      } else {
+        box.innerHTML = '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.28em;color:#6FE3A8;margin-bottom:10px;">LIVE SCAN RESULT · TOP ' + top.length + ' BY MASTERY SCORE</div>' +
+          top.map(e => {
+            const src = (e.sources && e.sources[0]) || {};
+            const label = (e.topic || '').replace(/·/g, ' ').slice(0, 60);
+            return '<a href="' + (src.url || '#') + '" target="_blank" rel="noopener" style="text-decoration:none;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;">' +
+              '<span><span style="font-size:13px;color:#F4F0E8;">' + label + '</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:9px;letter-spacing:.16em;color:#5C6675;margin-left:8px;">' + (src.domain || '') + '</span></span>' +
+              '<span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;color:#6FE3A8;">' + e.masteryScore + '</span></a>';
+          }).join('');
+      }
     }
     if (this.soundOn) this.confirm();
   }

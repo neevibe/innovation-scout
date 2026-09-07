@@ -30,6 +30,12 @@ export const SEED: StoreShape = {
     monitoringFrequencyHours: 24,
     mode: "offline",
     lastRefreshAt: now,
+    // Scoped to Tavily only: it's the one provider that's both licensed for
+    // this use case and reliably reachable. GDELT/GoogleNews/Reddit are
+    // blocked or 403 on this network; running all 7 providers × 6 cities ×
+    // 6 lenses (252 tasks) measured 3+ minutes and never returned — would
+    // hard-fail Vercel's function timeout. Tavily-only completes in ~11s.
+    enabledProviders: ["tavily"],
   },
 
   // Cities are chosen by REAL BLR flight connectivity (frequency + seats), not
