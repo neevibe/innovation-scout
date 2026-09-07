@@ -286,6 +286,7 @@ export interface StoreShape {
   bialPortfolio: BialPortfolioEntry[];
   dutyFreeSkus: DutyFreeSku[];
   refreshLog: RefreshLogEntry[];
+  agentRuns?: AgentRunEntry[]; // per-refresh, per-provider transparency log
 }
 
 export interface RefreshLogEntry {
@@ -308,3 +309,112 @@ export type Role =
   | "Duty Free Team"
   | "Strategy Team"
   | "Analyst";
+
+// --- City deep-dive: bucketed sections + BIAL feasibility ------------------
+// The "top 5 buzzing per section" view (per-city page). Sections are fixed
+// business categories BIAL organises around — deliberately coarser than the
+// full Vertical enum so leadership sees a stable, comparable structure.
+export type Section = "Brands" | "F&B" | "Retail" | "Duty Free" | "Experiences" | "Commercial Service";
+
+export const SECTIONS: Section[] = ["Brands", "F&B", "Retail", "Duty Free", "Experiences", "Commercial Service"];
+
+export interface CityBucketItem {
+  id: string; // underlying signal/candidate/opportunity id
+  kind: "opportunity" | "candidate" | "signal";
+  name: string; // brand or trend title
+  isNamedBrand: boolean; // true only when a real brand/company name is known —
+  // false means `name` is a fallback trend/headline label, not an entity BIAL
+  // could actually contact. Callers must not phrase this as "bring X to BIAL".
+  vertical: Vertical;
+  city: string;
+  score: number; // 0-100 buzz/relevance
+  feasibility: number; // 0-100 BIAL feasibility (heuristic — see businessPlan.ts)
+  atBial: boolean;
+  bialNote: string; // why atBial is true/false
+  why: string;
+  sourceLabel: string;
+  sourceUrl: string;
+  confidence: number;
+  opportunityId?: string; // set only when a full Opportunity dossier already exists
+}
+
+export interface CitySectionBreakdown {
+  city: string;
+  sections: Record<Section, CityBucketItem[]>;
+}
+
+// --- Business plan (generated for any not-yet-at-BIAL bucket item) --------
+// Deterministic, template-assembled from the item's own evidence fields —
+// no invented numbers. Commercial-model figures are explicitly labelled as
+// planning assumptions, never presented as fact.
+export interface BusinessPlanPhase {
+  phase: string;
+  timeframe: string;
+  actions: string[];
+}
+
+export interface BusinessPlan {
+  itemId: string;
+  title: string;
+  vertical: Vertical;
+  city: string;
+  summary: string;
+  marketSignal: string;
+  whyNow: string;
+  bialGap: string;
+  proposedFormat: string;
+  targetLocation: string;
+  targetPassenger: string;
+  commercialModelNote: string; // labelled assumption, not a forecast
+  phases: BusinessPlanPhase[];
+  risks: string[];
+  nextAction: string;
+  evidence: { label: string; url: string }[];
+  generatedFrom: "opportunity" | "heuristic"; // heuristic = no promoted Opportunity yet
+}
+
+// --- Scraping agent transparency (Feature: per-agent results page) --------
+// One row per provider per refresh — what it searched, what it found, and a
+// sample of real docs so leadership can audit what each "scraper" actually
+// did. Kept separate from Signal[] because it's raw/pre-extraction evidence.
+export interface AgentFinding {
+  title: string;
+  url: string;
+  source: string;
+  city: string;
+  publishedAt?: string;
+}
+
+export interface AgentRunResult {
+  providerId: string;
+  label: string;
+  complianceNote: string;
+  keyless: boolean;
+  queriesRun: number;
+  docsFound: number;
+  failed: boolean;
+  sample: AgentFinding[]; // capped sample of real docs this provider returned
+}
+
+export interface AgentRunEntry {
+  at: string;
+  mode: "offline" | "live";
+  totalQueries: number;
+  totalDocs: number;
+  agents: AgentRunResult[];
+}
+
+// One row of the Master Agent's bucketed opportunity table — a vertical
+// grouped view over the mastery sheet, so cross-source convergence is read
+// per business section, not just as one flat list.
+export interface MasterBucketRow {
+  vertical: Vertical;
+  dedupeKey: string;
+  topic: string;
+  masteryScore: number;
+  verdict: string;
+  providerCount: number;
+  sourceCount: number;
+  sampleUrl: string;
+  sampleDomain: string;
+}

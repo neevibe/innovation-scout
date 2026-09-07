@@ -13,6 +13,7 @@ import type {
   MarketCandidate,
   BialPortfolioEntry,
   DutyFreeSku,
+  AgentRunEntry,
 } from "@/lib/types";
 import { SEED } from "@/lib/data/seed";
 
@@ -268,6 +269,17 @@ export const Repo = {
       d.refreshLog.unshift(entry);
       d.refreshLog = d.refreshLog.slice(0, 50);
       d.config.lastRefreshAt = entry.at;
+    });
+  },
+
+  async agentRuns(): Promise<AgentRunEntry[]> {
+    return (await read()).agentRuns || [];
+  },
+  async addAgentRun(entry: AgentRunEntry): Promise<void> {
+    await mutate((d) => {
+      d.agentRuns = d.agentRuns || [];
+      d.agentRuns.unshift(entry);
+      d.agentRuns = d.agentRuns.slice(0, 20);
     });
   },
 };

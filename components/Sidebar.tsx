@@ -26,6 +26,7 @@ const GROUPS: { title: string; items: { href: string; label: string; icon: strin
     title: "Research",
     items: [
       { href: "/scout", label: "AI Scout", icon: "spark" },
+      { href: "/agents", label: "Scraping Agents", icon: "compass" },
       { href: "/methodology", label: "Methodology", icon: "doc" },
     ],
   },

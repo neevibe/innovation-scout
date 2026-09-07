@@ -1,7 +1,8 @@
-import type { Signal, Opportunity, StoreShape, RefreshLogEntry, Vertical, SignalType } from "@/lib/types";
+import type { Signal, Opportunity, StoreShape, RefreshLogEntry, Vertical, SignalType, AgentRunEntry, AgentRunResult } from "@/lib/types";
 import { read, mutate, Repo } from "@/lib/db/store";
 import { collectSignals, collectSignalsDetailed, type CollectionResult } from "@/lib/agents/collector";
 import { buildMasterySheet } from "@/lib/agents/mastery";
+import { ALL_PROVIDERS } from "@/lib/agents/collector";
 
 // ===========================================================================
 // Agent orchestration
@@ -153,6 +154,31 @@ export async function runPipeline(): Promise<RefreshResult> {
     notes: liveNotes,
   };
   await Repo.addRefreshLog(entry);
+
+  // --- Per-agent transparency log --------------------------------------
+  // One row per provider that ran this refresh, with a sample of the real
+  // docs it returned, so "what did each scraping agent actually find" is
+  // auditable on its own page — not just folded into aggregate counts.
+  const agentResults: AgentRunResult[] = Object.entries(collection.docsByProvider).map(([providerId, docs]) => {
+    const provider = ALL_PROVIDERS[providerId];
+    return {
+      providerId,
+      label: provider?.label || providerId,
+      complianceNote: m.complianceNotes[providerId] || provider?.complianceNote || "",
+      keyless: provider?.keyless ?? true,
+      queriesRun: m.live ? Math.round((m.queriesRun || 0) / Math.max(1, Object.keys(collection.docsByProvider).length)) : 0,
+      docsFound: docs.length,
+      failed: m.failedProviders.includes(providerId),
+      sample: docs.slice(0, 8).map((d) => ({ title: d.title, url: d.url, source: d.source, city: d.city, publishedAt: d.publishedAt })),
+    };
+  });
+  await Repo.addAgentRun({
+    at: entry.at,
+    mode: entry.mode,
+    totalQueries: m.queriesRun || 0,
+    totalDocs: m.docsFound || 0,
+    agents: agentResults,
+  });
 
   return { entry, store };
 }

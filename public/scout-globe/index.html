@@ -1252,6 +1252,16 @@ class Component extends DCLogic {
 
   openFocus(sig) {
     if (!sig) return;
+    // The 6 codes below are BIAL's REAL tracked markets (backed by live
+    // signals/opportunities in the dashboard). For those, navigate to the
+    // actual per-city intelligence page instead of the decorative in-globe
+    // panel — this is where "top 5 buzzing per section" + BIAL feasibility
+    // actually live. The globe's other ~12 cities are illustrative only
+    // (no real backing data), so they keep the lightweight preview panel
+    // rather than linking to a page that would have to fabricate content.
+    const MARKET_PAGE_BY_CODE = { DEL:'del', BOM:'bom', CCU:'ccu', DXB:'dxb', SIN:'sin', LHR:'lhr' };
+    const marketId = MARKET_PAGE_BY_CODE[sig.ci.c];
+    if (marketId) { window.location.href = '/markets/' + marketId; return; }
     this.skipIntro();
     this.focusLock = { lat:sig.ci.lat, lon:sig.ci.lon, d:1.62 };
     this.userSpin = false;
