@@ -46,7 +46,8 @@ async function ensureFile(): Promise<void> {
 }
 
 async function fileRead(): Promise<StoreShape> {
-  if (fileCache) return fileCache;
+  // Always re-read from disk in dev (force-dynamic pages need fresh data).
+  // In production (Vercel serverless), each invocation gets a fresh process anyway.
   await ensureFile();
   const raw = await fs.readFile(STORE_PATH, "utf-8");
   fileCache = JSON.parse(raw) as StoreShape;

@@ -6,6 +6,9 @@ import { githubProvider } from "./github";
 import { redditProvider } from "./reddit";
 import { youtubeProvider } from "./youtube";
 import { arxivProvider } from "./arxiv";
+import { scraplingProvider } from "./scrapling";
+import { agentReachProvider } from "./agentreach";
+import { scrapegraphaiProvider } from "./scrapegraphai";
 
 export * from "./types";
 export { tavilyProvider } from "./tavily";
@@ -15,6 +18,9 @@ export { githubProvider } from "./github";
 export { redditProvider } from "./reddit";
 export { youtubeProvider } from "./youtube";
 export { arxivProvider } from "./arxiv";
+export { scraplingProvider } from "./scrapling";
+export { agentReachProvider } from "./agentreach";
+export { scrapegraphaiProvider } from "./scrapegraphai";
 
 const REGISTRY: Record<string, SearchProvider> = {
   tavily: tavilyProvider,
@@ -24,6 +30,9 @@ const REGISTRY: Record<string, SearchProvider> = {
   reddit: redditProvider,
   youtube: youtubeProvider,
   arxiv: arxivProvider,
+  scrapling: scraplingProvider,
+  agentreach: agentReachProvider,
+  scrapegraphai: scrapegraphaiProvider,
 };
 
 /**

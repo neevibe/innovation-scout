@@ -13,6 +13,9 @@ import { githubProvider } from "./providers/github";
 import { redditProvider } from "./providers/reddit";
 import { youtubeProvider } from "./providers/youtube";
 import { arxivProvider } from "./providers/arxiv";
+import { scraplingProvider } from "./providers/scrapling";
+import { agentReachProvider } from "./providers/agentreach";
+import { scrapegraphaiProvider } from "./providers/scrapegraphai";
 import { extractSignals } from "./extract";
 
 // ===========================================================================
@@ -53,6 +56,9 @@ export const ALL_PROVIDERS: Record<string, SearchProvider> = {
   reddit: redditProvider,
   youtube: youtubeProvider,
   arxiv: arxivProvider,
+  scrapling: scraplingProvider,
+  agentreach: agentReachProvider,
+  scrapegraphai: scrapegraphaiProvider,
 };
 
 export interface CollectionResult {
@@ -141,7 +147,8 @@ async function collectLive(): Promise<CollectionResult> {
   }[] = [];
   for (const provider of providers) {
     for (const c of cities) {
-      for (const lens of LENSES) {
+      const lensesForProvider = provider.maxLenses ? LENSES.slice(0, provider.maxLenses) : LENSES;
+      for (const lens of lensesForProvider) {
         tasks.push({ provider, query: `${c.name} ${lens}`, city: c.name, country: c.country });
       }
     }

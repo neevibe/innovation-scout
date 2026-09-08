@@ -20,6 +20,7 @@ window.THREE = THREE;
 window.__threeReady = true;
 window.dispatchEvent(new Event('three-ready'));
 </script>
+
 <style>
   html, body { margin:0; padding:0; background:#04060A; }
   body { -webkit-font-smoothing:antialiased; }
@@ -77,11 +78,13 @@ window.dispatchEvent(new Event('three-ready'));
   </aside>
 
   <header style="position:fixed; top:0; left:0; right:0; z-index:40; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 28px; pointer-events:none; mix-blend-mode:normal;">
-    <div style="display:flex; align-items:baseline; gap:12px; pointer-events:auto;">
+
+  <div style="display:flex; align-items:baseline; gap:12px; pointer-events:auto;">
       <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.34em; color:#F0B429;">INNOVATION SCOUT</span>
       <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.24em; color:#5C6675;">BIAL</span>
     </div>
     <nav ref="{{ navRef }}" style="display:flex; gap:2px; pointer-events:auto; border:1px solid rgba(255,255,255,.08); background:rgba(6,9,14,.5); backdrop-filter:blur(12px); padding:4px;">
+      <button onClick="{{ goCities }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">CITIES</button>
       <button onClick="{{ goWorld }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">WORLD</button>
       <button onClick="{{ goIndia }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">INDIA</button>
       <button onClick="{{ goGlobal }}" style="background:none; border:none; color:#9AA5B4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:8px 12px; cursor:pointer;" style-hover="background:rgba(240,180,41,.14); color:#F0B429;">GLOBAL</button>
@@ -382,6 +385,28 @@ window.dispatchEvent(new Event('three-ready'));
 
   </div>
 
+  <sc-if value="{{ citiesOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; z-index:60; pointer-events:auto; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at center, rgba(4,6,10,0) 0%, rgba(4,6,10,.86) 100%);">
+      <div style="width:min(640px,90vw); max-height:80vh; background:rgba(7,10,16,.94); backdrop-filter:blur(24px); border:1px solid rgba(255,255,255,.1); border-radius:20px; padding:28px; box-shadow:0 40px 80px rgba(0,0,0,.8); display:flex; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px; border-bottom:1px solid rgba(255,255,255,.1); padding-bottom:14px; flex:0 0 auto;">
+          <h2 style="font-family:'Instrument Serif',serif; font-size:28px; color:#F4F0E8; margin:0;">All Tracked Cities</h2>
+          <button onClick="{{ closeCities }}" style="background:none; border:none; color:#5C6675; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; cursor:pointer;" style-hover="color:#F0B429;">CLOSE</button>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow-y:auto; padding-right:8px;">
+          <sc-for list="{{ cityList }}" as="row" hint-placeholder-count="10">
+            <div onClick="{{ row.open }}" style="display:flex; flex-direction:column; gap:4px; padding:12px 14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:10px; cursor:pointer;" style-hover="background:rgba(240,180,41,.08); border-color:rgba(240,180,41,.3);">
+              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                <span style="font-family:'Instrument Serif',serif; font-size:17px; color:#F4F0E8;">{{ row.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.16em; color:#7FD4FF;">{{ row.code }}</span>
+              </div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#8894A3; line-height:1.4;">{{ row.buzz }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <div style="position:fixed; left:50%; bottom:26px; transform:translateX(-50%); z-index:42; width:min(680px,92vw); pointer-events:none;">
     <sc-if value="{{ answer }}" hint-placeholder-val="{{ false }}">
       <div style="pointer-events:auto; margin-bottom:10px; background:rgba(6,9,14,.92); backdrop-filter:blur(18px); border:1px solid rgba(240,180,41,.3); padding:20px 22px; animation:is-fadeUp .4s ease both;">
@@ -612,7 +637,8 @@ window.dispatchEvent(new Event('three-ready'));
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{}">
+
+</script><script type="text/x-dc" data-dc-script data-props="{}">
 const GREETINGS = {
   BLR:{ g:'Namma Bengaluru', lang:'kn-IN' },
   BOM:{ g:'Amchi Mumbai',   lang:'mr-IN' },
@@ -730,7 +756,7 @@ const ANSWERS = {
 };
 
 class Component extends DCLogic {
-  state = { answer:null, focus:null };
+  state = { answer:null, focus:null, citiesOpen:false };
 
   constructor(props) {
     super(props);
@@ -778,6 +804,11 @@ class Component extends DCLogic {
     if (this.volRef.current) this.volRef.current.value = String(Math.round(this.vol * 100));
     this._onKey = (e) => { if (e.key === 'Escape' && this.state.focus) this.closeFocus(); };
     window.addEventListener('keydown', this._onKey);
+    window.addEventListener('focus-city', (e) => {
+      const code = e.detail;
+      const sig = this.signals.find(s => s.ci.c === code);
+      if (sig) this.openFocus(sig);
+    });
     const armOnce = () => { this.armVoice(); window.removeEventListener('pointerdown', armOnce, true); window.removeEventListener('keydown', armOnce, true); window.removeEventListener('scroll', armOnce, true); window.removeEventListener('wheel', armOnce, true); window.removeEventListener('touchstart', armOnce, true); };
     window.addEventListener('pointerdown', armOnce, true);
     window.addEventListener('keydown', armOnce, true);
@@ -1753,6 +1784,13 @@ class Component extends DCLogic {
       answer:!!ans, answerTitle:ans ? ans.title : '', answerItems:ans ? ans.items : [],
       clearAnswer:() => this.setState({ answer:null }),
       skipIntro:() => this.skipIntro(),
+      citiesOpen:this.state.citiesOpen,
+      goCities:() => this.setState({ citiesOpen:!this.state.citiesOpen }),
+      closeCities:() => this.setState({ citiesOpen:false }),
+      cityList:CITIES.map(ci => ({
+        code:ci.c, name:ci.n, buzz:ci.s,
+        open:() => { this.setState({ citiesOpen:false }); this.skipIntro(); const sig = this.signals.find(s => s.ci.c === ci.c); if (sig) this.openFocus(sig); }
+      })),
       goWorld:() => { this.skipIntro(); this.scrollToScene(0); },
       goIndia:() => { this.skipIntro(); this.scrollToScene(3); },
       goGlobal:() => { this.skipIntro(); this.scrollToScene(5); },

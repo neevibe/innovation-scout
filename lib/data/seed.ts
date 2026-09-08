@@ -30,12 +30,17 @@ export const SEED: StoreShape = {
     monitoringFrequencyHours: 24,
     mode: "offline",
     lastRefreshAt: now,
-    // Scoped to Tavily only: it's the one provider that's both licensed for
-    // this use case and reliably reachable. GDELT/GoogleNews/Reddit are
-    // blocked or 403 on this network; running all 7 providers × 6 cities ×
-    // 6 lenses (252 tasks) measured 3+ minutes and never returned — would
-    // hard-fail Vercel's function timeout. Tavily-only completes in ~11s.
-    enabledProviders: ["tavily"],
+    // Scoped providers: Tavily is licensed + reliable. Scrapling and
+    // Agent-Reach are real keyless local agents (each shells out to its own
+    // Python venv on this machine) — both fail fast and honestly on Vercel
+    // serverless (no Python there) via an explicit env check, so enabling
+    // them here is safe in both environments. ScrapeGraphAI is registered
+    // but NOT enabled by default: it requires an LLM key (OPENAI_API_KEY)
+    // that isn't configured on this machine, so it would fail every run —
+    // add "scrapegraphai" here once a key is set. GDELT/GoogleNews/Reddit/
+    // GitHub/YouTube/Arxiv are registered but disabled: blocked or 403 on
+    // this network, or scoped out to keep refresh time bounded.
+    enabledProviders: ["tavily", "scrapling", "agentreach"],
   },
 
   // Cities are chosen by REAL BLR flight connectivity (frequency + seats), not

@@ -16,6 +16,12 @@ export interface SearchProvider {
   readonly label: string;
   readonly keyless: boolean;
   readonly complianceNote: string;
+  /** Optional cap on how many of the 6 search lenses this provider runs per
+   *  city per refresh. Omit for the full fan-out. Use this for providers
+   *  with heavy per-query cost (e.g. local-LLM-backed agents) so a single
+   *  refresh stays bounded — e.g. 1 restricts to the single most relevant
+   *  lens (duty free / travel retail) instead of all 6. */
+  readonly maxLenses?: number;
   search(query: string, opts: { city: string; country: string; timespanMonths: number }): Promise<RawDoc[]>;
 }
 
