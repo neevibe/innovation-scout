@@ -9,6 +9,8 @@ import { arxivProvider } from "./arxiv";
 import { scraplingProvider } from "./scrapling";
 import { agentReachProvider } from "./agentreach";
 import { scrapegraphaiProvider } from "./scrapegraphai";
+import { googleSearch } from "./google";
+import { xSearch } from "./x";
 
 export * from "./types";
 export { tavilyProvider } from "./tavily";
@@ -21,6 +23,8 @@ export { arxivProvider } from "./arxiv";
 export { scraplingProvider } from "./scrapling";
 export { agentReachProvider } from "./agentreach";
 export { scrapegraphaiProvider } from "./scrapegraphai";
+export { googleSearch } from "./google";
+export { xSearch } from "./x";
 
 const REGISTRY: Record<string, SearchProvider> = {
   tavily: tavilyProvider,
@@ -33,6 +37,8 @@ const REGISTRY: Record<string, SearchProvider> = {
   scrapling: scraplingProvider,
   agentreach: agentReachProvider,
   scrapegraphai: scrapegraphaiProvider,
+  google: googleSearch,
+  x: xSearch,
 };
 
 /**

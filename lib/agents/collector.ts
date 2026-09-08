@@ -16,6 +16,8 @@ import { arxivProvider } from "./providers/arxiv";
 import { scraplingProvider } from "./providers/scrapling";
 import { agentReachProvider } from "./providers/agentreach";
 import { scrapegraphaiProvider } from "./providers/scrapegraphai";
+import { googleSearch } from "./providers/google";
+import { xSearch } from "./providers/x";
 import { extractSignals } from "./extract";
 
 // ===========================================================================
@@ -59,6 +61,8 @@ export const ALL_PROVIDERS: Record<string, SearchProvider> = {
   scrapling: scraplingProvider,
   agentreach: agentReachProvider,
   scrapegraphai: scrapegraphaiProvider,
+  google: googleSearch,
+  x: xSearch,
 };
 
 export interface CollectionResult {
