@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Repo } from "@/lib/db/store";
-import { Topbar } from "@/components/Topbar";
 import { BuzzSpark } from "@/components/BuzzSpark";
 import { DomainBadge } from "@/components/DomainBadge";
 import { MotionGrid, MotionItem } from "@/components/Motion";
@@ -12,8 +11,6 @@ import { buildCitySectionBreakdown } from "@/lib/intelligence/citySections";
 import { SECTIONS } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
-
-const FLAG: Record<string, string> = { India: "🇮🇳", UAE: "🇦🇪", Singapore: "🇸🇬", "United Kingdom": "🇬🇧" };
 
 const SECTION_ICON: Record<string, string> = {
   "Brands": "spark", "F&B": "bag", "Retail": "bag", "Duty Free": "bag",
@@ -27,125 +24,149 @@ export default async function MarketPage({ params }: { params: Promise<{ id: str
   ]);
   const city = cities.find((c) => c.id === id);
   if (!city) return notFound();
-  const { config, opportunities } = await getPageData();
+  const { opportunities } = await getPageData();
   const candidates = await Repo.candidatesForCity(city.name);
   const breakdown = buildCitySectionBreakdown(city, signals, await Repo.candidates(), opportunities, portfolio, dutyFreeSkus);
 
+  const code = ({ del: "DEL", bom: "BOM", ccu: "CCU", dxb: "DXB", sin: "SIN", lhr: "LHR" } as Record<string, string>)[city.id] || city.id.toUpperCase();
+
   return (
-    <>
-      <Topbar title={`${city.name} — Market Intelligence`} subtitle="Top 5 buzzing per section · scored against BIAL feasibility" mode={config.mode} lastRefresh={config.lastRefreshAt} />
-      <div style={{ padding: "26px 34px 48px", maxWidth: 1180 }}>
-        <Link href="/cities" style={{ fontSize: 13, color: "var(--muted)" }}>← All cities</Link>
-
-        {/* Header */}
-        <div className="card" style={{ padding: 20, marginTop: 12, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-          <div>
-            <div style={{ fontSize: 22, fontWeight: 700 }}>{FLAG[city.country] || "🌐"} {city.name}</div>
-            <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 4 }}>{city.kind === "domestic" ? "Domestic feeder" : "International hub"} · {city.benchmarkAirport}</div>
-            {city.connectivity && <div style={{ fontSize: 12, color: "var(--muted-2)", marginTop: 8 }}>✈ {city.connectivity.rank} — {city.connectivity.metric}</div>}
-          </div>
-          <Link href="/methodology" className="btn" style={{ height: "fit-content" }}>How these are scored <Icon name="arrow" size={13} /></Link>
-        </div>
-
-        {/* Six-section bucketed breakdown */}
-        <div style={{ marginTop: 22 }}>
-          <div className="eyebrow" style={{ marginBottom: 4 }}>What&rsquo;s buzzing, by section</div>
-          <div style={{ fontSize: 12.5, color: "var(--muted)", marginBottom: 16 }}>
-            Click any item: if it&rsquo;s already at BIAL you&rsquo;ll see why; if not, you get a generated business plan for bringing it in.
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(360px,1fr))", gap: 14 }}>
-            {SECTIONS.map((section) => {
-              const items = breakdown.sections[section];
-              return (
-                <div key={section} className="card" style={{ padding: 16 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                    <Icon name={SECTION_ICON[section] || "spark"} size={15} />
-                    <span style={{ fontWeight: 700, fontSize: 14 }}>{section}</span>
-                    <span className="badge" style={{ marginLeft: "auto" }}>{items.length}</span>
-                  </div>
-                  {items.length === 0 ? (
-                    <div style={{ fontSize: 12, color: "var(--muted)", padding: "10px 0" }}>No buzzing signal yet in this section — will populate on next live refresh.</div>
-                  ) : (
-                    <div style={{ display: "grid", gap: 8 }}>
-                      {items.map((item, i) => {
-                        const cardStyle: CSSProperties = {
-                          display: "block", padding: "10px 11px", borderRadius: 10,
-                          border: "1px solid var(--line)", textDecoration: "none", color: "inherit",
-                        };
-                        const inner = (
-                          <>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
-                              <span style={{ fontSize: 13, fontWeight: 650 }}>{String(i + 1).padStart(2, "0")} · {item.name}</span>
-                              <span className="tnum" style={{ fontSize: 15, fontWeight: 700 }}>{item.score}</span>
-                            </div>
-                            <div style={{ display: "flex", gap: 6, marginTop: 4, alignItems: "center", flexWrap: "wrap" }}>
-                              {item.atBial ? (
-                                <span className="badge" style={{ borderColor: "#a7e0b8", color: "var(--ok)", fontSize: 10 }}>✓ At BIAL</span>
-                              ) : (
-                                <span className="badge" style={{ borderColor: "#f0d28a", color: "var(--warn)", fontSize: 10 }}>Not at BIAL</span>
-                              )}
-                              <span style={{ fontSize: 10.5, color: "var(--muted-2)" }}>Feasibility {item.feasibility}/100</span>
-                            </div>
-                            <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 5, lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                              {item.atBial ? item.bialNote : "Click for a business plan →"}
-                            </div>
-                          </>
-                        );
-                        return item.atBial ? (
-                          <div key={item.id} style={cardStyle}>{inner}</div>
-                        ) : (
-                          <Link key={item.id} href={`/markets/${city.id}/plan/${item.id}?section=${encodeURIComponent(section)}`} className="lift-card" style={{ ...cardStyle, cursor: "pointer" }}>{inner}</Link>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Existing full market shortlist (buzz-profiled, deeper detail) */}
-        <div style={{ marginTop: 30 }}>
-          <div className="eyebrow" style={{ marginBottom: 12 }}>Full market shortlist</div>
-          {candidates.length === 0 ? (
-            <div className="card" style={{ padding: 24, color: "var(--muted)" }}>
-              Shortlist not yet built for this market. Dubai is the first fully-worked market; run the live collector (or ask) to populate the rest.
-            </div>
-          ) : (
-            <MotionGrid style={{ display: "grid", gap: 12 }}>
-              {candidates.map((c, i) => (
-                <MotionItem key={c.id}>
-                  <div className="card" style={{ padding: 18 }}>
-                    <div style={{ display: "flex", gap: 16, alignItems: "flex-start", flexWrap: "wrap" }}>
-                      <div className="tnum" style={{ fontSize: 22, fontWeight: 700, color: "var(--muted-2)", width: 34, flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}</div>
-                      <div style={{ flex: 1, minWidth: 220 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                          <span style={{ fontWeight: 600, fontSize: 16 }}>{c.brand}</span>
-                          <DomainBadge vertical={c.vertical} />
-                          <span style={{ fontSize: 11, color: "var(--muted-2)" }}>{c.category}</span>
-                          {c.airportPrecedent && <span className="badge" style={{ borderColor: "#7fd6a0", color: "var(--ok)" }}>✈ Airport precedent</span>}
-                        </div>
-                        <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.5 }}><b style={{ color: "var(--text)" }}>Why:</b> {c.why}</div>
-                        <div style={{ fontSize: 12.5, marginTop: 6, lineHeight: 1.5 }}><b style={{ color: "var(--accent)" }}>Bring to BIAL:</b> {c.bialFit}</div>
-                        <div style={{ display: "flex", gap: 12, marginTop: 9, flexWrap: "wrap", fontSize: 11.5 }}>
-                          {c.sources.map((s, j) => (
-                            <a key={j} href={s.url} target="_blank" rel="noreferrer" style={{ color: "var(--accent)" }}>{s.tier === 4 ? "◆ " : "↗ "}{s.label} ↗</a>
-                          ))}
-                        </div>
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8, flexShrink: 0 }}>
-                        <div className="tnum" style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.03em" }}>{c.score}<span style={{ fontSize: 11, color: "var(--muted-2)" }}>/100</span></div>
-                        <BuzzSpark buzz={c.buzz} w={120} h={32} />
-                      </div>
-                    </div>
-                  </div>
-                </MotionItem>
-              ))}
-            </MotionGrid>
-          )}
-        </div>
+    <div className="cx-page">
+      <div style={{ display: "flex", gap: 18, flexWrap: "wrap", alignItems: "center" }}>
+        <a href="/" className="cx-link">← Globe</a>
+        <Link href="/cities" className="cx-link" style={{ color: "var(--muted)" }}>All cities</Link>
       </div>
-    </>
+
+      {/* Hero */}
+      <section style={{ padding: "clamp(24px,5vh,56px) 0 30px", display: "grid", gridTemplateColumns: "minmax(0,1.4fr) minmax(0,1fr)", gap: 32, alignItems: "end" }} className="cx-hero">
+        <div>
+          <span className="cx-kicker" style={{ color: city.kind === "domestic" ? "var(--cyan)" : "#FF7A45" }}>
+            {city.kind === "domestic" ? "Domestic feeder" : "International hub"} · {city.benchmarkAirport}
+          </span>
+          <h1 className="cx-serif" style={{ fontSize: "clamp(52px,7vw,112px)", lineHeight: 0.92, margin: "16px 0 0", letterSpacing: "-.025em" }}>
+            {city.name}<span style={{ fontStyle: "italic", color: "var(--gold)" }}>.</span>
+          </h1>
+          <p style={{ maxWidth: 560, margin: "18px 0 0", fontSize: 15, lineHeight: 1.65, color: "#C6CDD7" }}>
+            The top five buzzing items in each section, scored against BIAL feasibility. Anything not yet at BLR opens a generated business plan.
+          </p>
+        </div>
+        <div className="cx-grid" style={{ gridTemplateColumns: "1fr 1fr" }}>
+          <div className="cx-cell" style={{ padding: "16px 14px" }}>
+            <div className="cx-kicker" style={{ fontSize: 9 }}>Airport code</div>
+            <div className="cx-serif" style={{ fontSize: 38, color: "var(--gold)" }}>{code}</div>
+          </div>
+          <div className="cx-cell" style={{ padding: "16px 14px" }}>
+            <div className="cx-kicker" style={{ fontSize: 9 }}>Shortlist</div>
+            <div className="cx-serif" style={{ fontSize: 38 }}>{String(candidates.length).padStart(2, "0")}</div>
+          </div>
+          {city.connectivity && (
+            <div className="cx-cell" style={{ padding: "14px", gridColumn: "1 / -1" }}>
+              <div className="cx-kicker gold" style={{ fontSize: 9 }}>✈ {city.connectivity.rank}</div>
+              <div style={{ fontSize: 13.5, color: "var(--head)", marginTop: 6 }}>{city.connectivity.metric}</div>
+            </div>
+          )}
+          <Link href="/methodology" className="cx-cta" style={{ gridColumn: "1 / -1", background: "#070A10" }}><span>How these are scored</span><span>→</span></Link>
+        </div>
+      </section>
+
+      {/* Six-section bucketed breakdown */}
+      <section style={{ paddingTop: 28 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 20, flexWrap: "wrap", marginBottom: 20 }}>
+          <div>
+            <span className="cx-kicker"><span style={{ color: "var(--gold)", marginRight: 12 }}>01</span>What&rsquo;s buzzing, by section</span>
+            <h2 className="cx-serif" style={{ fontSize: "clamp(30px,3.4vw,46px)", lineHeight: 1, margin: "12px 0 0" }}>Five per section, <span style={{ fontStyle: "italic", color: "var(--gold)" }}>scored for BLR</span></h2>
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <span className="cx-pill" style={{ color: "var(--ok)", borderColor: "rgba(111,227,168,.4)" }}>✓ At BIAL</span>
+            <span className="cx-pill" style={{ color: "var(--gold)", borderColor: "rgba(240,180,41,.45)" }}>Not at BIAL → plan</span>
+          </div>
+        </div>
+        <div className="cx-grid" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,360px),1fr))" }}>
+          {SECTIONS.map((section) => {
+            const items = breakdown.sections[section];
+            return (
+              <div key={section} className="cx-cell" style={{ padding: "18px 18px 10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                  <Icon name={SECTION_ICON[section] || "spark"} size={14} color="var(--gold)" />
+                  <span className="cx-kicker" style={{ color: "var(--head)" }}>{section}</span>
+                  <span className="cx-mono" style={{ marginLeft: "auto", fontSize: 10, color: "var(--muted-2)" }}>{items.length}</span>
+                </div>
+                {items.length === 0 ? (
+                  <div style={{ fontSize: 12.5, color: "var(--muted-2)", padding: "10px 0 12px" }}>No buzzing signal yet in this section — will populate on the next live refresh.</div>
+                ) : (
+                  <div>
+                    {items.map((item, i) => {
+                      const cardStyle: CSSProperties = { display: "block", padding: "12px 0", borderTop: "1px solid var(--line)", textDecoration: "none", color: "inherit" };
+                      const inner = (
+                        <>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                            <span style={{ fontSize: 14.5, color: "var(--head)" }}><span className="cx-mono" style={{ fontSize: 10, color: "var(--muted-2)", marginRight: 8 }}>{String(i + 1).padStart(2, "0")}</span>{item.name}</span>
+                            <span className="cx-serif" style={{ fontSize: 26, lineHeight: 1, color: "var(--gold)" }}>{item.score}</span>
+                          </div>
+                          <div style={{ display: "flex", gap: 8, marginTop: 6, alignItems: "center", flexWrap: "wrap" }}>
+                            {item.atBial ? (
+                              <span className="cx-pill" style={{ color: "var(--ok)", borderColor: "rgba(111,227,168,.4)" }}>✓ At BIAL</span>
+                            ) : (
+                              <span className="cx-pill" style={{ color: "var(--gold)", borderColor: "rgba(240,180,41,.45)" }}>Not at BIAL</span>
+                            )}
+                            <span className="cx-mono" style={{ fontSize: 9.5, letterSpacing: ".12em", color: "var(--muted-2)" }}>FEASIBILITY {item.feasibility}/100</span>
+                          </div>
+                          <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                            {item.atBial ? item.bialNote : <span className="cx-link">Open business plan →</span>}
+                          </div>
+                        </>
+                      );
+                      return item.atBial ? (
+                        <div key={item.id} style={cardStyle}>{inner}</div>
+                      ) : (
+                        <Link key={item.id} href={`/markets/${city.id}/plan/${item.id}?section=${encodeURIComponent(section)}`} className="cx-row" style={{ ...cardStyle, cursor: "pointer" }}>{inner}</Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Full market shortlist (buzz-profiled) */}
+      <section style={{ paddingTop: 64 }}>
+        <span className="cx-kicker"><span style={{ color: "var(--gold)", marginRight: 12 }}>02</span>Full market shortlist</span>
+        <h2 className="cx-serif" style={{ fontSize: "clamp(30px,3.4vw,46px)", lineHeight: 1, margin: "12px 0 20px" }}>Every buzzing brand, <span style={{ fontStyle: "italic", color: "var(--gold)" }}>ranked</span></h2>
+        {candidates.length === 0 ? (
+          <div className="cx-note">Shortlist not yet built for this market. Run the live collector to populate it.</div>
+        ) : (
+          <MotionGrid className="cx-grid" style={{ gridTemplateColumns: "1fr" }}>
+            {candidates.map((c, i) => (
+              <MotionItem key={c.id}>
+                <div className="cx-cell cx-shortrow">
+                  <div className="cx-mono" style={{ fontSize: 11, color: "var(--muted-2)" }}>{String(i + 1).padStart(2, "0")}</div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                      <span className="cx-serif" style={{ fontSize: 28, lineHeight: 1 }}>{c.brand}</span>
+                      <DomainBadge vertical={c.vertical} />
+                      {c.airportPrecedent && <span className="cx-pill" style={{ color: "var(--ok)", borderColor: "rgba(111,227,168,.4)" }}>✈ Airport precedent</span>}
+                    </div>
+                    <div className="cx-mono" style={{ fontSize: 9.5, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--muted-2)", marginTop: 6 }}>{c.category}</div>
+                    <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 10, lineHeight: 1.55 }}><span style={{ color: "var(--head)" }}>Why · </span>{c.why}</div>
+                    <div style={{ fontSize: 13.5, marginTop: 6, lineHeight: 1.55, color: "var(--text)" }}><span style={{ color: "var(--gold)" }}>Bring to BIAL · </span>{c.bialFit}</div>
+                    <div style={{ display: "flex", gap: 14, marginTop: 10, flexWrap: "wrap" }}>
+                      {c.sources.map((s, j) => (
+                        <a key={j} href={s.url} target="_blank" rel="noreferrer" className="cx-link" style={{ fontSize: 9 }}>{s.tier === 4 ? "◆ " : "↗ "}{s.label}</a>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+                    <div className="cx-serif" style={{ fontSize: 44, lineHeight: 1, color: "var(--gold)" }}>{c.score}</div>
+                    <BuzzSpark buzz={c.buzz} w={120} h={32} />
+                  </div>
+                </div>
+              </MotionItem>
+            ))}
+          </MotionGrid>
+        )}
+      </section>
+    </div>
   );
 }

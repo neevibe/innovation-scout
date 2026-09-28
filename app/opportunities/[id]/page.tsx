@@ -48,7 +48,7 @@ export default async function OpportunityDetail({ params }: { params: Promise<{ 
           <div style={{ display: "flex", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
             <span className="badge">{o.vertical}</span>
             <span className="badge">{o.category}</span>
-            <span className="badge">🌍 {o.city}, {o.country}</span>
+            <span className="badge">{o.city}, {o.country}</span>
             <span className="badge">{o.signalType}</span>
           </div>
           <h1 style={{ margin: "0 0 8px", fontSize: 24, fontWeight: 820, lineHeight: 1.2 }}>{o.title}</h1>
@@ -80,7 +80,7 @@ export default async function OpportunityDetail({ params }: { params: Promise<{ 
       <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 14, marginTop: 14, alignItems: "start" }}>
         {/* Recommendation */}
         <div className="card" style={{ padding: 20 }}>
-          <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>🎯 AI Recommendation</h2>
+          <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>AI Recommendation</h2>
           <Field label="Opportunity" value={o.recommendation.opportunity} />
           <Field label="Market Signal" value={o.recommendation.marketSignal} />
           <Field label="Why Now?" value={o.recommendation.whyNow} />
@@ -103,12 +103,12 @@ export default async function OpportunityDetail({ params }: { params: Promise<{ 
         <div className="card" style={{ padding: 20 }}>
           {o.buzz && (
             <div style={{ marginBottom: 18, paddingBottom: 16, borderBottom: "1px solid var(--line)" }}>
-              <h2 style={{ marginTop: 0, marginBottom: 10, fontSize: 15, fontWeight: 750 }}>📈 Buzz Longevity <Link href="/methodology" style={{ fontSize: 11, color: "var(--accent)", fontWeight: 400 }}>· model ↗</Link></h2>
+              <h2 style={{ marginTop: 0, marginBottom: 10, fontSize: 15, fontWeight: 750 }}>Buzz Longevity <Link href="/methodology" style={{ fontSize: 11, color: "var(--accent)", fontWeight: 400 }}>· model ↗</Link></h2>
               <BuzzSpark buzz={o.buzz} w={150} h={40} />
               <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 10, lineHeight: 1.5 }}>{o.buzz.note}</div>
             </div>
           )}
-          <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>📊 Factor Breakdown</h2>
+          <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Factor Breakdown</h2>
           <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>Weighted 0–100 · weights configurable in Admin</div>
           {(Object.keys(o.factors) as FactorKey[]).map((k) => {
             const val = o.factors[k];
@@ -130,7 +130,7 @@ export default async function OpportunityDetail({ params }: { params: Promise<{ 
 
       {/* Evidence */}
       <div className="card" style={{ padding: 20, marginTop: 14 }}>
-        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>🔍 Why are we saying this? — Evidence Trail</h2>
+        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Why are we saying this? — Evidence Trail</h2>
         <div style={{ display: "grid", gap: 10 }}>
           {o.evidence.map((e) => (
             <div key={e.id} style={{ display: "flex", gap: 12, padding: 12, borderRadius: 10, border: "1px solid var(--line)" }}>
@@ -155,7 +155,7 @@ export default async function OpportunityDetail({ params }: { params: Promise<{ 
 
       {/* Contacts */}
       <div className="card" style={{ padding: 20, marginTop: 14 }}>
-        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>🤝 Business Development Contact</h2>
+        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Business Development Contact</h2>
         {o.contacts.length === 0 ? (
           <div className="muted" style={{ fontSize: 13 }}>No public business contact identified yet. Contact Intelligence agent runs at Validated stage.</div>
         ) : (

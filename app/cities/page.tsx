@@ -1,97 +1,98 @@
 import { Repo } from "@/lib/db/store";
 import { getPageData } from "@/lib/view";
-import { Topbar } from "@/components/Topbar";
 import Link from "next/link";
 import { buildSixMonthReport } from "@/lib/intelligence/sixMonth";
 
 export const dynamic = "force-dynamic";
 
-const FLAG: Record<string, string> = { India: "🇮🇳", UAE: "🇦🇪", Singapore: "🇸🇬", "United Kingdom": "🇬🇧" };
+const CODE: Record<string, string> = { del: "DEL", bom: "BOM", ccu: "CCU", dxb: "DXB", sin: "SIN", lhr: "LHR" };
 
 export default async function CitiesPage() {
-  const { config, opportunities } = await getPageData();
+  const { opportunities } = await getPageData();
   const [cities, signals, portfolio, candidates] = await Promise.all([Repo.cities(), Repo.signals(), Repo.portfolio(), Repo.candidates()]);
   const report = buildSixMonthReport(cities, signals, portfolio, opportunities);
 
   return (
-    <>
-      <Topbar title="City Intelligence" subtitle={`Six reference markets · research window ${report.windowLabel}`} mode={config.mode} lastRefresh={config.lastRefreshAt} />
-      <div style={{ padding: "24px 34px 48px" }}>
-        <div className="card" style={{ padding: "14px 16px", marginBottom: 16, background: "linear-gradient(110deg,rgba(142,179,255,.13),rgba(146,112,255,.06))" }}>
-          <span className="eyebrow" style={{ color: "#b9ceff" }}>Market reading protocol</span>
-          <span style={{ fontSize: 13, color: "var(--muted)", marginLeft: 10 }}>Every card below prioritises evidence published in the last six months, then connects it to a BIAL-applicable move.</span>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(330px,1fr))", gap: 14 }}>
+    <div className="cx-page">
+      {/* Hero — same register as the globe console */}
+      <section style={{ padding: "clamp(28px,6vh,64px) 0 32px" }}>
+        <span className="cx-kicker" style={{ color: "#C6CDD7" }}>City intelligence — {cities.length} reference markets</span>
+        <h1 className="cx-serif" style={{ fontSize: "clamp(42px,5.4vw,84px)", lineHeight: 0.95, margin: "18px 0 0", letterSpacing: "-.02em" }}>
+          Where BLR&apos;s passengers come from,<br /><span style={{ fontStyle: "italic", color: "var(--gold)" }}>and what they&apos;re buying there.</span>
+        </h1>
+        <p style={{ maxWidth: 620, margin: "20px 0 0", fontSize: 15, lineHeight: 1.65, color: "#C6CDD7" }}>
+          Markets are chosen by real BLR passenger traffic, not flight counts. Each card reads the last six months of evidence ({report.windowLabel}) and ties it to a move BIAL can make.
+        </p>
+      </section>
+
+      <div className="cx-grid" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,380px),1fr))" }}>
         {cities.map((c) => {
           const pulse = report.cityPulses.find((item) => item.city.id === c.id);
           const citySignals = pulse?.signals || [];
-          const cityOpps = opportunities.filter((o) => o.city === c.name);
+          const cityOpps = opportunities.filter((o) => o.city === c.name).sort((a, b) => b.score - a.score);
           const brands = new Set(citySignals.map((s) => s.brand).filter(Boolean)).size;
           const fnb = citySignals.filter((s) => s.category === "F&B").length;
           const retail = citySignals.filter((s) => s.category !== "F&B").length;
-          const topScore = cityOpps.length ? Math.max(...cityOpps.map((o) => o.score)) : 0;
           const candCount = candidates.filter((cd) => cd.city === c.name).length;
           return (
-            <div key={c.id} className="card lift-card" style={{ padding: 18 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-                <div>
-                  <div style={{ fontSize: 17, fontWeight: 780 }}>{FLAG[c.country] || "🌐"} {c.name}</div>
-                  <div style={{ fontSize: 12, color: "var(--muted)" }}>{c.kind === "domestic" ? "Domestic feeder" : "International benchmark"} · {c.benchmarkAirport}</div>
+            <article key={c.id} className="cx-cell" style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ padding: "22px 22px 0", flex: 1 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12 }}>
+                  <span className="cx-kicker" style={{ color: c.kind === "domestic" ? "var(--cyan)" : "#FF7A45" }}>
+                    {c.kind === "domestic" ? "Domestic feeder" : "International hub"} · {c.benchmarkAirport}
+                  </span>
+                  <span className="cx-mono" style={{ fontSize: 11, letterSpacing: ".18em", color: "var(--gold)" }}>{CODE[c.id] || c.id.toUpperCase()}</span>
                 </div>
-                <span className="badge">{c.active ? "● Active" : "Paused"}</span>
-              </div>
-              {c.connectivity && (
-                <div style={{ marginTop: 12, padding: "10px 11px", borderRadius: 13, background: "rgba(127,214,160,.08)", border: "1px solid rgba(127,214,160,.14)" }}>
-                  <div className="eyebrow" style={{ fontSize: 9, color: "#7fd6a0" }}>✈ BLR connectivity · {c.connectivity.rank}</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, marginTop: 5 }}>{c.connectivity.metric}</div>
-                  {c.connectivity.detail && <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 3 }}>{c.connectivity.detail}</div>}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 7 }}>
-                    {c.connectivity.sources.map((s, i) => (
-                      <a key={i} href={s.url} target="_blank" rel="noreferrer" style={{ fontSize: 11, color: "var(--accent)" }}>
-                        {s.kind === "social" ? "◆ " : s.kind === "aviation-data" ? "✈ " : "↗ "}{s.label} ↗
-                      </a>
-                    ))}
+                <h2 className="cx-serif" style={{ fontSize: 44, lineHeight: 1, margin: "14px 0 0" }}>{c.name}</h2>
+
+                {c.connectivity && (
+                  <div style={{ marginTop: 18, paddingLeft: 12, borderLeft: "2px solid var(--gold)" }}>
+                    <div className="cx-kicker gold" style={{ fontSize: 9 }}>✈ BLR connectivity · {c.connectivity.rank}</div>
+                    <div style={{ fontSize: 14, color: "var(--head)", marginTop: 6 }}>{c.connectivity.metric}</div>
+                    {c.connectivity.detail && <div style={{ fontSize: 12, color: "var(--muted-2)", marginTop: 3 }}>{c.connectivity.detail}</div>}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 8 }}>
+                      {c.connectivity.sources.map((s, i) => (
+                        <a key={i} href={s.url} target="_blank" rel="noreferrer" className="cx-link" style={{ fontSize: 9 }}>
+                          {s.kind === "social" ? "◆ " : s.kind === "aviation-data" ? "✈ " : "↗ "}{s.label}
+                        </a>
+                      ))}
+                    </div>
                   </div>
+                )}
+
+                <div style={{ marginTop: 18 }}>
+                  <div className="cx-kicker cyan" style={{ fontSize: 9 }}>Six-month signal</div>
+                  <div style={{ fontSize: 14, lineHeight: 1.5, color: "var(--text)", marginTop: 6 }}>{pulse?.focus || "No distinct recent signal yet."}</div>
+                  {c.rationale && <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>{c.rationale}</div>}
                 </div>
-              )}
-              <div style={{ marginTop: 12, padding: "10px 11px", borderRadius: 13, background: "rgba(160,187,255,.08)", border: "1px solid rgba(184,205,255,.10)" }}>
-                <div className="eyebrow" style={{ fontSize: 9, color: "#b6caff" }}>Six-month signal</div>
-                <div style={{ fontSize: 12.5, lineHeight: 1.4, marginTop: 4 }}>{pulse?.focus || "No distinct recent signal yet."}</div>
+
+                <div className="cx-grid" style={{ gridTemplateColumns: "repeat(4,1fr)", marginTop: 18 }}>
+                  {([[citySignals.length, "Signals"], [brands, "Brands"], [fnb, "F&B"], [retail, "Retail/DF"]] as const).map(([n, l]) => (
+                    <div key={l} className="cx-cell" style={{ padding: "12px 10px" }}>
+                      <div className="cx-kicker" style={{ fontSize: 8.5, letterSpacing: ".18em" }}>{l}</div>
+                      <div className="cx-serif" style={{ fontSize: 30, lineHeight: 1.1 }}>{String(n).padStart(2, "0")}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ marginTop: 18, paddingBottom: 18 }}>
+                  <div className="cx-kicker" style={{ fontSize: 9, marginBottom: 6 }}>BIAL opportunities · {cityOpps.length}</div>
+                  {cityOpps.slice(0, 3).map((o) => (
+                    <Link key={o.id} href={`/opportunities/${o.id}`} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "8px 0", borderBottom: "1px solid var(--line)", textDecoration: "none" }}>
+                      <span style={{ color: "var(--head)", fontSize: 14 }}>{o.brand}</span>
+                      <span className="cx-serif" style={{ fontSize: 24, color: "var(--gold)" }}>{o.score}</span>
+                    </Link>
+                  ))}
+                  {cityOpps.length === 0 && <div style={{ fontSize: 12.5, color: "var(--muted-2)" }}>Monitoring — no scored opportunity yet.</div>}
+                </div>
               </div>
-              <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 10 }}>{c.rationale}</div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, marginTop: 14 }}>
-                <Stat n={citySignals.length} l="signals" />
-                <Stat n={brands} l="brands" />
-                <Stat n={fnb} l="F&B" />
-                <Stat n={retail} l="retail/DF" />
-              </div>
-              <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid var(--line)" }}>
-                <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase", letterSpacing: ".04em", marginBottom: 8 }}>BIAL opportunities ({cityOpps.length}) · top score {topScore}</div>
-                {cityOpps.slice(0, 3).map((o) => (
-                  <Link key={o.id} href={`/opportunities/${o.id}`} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 13 }}>
-                    <span style={{ color: "var(--accent)" }}>{o.brand}</span>
-                    <b>{o.score}</b>
-                  </Link>
-                ))}
-                {cityOpps.length === 0 && <div className="muted" style={{ fontSize: 12 }}>Monitoring — no scored opportunity yet.</div>}
-              </div>
-              <Link href={`/markets/${c.id}`} className="btn" style={{ marginTop: 12, width: "100%", justifyContent: "center", fontSize: 12.5 }}>
-                {candCount > 0 ? `Explore ${candCount} buzzing brands` : "Market shortlist"} →
+              <Link href={`/markets/${c.id}`} className="cx-cta">
+                <span>{candCount > 0 ? `Explore ${candCount} buzzing brands` : "Market shortlist"}</span><span>→</span>
               </Link>
-            </div>
+            </article>
           );
         })}
-        </div>
       </div>
-    </>
-  );
-}
-
-function Stat({ n, l }: { n: number; l: string }) {
-  return (
-    <div style={{ textAlign: "center", padding: 8, borderRadius: 9, background: "var(--surface-2)" }}>
-      <div style={{ fontSize: 20, fontWeight: 800 }}>{n}</div>
-      <div style={{ fontSize: 10, color: "var(--muted)" }}>{l}</div>
     </div>
   );
 }

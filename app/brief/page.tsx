@@ -46,16 +46,16 @@ export default async function BriefPage() {
       <Topbar title="AI Executive Brief" subtitle={`BIAL Innovation Brief · ${today}`} mode={config.mode} lastRefresh={config.lastRefreshAt} />
       <div style={{ padding: 28, maxWidth: 900 }}>
         {mastery.length > 0 && (
-          <Section title="🎯 Cross-Source Mastery (top convergence)">
+          <Section title="Cross-Source Mastery (top convergence)">
             <div style={{ fontSize: 12.5, color: "var(--muted)", marginBottom: 10 }}>
               Each row shows how many distinct scraping sources independently surfaced the same story.
               <b> Strong</b> = 3+ sources, <b>Moderate</b> = 2, <b>Single</b> = 1 (tier 1-2).
             </div>
             {mastery.map((m) => (
               <div key={m.dedupeKey} style={{ display: "flex", gap: 12, padding: "8px 0", borderBottom: "1px solid var(--line)", alignItems: "center" }}>
-                <div style={{ width: 44, fontWeight: 820, fontSize: 17, color: m.verdict === "strong" ? "var(--ok)" : m.verdict === "moderate" ? "#d4a64a" : "var(--muted)" }}>{m.masteryScore}</div>
+                <div className="cx-serif" style={{ width: 44, fontSize: 28, lineHeight: 1, color: m.verdict === "strong" ? "var(--ok)" : m.verdict === "moderate" ? "#d4a64a" : "var(--muted)" }}>{m.masteryScore}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700 }}>{m.topic}</div>
+                  <div style={{ color: "var(--head)", fontSize: 14.5 }}>{m.topic}</div>
                   <div style={{ fontSize: 12, color: "var(--muted)" }}>
                     verdict: <b>{m.verdict}</b> · {m.providerCount} provider{m.providerCount === 1 ? "" : "s"} · {m.sourceCount} source{m.sourceCount === 1 ? "" : "s"}
                   </div>
@@ -66,24 +66,24 @@ export default async function BriefPage() {
           </Section>
         )}
 
-        <Section title="🔥 Top 5 Opportunities This Week">
+        <Section title="Top 5 Opportunities This Week">
           {top5.map((o, i) => (
             <div key={o.id} style={{ display: "flex", gap: 12, padding: "12px 0", borderBottom: "1px solid var(--line)" }}>
-              <div style={{ fontSize: 22, fontWeight: 820, width: 30, color: "var(--muted)" }}>{i + 1}</div>
+              <div className="cx-mono" style={{ fontSize: 11, width: 30, color: "var(--muted-2)", paddingTop: 6 }}>{String(i + 1).padStart(2, "0")}</div>
               <div style={{ flex: 1 }}>
-                <Link href={`/opportunities/${o.id}`} style={{ fontWeight: 700, color: "var(--accent)" }}>{o.title}</Link>
+                <Link href={`/opportunities/${o.id}`} className="cx-serif" style={{ fontSize: 22, lineHeight: 1.15, color: "var(--head)" }}>{o.title}</Link>
                 <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 3 }}>{o.recommendation.whyNow}</div>
                 <div style={{ fontSize: 12.5, marginTop: 6 }}><b>Action:</b> {o.recommendation.recommendedNextAction}</div>
               </div>
               <div style={{ textAlign: "right", flexShrink: 0 }}>
-                <div style={{ fontSize: 24, fontWeight: 820 }}>{o.score}</div>
+                <div className="cx-serif" style={{ fontSize: 36, lineHeight: 1, color: "var(--gold)" }}>{o.score}</div>
                 <TierPill tier={o.tier} />
               </div>
             </div>
           ))}
         </Section>
 
-        <Section title="🏷️ Brands to Watch">
+        <Section title="Brands to Watch">
           {brandsToWatch.map((s) => (
             <li key={s.id} style={{ marginBottom: 8 }}>
               <b>{s.brand}</b> ({s.city}) — {s.trend}{" "}
@@ -92,7 +92,7 @@ export default async function BriefPage() {
           ))}
         </Section>
 
-        <Section title="✈️ Airport Benchmarking">
+        <Section title="Airport Benchmarking">
           {airportBench.map((s) => (
             <li key={s.id} style={{ marginBottom: 8 }}>
               <b>{s.airport}</b> — {s.description}{" "}
@@ -101,7 +101,7 @@ export default async function BriefPage() {
           ))}
         </Section>
 
-        <Section title="⚠️ Competitive Alerts">
+        <Section title="Competitive Alerts">
           {competitive.length === 0 && <li className="muted">None this cycle.</li>}
           {competitive.map((s) => (
             <li key={s.id} style={{ marginBottom: 8 }}>{s.description}{" "}
@@ -110,7 +110,7 @@ export default async function BriefPage() {
           ))}
         </Section>
 
-        <Section title="🤝 Partnership Opportunities">
+        <Section title="Partnership Opportunities">
           {partnerships.map((o) => (
             <li key={o.id} style={{ marginBottom: 8 }}>
               <b>{o.company}</b> — {o.contacts[0]?.designation}. <Link href={`/opportunities/${o.id}`} style={{ color: "var(--accent)", fontSize: 12 }}>open ↗</Link>

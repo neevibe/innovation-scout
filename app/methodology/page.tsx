@@ -75,7 +75,7 @@ export default async function MethodologyPage() {
         {/* Scrape */}
         <Section n="03" title="Multi-source scrape — think like a human analyst, read everything">
           <P>For each market × lens (retail · F&B · duty-free · experiential · D2C), the collector sweeps four source tiers and consolidates duplicates (N publications → one event):</P>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))", gap: 12, marginTop: 8 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,210px),1fr))", gap: 12, marginTop: 8 }}>
             <Tier n="Tier 1 · Official" items="Airport & brand sites, company announcements, government / regulatory" />
             <Tier n="Tier 2 · Media" items="Reuters, ET, Livemint, Forbes, trade press (Moodie Davitt)" />
             <Tier n="Tier 3 · Industry" items="Inc42, D2C Insider, World Coffee Portal, sector reports" />
@@ -92,7 +92,7 @@ export default async function MethodologyPage() {
             <li><b style={{ color: "var(--text)" }}>Momentum (slope)</b> = direction of the monthly series — rising, flat, or falling.</li>
             <li><b style={{ color: "var(--text)" }}>Trajectory class</b> — the label attached to every pick:</li>
           </ul>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginTop: 6 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,180px),1fr))", gap: 10, marginTop: 6 }}>
             <Traj c="#7fd6a0" name="Accelerating" d="Present most months, rising — promote" />
             <Traj c="#b9c6d6" name="Sustained" d="Present all/most months, steady — promote" />
             <Traj c="#7fd6a0" name="Emerging" d="New + rising, <3 mo — watch/validate" />
@@ -114,7 +114,7 @@ export default async function MethodologyPage() {
           <Eq label="Opportunity Score" eq="Score = ( Σ wᵢ · fᵢ ) ÷ ( Σ wᵢ ),  i = 1…9,  fᵢ ∈ [0,100]" note="Weighted mean of nine factor sub-scores; weights below sum to 100 and re-rank every opportunity live." />
           <div style={{ display: "grid", gap: 7, marginTop: 12 }}>
             {(Object.keys(w) as FactorKey[]).map((k, i) => {
-              const grads = ["#5b8cff", "#a06bff", "#ff6bcb", "#34e3c8", "#f59e0b", "#22c55e", "#06b6d4", "#ef4444", "#6366f1"];
+              const grads = ["#F0B429", "#FFD87A", "#FF7A45", "#7FD4FF", "#6FE3A8", "#D9C08A", "#8FB8FF", "#E8A0C8", "#B7C2FF"];
               const col = grads[i % grads.length];
               return (
                 <div key={k} style={{ display: "grid", gridTemplateColumns: "180px 1fr 40px", gap: 10, alignItems: "center", fontSize: 12 }}>
@@ -180,7 +180,7 @@ function Callout({ children }: { children: React.ReactNode }) {
 }
 function Eq({ label, eq, note }: { label: string; eq: string; note: string }) {
   return (
-    <div style={{ marginTop: 12, padding: "13px 16px", borderRadius: 12, background: "linear-gradient(120deg, rgba(91,140,255,0.10), rgba(160,107,255,0.08))", border: "1px solid rgba(122,162,255,0.22)" }}>
+    <div style={{ marginTop: 12, padding: "13px 16px", borderRadius: 12, background: "linear-gradient(120deg, rgba(240,180,41,0.08), rgba(240,180,41,0.08))", border: "1px solid rgba(240,180,41,0.28)" }}>
       <div className="eyebrow" style={{ fontSize: 9.5, color: "#9db4ff" }}>{label}</div>
       <div style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 15, marginTop: 6, color: "#eaf0ff", letterSpacing: "0.01em" }}>{eq}</div>
       <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.5 }}>{note}</div>

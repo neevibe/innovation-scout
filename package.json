@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx scripts/seed.ts",
-    "migrate": "tsx scripts/migrate.ts"
+    "migrate": "tsx scripts/migrate.ts",
+    "trends": "tsx scripts/collectTrends.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

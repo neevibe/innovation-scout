@@ -47,7 +47,7 @@ export function MarketChart({ domestic, international }: { domestic: MarketRow[]
           {/* bubbles */}
           {rows.map((r) => {
             const active = hover?.code === r.code;
-            const c = r.pick ? "#34e3c8" : "#8a90a6";
+            const c = r.pick ? "#6FE3A8" : "#5C6675";
             return (
               <g key={r.code} onMouseEnter={() => setHover(r)} onMouseLeave={() => setHover(null)} style={{ cursor: "pointer" }}>
                 <circle cx={px(r.atm)} cy={py(r.pax)} r={rr(r.slf)} fill={c} fillOpacity={active ? 0.5 : 0.28} stroke={c} strokeWidth={active ? 2.5 : 1.5} />
@@ -61,8 +61,8 @@ export function MarketChart({ domestic, international }: { domestic: MarketRow[]
             <div style={{ fontWeight: 700, marginBottom: 4 }}>{hover.city} ({hover.code})</div>
             <div className="muted">Passengers: <b style={{ color: "var(--text)" }}>{hover.pax.toLocaleString("en-IN")}</b></div>
             <div className="muted">Flights: <b style={{ color: "var(--text)" }}>{hover.atm.toLocaleString("en-IN")}</b></div>
-            <div className="muted">Load factor: <b style={{ color: hover.slf >= 88 ? "#34e3c8" : hover.slf < 80 ? "var(--warn)" : "var(--text)" }}>{hover.slf}%</b></div>
-            <div style={{ marginTop: 4, color: hover.pick ? "#34e3c8" : "var(--muted-2)", fontWeight: 600 }}>{hover.pick ? "✓ selected" : "not selected"}</div>
+            <div className="muted">Load factor: <b style={{ color: hover.slf >= 88 ? "#6FE3A8" : hover.slf < 80 ? "var(--warn)" : "var(--text)" }}>{hover.slf}%</b></div>
+            <div style={{ marginTop: 4, color: hover.pick ? "#6FE3A8" : "var(--muted-2)", fontWeight: 600 }}>{hover.pick ? "✓ selected" : "not selected"}</div>
           </div>
         )}
       </div>

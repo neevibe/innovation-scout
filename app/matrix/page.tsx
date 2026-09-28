@@ -17,14 +17,14 @@ export default async function MatrixPage() {
   return (
     <>
       <Topbar title="BIAL Opportunity Matrix" subtitle="Market Attractiveness vs BIAL Implementation Feasibility" mode={config.mode} lastRefresh={config.lastRefreshAt} />
-      <div style={{ padding: 28, display: "grid", gridTemplateColumns: "auto 320px", gap: 20, alignItems: "start" }}>
+      <div className="cx-matrix" style={{ padding: "28px clamp(16px,3vw,40px)", display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 20, alignItems: "start" }}>
         <div className="card" style={{ padding: 20, overflow: "auto" }}>
           <svg width={W} height={H} style={{ maxWidth: "100%" }}>
             {/* quadrant fills */}
-            <rect x={px(fy)} y={pad} width={W - pad - px(fy)} height={py(ax) - pad} fill="rgba(34,197,94,.06)" />
-            <rect x={pad} y={pad} width={px(fy) - pad} height={py(ax) - pad} fill="rgba(129,140,248,.06)" />
-            <rect x={px(fy)} y={py(ax)} width={W - pad - px(fy)} height={H - pad - py(ax)} fill="rgba(234,179,8,.05)" />
-            <rect x={pad} y={py(ax)} width={px(fy) - pad} height={H - pad - py(ax)} fill="rgba(100,116,139,.05)" />
+            <rect x={px(fy)} y={pad} width={W - pad - px(fy)} height={py(ax) - pad} fill="rgba(240,180,41,.07)" />
+            <rect x={pad} y={pad} width={px(fy) - pad} height={py(ax) - pad} fill="rgba(127,212,255,.04)" />
+            <rect x={px(fy)} y={py(ax)} width={W - pad - px(fy)} height={H - pad - py(ax)} fill="rgba(255,122,69,.04)" />
+            <rect x={pad} y={py(ax)} width={px(fy) - pad} height={H - pad - py(ax)} fill="rgba(255,255,255,.015)" />
 
             {/* grid lines */}
             <line x1={px(fy)} y1={pad} x2={px(fy)} y2={H - pad} stroke="rgba(255,255,255,0.14)" strokeDasharray="4 4" />
@@ -34,14 +34,14 @@ export default async function MatrixPage() {
             <line x1={pad} y1={pad} x2={pad} y2={H - pad} stroke="rgba(255,255,255,0.22)" />
 
             {/* quadrant labels */}
-            <text x={W - pad - 8} y={pad + 16} textAnchor="end" fill="#7fd6a0" fontSize="12" fontWeight="700">🚀 Do Now</text>
-            <text x={pad + 8} y={pad + 16} fill="#b9c6d6" fontSize="12" fontWeight="700">🔬 Pilot</text>
-            <text x={W - pad - 8} y={H - pad - 8} textAnchor="end" fill="#e0b877" fontSize="12" fontWeight="700">⚡ Quick Win</text>
-            <text x={pad + 8} y={H - pad - 8} fill="#9aa2aa" fontSize="12" fontWeight="700">❌ Deprioritise</text>
+            <text x={W - pad - 8} y={pad + 16} textAnchor="end" fill="#F0B429" fontSize="10" letterSpacing="2.4" fontFamily="var(--font-mono)">DO NOW</text>
+            <text x={pad + 8} y={pad + 16} fill="#7FD4FF" fontSize="10" letterSpacing="2.4" fontFamily="var(--font-mono)">PILOT</text>
+            <text x={W - pad - 8} y={H - pad - 8} textAnchor="end" fill="#FF7A45" fontSize="10" letterSpacing="2.4" fontFamily="var(--font-mono)">QUICK WIN</text>
+            <text x={pad + 8} y={H - pad - 8} fill="#5C6675" fontSize="10" letterSpacing="2.4" fontFamily="var(--font-mono)">DEPRIORITISE</text>
 
             {/* axis titles */}
-            <text x={W / 2} y={H - 10} textAnchor="middle" fill="#a7aeb5" fontSize="12">Implementation Feasibility →</text>
-            <text x={16} y={H / 2} textAnchor="middle" fill="#a7aeb5" fontSize="12" transform={`rotate(-90 16 ${H / 2})`}>Market Attractiveness →</text>
+            <text x={W / 2} y={H - 10} textAnchor="middle" fill="#6E7A8A" fontSize="10" letterSpacing="2.2" fontFamily="var(--font-mono)">IMPLEMENTATION FEASIBILITY →</text>
+            <text x={16} y={H / 2} textAnchor="middle" fill="#6E7A8A" fontSize="10" letterSpacing="2.2" fontFamily="var(--font-mono)" transform={`rotate(-90 16 ${H / 2})`}>MARKET ATTRACTIVENESS →</text>
 
             {/* points */}
             {opportunities.map((o) => {
@@ -50,8 +50,8 @@ export default async function MatrixPage() {
               const color = TIER_META[o.tier].color;
               return (
                 <g key={o.id}>
-                  <circle cx={x} cy={y} r={o.sufficientEvidence ? 9 : 6} fill={color} fillOpacity={0.95} stroke="#2c333b" strokeWidth={2} />
-                  <text x={x + 12} y={y + 4} fill="#f3f4f5" fontSize="11" fontWeight="600">{o.brand.length > 16 ? o.brand.slice(0, 15) + "…" : o.brand}</text>
+                  <circle cx={x} cy={y} r={o.sufficientEvidence ? 9 : 6} fill={color} fillOpacity={0.95} stroke="#04060A" strokeWidth={2} />
+                  <text x={x + 12} y={y + 4} fill="#EDE9E1" fontSize="11.5">{o.brand.length > 16 ? o.brand.slice(0, 15) + "…" : o.brand}</text>
                 </g>
               );
             })}
@@ -63,12 +63,12 @@ export default async function MatrixPage() {
             const items = opportunities.filter((o) => o.quadrant === q);
             return (
               <div key={q} className="card" style={{ padding: 14 }}>
-                <div style={{ fontWeight: 720, fontSize: 14 }}>{QUADRANT_META[q].emoji} {q}</div>
-                <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 8 }}>{QUADRANT_META[q].blurb}</div>
+                <div className="cx-serif" style={{ fontSize: 24, lineHeight: 1.1 }}>{q}</div>
+                <div className="cx-kicker" style={{ fontSize: 9, margin: "4px 0 10px" }}>{QUADRANT_META[q].blurb}</div>
                 {items.map((o) => (
-                  <Link key={o.id} href={`/opportunities/${o.id}`} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, padding: "4px 0" }}>
-                    <span style={{ color: "var(--accent)" }}>{o.brand}</span>
-                    <b>{o.score}</b>
+                  <Link key={o.id} href={`/opportunities/${o.id}`} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, padding: "6px 0", borderTop: "1px solid var(--line)", alignItems: "baseline" }}>
+                    <span style={{ color: "var(--head)" }}>{o.brand}</span>
+                    <span className="cx-serif" style={{ fontSize: 20, color: "var(--gold)" }}>{o.score}</span>
                   </Link>
                 ))}
                 {items.length === 0 && <div className="muted" style={{ fontSize: 12 }}>—</div>}

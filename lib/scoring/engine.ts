@@ -61,10 +61,10 @@ export function tierForScore(score: number, cfg: ScoutConfig): OpportunityTier {
 }
 
 export const TIER_META: Record<OpportunityTier, { emoji: string; label: string; color: string; hi: string }> = {
-  Immediate: { emoji: "🚨", label: "Immediate Opportunity", color: "#e8908f", hi: "#f4b6b0" },
-  "High Potential": { emoji: "🔥", label: "High Potential", color: "#e0b877", hi: "#f0d29b" },
-  Monitor: { emoji: "🟡", label: "Monitor / Validate", color: "#d8c98a", hi: "#e8dcac" },
-  "Low Priority": { emoji: "⚪", label: "Low Priority", color: "#9aa2aa", hi: "#c0c6cc" },
+  Immediate: { emoji: "🚨", label: "Immediate Opportunity", color: "#F0B429", hi: "#FFD87A" },
+  "High Potential": { emoji: "🔥", label: "High Potential", color: "#FF7A45", hi: "#FF9E6B" },
+  Monitor: { emoji: "🟡", label: "Monitor / Validate", color: "#7FD4FF", hi: "#B5E6FF" },
+  "Low Priority": { emoji: "⚪", label: "Low Priority", color: "#5C6675", hi: "#98A2B1" },
 };
 
 // --- 2x2 Opportunity Matrix axes -------------------------------------------

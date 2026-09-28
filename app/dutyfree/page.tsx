@@ -22,7 +22,7 @@ export default async function DutyFreePage() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(190px,1fr))", gap: 10, marginBottom: 26 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,190px),1fr))", gap: 10, marginBottom: 26 }}>
           {report.gaps.filter((gap) => gap.vertical === "Duty Free").slice(0, 3).map((gap) => (
             <div key={gap.category} className="card lift-card" style={{ padding: 14 }}>
               <div className="eyebrow" style={{ fontSize: 9, color: "#b8ceff" }}>Priority white space</div>
@@ -60,7 +60,7 @@ export default async function DutyFreePage() {
         </div>
 
         <h2 style={{ fontSize: 15, fontWeight: 750, margin: "0 0 12px" }}>Scored Duty Free opportunities</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: 14, marginBottom: 26 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,300px),1fr))", gap: 14, marginBottom: 26 }}>
           {dfOpps.map((o) => (
             <Link key={o.id} href={`/opportunities/${o.id}`} className="card" style={{ padding: 16, display: "block" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

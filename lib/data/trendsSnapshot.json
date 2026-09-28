@@ -1,0 +1,5173 @@
+{
+  "generatedAt": "2026-09-28T06:02:43.108Z",
+  "windowDays": 30,
+  "collector": "Agent Reach toolchain — Search, YouTube, News / Web",
+  "platforms": [
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "mode": "disconnected",
+      "sourceLabel": "Instagram Graph API — hashtag search",
+      "howToConnect": "Set IG_USER_ID + META_ACCESS_TOKEN (Instagram Business account). Agent Reach: `opencli instagram` via a logged-in browser session."
+    },
+    {
+      "id": "x",
+      "label": "X",
+      "mode": "disconnected",
+      "sourceLabel": "X API v2 — recent tweet counts",
+      "howToConnect": "Set X_BEARER_TOKEN (Basic tier or above). Agent Reach: `agent-reach configure twitter-cookies` + twitter-cli."
+    },
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "mode": "disconnected",
+      "sourceLabel": "No public trends API",
+      "howToConnect": "Meta retired CrowdTangle (Aug 2024); Meta Content Library is researcher-only. Agent Reach `opencli facebook` can read pages/groups with a logged-in session."
+    },
+    {
+      "id": "search",
+      "label": "Search",
+      "mode": "proxy",
+      "sourceLabel": "Wikipedia daily pageviews (Google Trends has no public API)",
+      "howToConnect": "For true Google Trends numbers, add a SerpApi / DataForSEO key."
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "mode": "live",
+      "sourceLabel": "YouTube search via yt-dlp (Agent Reach)",
+      "howToConnect": "Set YOUTUBE_API_KEY, or install yt-dlp (bundled with Agent Reach)."
+    },
+    {
+      "id": "reddit",
+      "label": "Reddit",
+      "mode": "disconnected",
+      "sourceLabel": "Reddit OAuth (app-only) search",
+      "howToConnect": "Public JSON now returns 403. Create a Reddit 'script' app and set REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET."
+    },
+    {
+      "id": "news",
+      "label": "News / Web",
+      "mode": "live",
+      "sourceLabel": "Google News RSS — global + India- and Asia-scoped queries"
+    }
+  ],
+  "trends": [
+    {
+      "id": "pickleball",
+      "name": "Pickleball",
+      "category": "Wellness",
+      "query": "pickleball",
+      "wiki": "Pickleball",
+      "blr": {
+        "fit": 38,
+        "vertical": "Experiences",
+        "zone": "Landside / campus",
+        "play": "Brand activation or landside court on the airport campus — not a terminal format.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 95,
+          "velocity": 0.91,
+          "raw": {
+            "avgDaily30d": 2839,
+            "last7avg": 2664,
+            "prior28avg": 2937
+          }
+        },
+        "youtube": {
+          "intensity": 91,
+          "velocity": 0.8,
+          "raw": {
+            "views7d": 1619905,
+            "views30d": 4234165,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 100,
+          "velocity": 2.37,
+          "raw": {
+            "items7d": 100,
+            "items1d_unsaturated": 43,
+            "items7d_unsaturated": 109,
+            "last48h": 5
+          }
+        }
+      },
+      "geo": {
+        "global": 100,
+        "asia": 93,
+        "india": 92,
+        "bengaluru": 98
+      },
+      "geoRaw": {
+        "global": 100,
+        "india": 63,
+        "asia": 46,
+        "bengaluru": 69
+      },
+      "series": [
+        3049,
+        3660,
+        3093,
+        3234,
+        3931,
+        3757,
+        3177,
+        3225,
+        3012,
+        4367,
+        7746,
+        4948,
+        4714,
+        3422,
+        3074,
+        2805,
+        2653,
+        2756,
+        2997,
+        2831,
+        2593,
+        2890,
+        3103,
+        2888,
+        3548,
+        3872,
+        3980,
+        3506,
+        3233,
+        3187,
+        3089,
+        3097,
+        4894,
+        3802,
+        3536,
+        3161,
+        3048,
+        3077,
+        3082,
+        3590,
+        3664,
+        3038,
+        2678,
+        2481,
+        2984,
+        2870,
+        3240,
+        3339,
+        2923,
+        2742,
+        3912,
+        2658,
+        2718,
+        2779,
+        2944,
+        2826,
+        2684,
+        2925,
+        4099,
+        3170,
+        3021,
+        3481,
+        3114,
+        2849,
+        2909,
+        2947,
+        2885,
+        3024,
+        3397,
+        3261,
+        3021,
+        2654,
+        2686,
+        2715,
+        2985,
+        2864,
+        2641,
+        2536,
+        2824,
+        2806,
+        2606,
+        2560,
+        2736,
+        2978,
+        2639,
+        2635,
+        2282,
+        2500,
+        2894,
+        2721
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Bauxite community holds pickleball tournament to support Gunner Frazier s family - KATV",
+          "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbXh2NWR1SG9rczVwVEJhNW5GelY2T0FkbnNOaWRleUJpcHloblhaVDJ1Si1zU2x4QlI0ZjF5bVdkVUMwbGNCRE5uRDhybEVOdkRGdVBvWjlqMFRSTDJJVnVaOUw2OHlCZDN1VDFrMy15LXFWMkJ6R3RDazk0NHc1YzQyc0M0SWN6Y01VcTFwa0hLUFNEbmpwUEZ5Sm15bXpaRDhqWjFjX3lIOHRKMWxlX01OUS1GZWVhdERSVi12b3c2ZDMwRzRPdA?oc=5",
+          "source": "KATV",
+          "date": "2026-09-28T03:10:53.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Pickleball tip of the week: Fixing 'tall-player' syndrome - The Desert Sun",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNVWVaT1pUeW04cHdidExDZ3l3OVZ6bFcxVDNqOHB6Mm55YXkxWEN5MnlIeGhWUWVzek1UTlE2RjI3YlI5LVF4VVpBNnJHN1AxMEpsaU9kVEFyNkFGR1VqRHhLQTNuMGhGUS1kTlpuREVxMG0xdERqSjJjcXJZdVV4QWtITWw0TWkxcEo5X0JUUXJtTk9OelRQNXJNOFRjX2lkY3luLUUyZ2M1S0s1NG1jeUdWMVlDRmlG?oc=5",
+          "source": "The Desert Sun",
+          "date": "2026-09-26T18:02:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Upcoming area blood drives; gift cards, pickleball equipment available for donors - Hays Post",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5aMEpmUHlfQ3dadHNZR0tmTWk0SnUtam95bW1tR29fZHVzNVgtWWdWV2QyMEFWTTdEbFp6SUNfamRpalFEblllN0ZEM1lnVWNBSzBVV0VYOVVKd2x6Ulh1VWJhZmJ5SWIwcWhJMVBfWUI?oc=5",
+          "source": "Hays Post",
+          "date": "2026-09-26T15:02:42.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "A New Non-Profit Has Formed To Promote Tennis And Pickleball In Newton - KNIA - KRLS",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxONEI5Z3FudUgzbHVPSW4wUzI3REd4SWJsUWJvVk10REpUR2IwNHdORUFYd0dITHhEVG5lRExzbFJlSVpGWmtaRjhwUmdqVmNJcThqTnVLUC1iMllOaVMxWlZGay1HMmlLLUVWd1VNVk4yNnp6OU9vTXFGNVdialJPd2JrSHRjWmlTamNGcU1QYVNtTlNHVjhpMmd5Wkw?oc=5",
+          "source": "KNIA - KRLS",
+          "date": "2026-09-26T11:36:59.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Waters/Johns v Rohrabacher/Alshon at the PPA Veolia Arizona Open 2026",
+          "url": "https://www.youtube.com/watch?v=xLPJEODhJug",
+          "source": "PPA Tour",
+          "metric": "229.0K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Anna Leigh Waters v Kate Fahey at the PPA Veolia Arizona Open 2026",
+          "url": "https://www.youtube.com/watch?v=87ES4Zd22Rc",
+          "source": "PPA Tour",
+          "metric": "149.1K views"
+        }
+      ],
+      "momentum": 95,
+      "velocityScore": 55,
+      "breadth": 1,
+      "overall": 84,
+      "lifecycle": "Peak",
+      "spread": "cross-platform",
+      "dominantPlatform": "news",
+      "blrRelevance": 61,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "smart-glasses",
+      "name": "AI smart glasses",
+      "category": "Technology",
+      "query": "smart glasses",
+      "wiki": "Smartglasses",
+      "blr": {
+        "fit": 66,
+        "vertical": "Retail",
+        "zone": "T2 Intl tech retail",
+        "play": "Demo-led tech retail (Ray-Ban Meta class) — high AOV, strong gifting and try-on theatre.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 61,
+          "velocity": 1.28,
+          "raw": {
+            "avgDaily30d": 237,
+            "last7avg": 287,
+            "prior28avg": 224
+          }
+        },
+        "youtube": {
+          "intensity": 100,
+          "velocity": 1.24,
+          "raw": {
+            "views7d": 4824630,
+            "views30d": 8071700,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 100,
+          "velocity": 1.59,
+          "raw": {
+            "items7d": 100,
+            "items1d_unsaturated": 30,
+            "items7d_unsaturated": 113,
+            "last48h": 13
+          }
+        }
+      },
+      "geo": {
+        "global": 100,
+        "asia": 97,
+        "india": 90,
+        "bengaluru": 96
+      },
+      "geoRaw": {
+        "global": 100,
+        "india": 58,
+        "asia": 55,
+        "bengaluru": 62
+      },
+      "series": [
+        216,
+        221,
+        194,
+        146,
+        183,
+        153,
+        187,
+        229,
+        234,
+        204,
+        241,
+        200,
+        155,
+        274,
+        317,
+        263,
+        221,
+        187,
+        184,
+        167,
+        205,
+        185,
+        159,
+        189,
+        157,
+        157,
+        203,
+        260,
+        192,
+        184,
+        164,
+        171,
+        187,
+        208,
+        215,
+        265,
+        223,
+        260,
+        442,
+        271,
+        278,
+        272,
+        288,
+        248,
+        207,
+        220,
+        163,
+        199,
+        208,
+        195,
+        210,
+        240,
+        213,
+        169,
+        191,
+        172,
+        263,
+        226,
+        262,
+        243,
+        182,
+        205,
+        381,
+        274,
+        226,
+        236,
+        230,
+        148,
+        171,
+        161,
+        181,
+        195,
+        202,
+        222,
+        309,
+        183,
+        242,
+        229,
+        194,
+        271,
+        263,
+        200,
+        189,
+        285,
+        312,
+        257,
+        387,
+        359,
+        239,
+        169
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Meta Glasses by Lisa launch: Price, styles, and where to buy - mashable.com",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9EVTNaWVZ6TlgxSlVVcmZ0YXJyVDRsLVpEYVFyNTZlUnN0V2NZYlBWUDBycEF3emptakxhQzhtMGhVNlUwMU9DbHVUUTdTc0dVWnM2MXRGOEJMM3IyWE8zelVWOUthVmM?oc=5",
+          "source": "mashable.com",
+          "date": "2026-09-28T05:14:02.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Smart glasses raise new workplace privacy concerns - NJBIZ",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9FM0NaMmRqcjB6SUp1UEp6ZVZrRjdFd1o1dkhOWEotUFdmMi1IUmk4YjQtbkNNWGlBZVVNUi13MHV5Zk9wUXU4MFNLWXRoTGVRVVpQaFgxRWRBekdtS1VFWm5pejllVC1CREMyeUlManI0N281eWl5UA?oc=5",
+          "source": "NJBIZ",
+          "date": "2026-09-28T04:03:57.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Mark Zuckerberg largely ignores smart glasses privacy backlash at Meta Connect - mashable.com",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNZHlhcmZoQTF0VTZzUGQ5eHZ5eXoxMVRRaU1JeS10TU1nQS0zQ29VUUQtd0dEeEJ0d0FTNHM1WG1CQlpmVlpKcjJlQTFfckRFLVJfYjV4UG8wRTI3QkVnWkZkUDI3WDJFd29jMlk5OU1ydHFWQk1DNHIzZ0kzSnp0bGY2MEdBVS1pRTlpWi1ER2pWblJfMHNMZElNclpidTlBMXc?oc=5",
+          "source": "mashable.com",
+          "date": "2026-09-27T20:02:35.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Meta pitches new privacy protections for Muse and its smart glasses - mashable.com",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5id25OdTVkRjZwUGxUd2NLU2hDd0wyczE0MHJiVGp2RmNPU3U2Y2dUYjNxMmo5cW1NMnNmb2lQY2lTU2FTRlcyN1BKVzRaZXVGUXJmakpYSkk5S3hqLWEwQzFRX1lLeWRFZ09qUThuMnpVcmdaOEtLNXl3?oc=5",
+          "source": "mashable.com",
+          "date": "2026-09-27T18:44:30.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Meta Introduces No Camera Smart Glasses, AI Keychain And VR Glasses | 3 Tech Wonders To Launch Soon",
+          "url": "https://www.youtube.com/watch?v=OwehQYCj4TE",
+          "source": "NDTV Profit",
+          "metric": "1.0M views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Meta Connect 2026: Everything Revealed in 16 Minutes",
+          "url": "https://www.youtube.com/watch?v=JvyVwlP_nlw",
+          "source": "VRelity",
+          "metric": "1.0M views"
+        }
+      ],
+      "momentum": 83,
+      "velocityScore": 66,
+      "breadth": 1,
+      "overall": 81,
+      "lifecycle": "Accelerating",
+      "spread": "cross-platform",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 74,
+      "verdict": "Act now"
+    },
+    {
+      "id": "matcha",
+      "name": "Matcha",
+      "category": "F&B",
+      "query": "matcha",
+      "wiki": "Matcha",
+      "blr": {
+        "fit": 86,
+        "vertical": "F&B",
+        "zone": "T1 + T2 landside/airside",
+        "play": "Matcha bar or matcha-led café slot (VE/LA-class). Pairs with the existing matcha pop-up opportunity.",
+        "links": [
+          {
+            "label": "Matcha pop-up opportunity",
+            "href": "/opportunities/opp-matcha"
+          },
+          {
+            "label": "Singapore shortlist (VE/LA)",
+            "href": "/markets/sin"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 91,
+          "velocity": 0.99,
+          "raw": {
+            "avgDaily30d": 2158,
+            "last7avg": 2127,
+            "prior28avg": 2141
+          }
+        },
+        "youtube": {
+          "intensity": 93,
+          "velocity": 0.66,
+          "raw": {
+            "views7d": 1526213,
+            "views30d": 4784650,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 100,
+          "velocity": 0.87,
+          "raw": {
+            "items7d": 100,
+            "items1d_unsaturated": 11,
+            "items7d_unsaturated": 76,
+            "last48h": 12
+          }
+        }
+      },
+      "geo": {
+        "global": 100,
+        "asia": 92,
+        "india": 79,
+        "bengaluru": 80
+      },
+      "geoRaw": {
+        "global": 100,
+        "india": 32,
+        "asia": 44,
+        "bengaluru": 28
+      },
+      "series": [
+        1758,
+        2088,
+        2031,
+        2147,
+        3358,
+        2732,
+        7930,
+        2908,
+        2140,
+        2214,
+        2120,
+        2057,
+        2209,
+        1993,
+        1937,
+        1861,
+        1892,
+        1925,
+        1997,
+        1999,
+        1788,
+        1816,
+        1815,
+        2123,
+        2182,
+        2399,
+        2278,
+        2282,
+        2256,
+        2393,
+        2033,
+        1987,
+        2142,
+        2292,
+        2150,
+        2064,
+        1925,
+        2071,
+        2265,
+        2253,
+        2321,
+        2053,
+        1912,
+        1934,
+        2058,
+        2098,
+        2150,
+        2274,
+        1996,
+        1934,
+        1985,
+        2304,
+        2066,
+        2112,
+        2288,
+        1949,
+        2143,
+        1985,
+        2001,
+        2021,
+        2183,
+        2314,
+        2008,
+        1978,
+        1982,
+        2106,
+        2287,
+        2312,
+        2361,
+        2027,
+        1891,
+        1964,
+        2067,
+        2176,
+        2208,
+        2493,
+        1946,
+        2024,
+        1999,
+        2334,
+        2236,
+        2427,
+        2527,
+        2139,
+        2005,
+        1980,
+        2035,
+        2069,
+        2409,
+        2249
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Creamie Sippies Opens 4th Outlet In Bugis With SG’s First DIY Banana Pudding Bar - Eatbook.sg",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1FbW95eGotMUZGTWp2eFNkdFEwYmpON3ZWLWJKekdYa0pvQ1dtVHRmSlJtTGFLXy1vTzdGWExocXVVNWpWT1EybkdwSTh0MHZGc1Q4ZHY0c3FJTHVERVUxUU1B0gFiQVVfeXFMTUVtb3l4ai0xRkZNanZ4U2R0UTBiak43dlYtYkp6R1hrSm9DV21UdGZKUm1MYUtfLW9PN0ZYTGhxdVU1alZPUTJuR3BJOHQwdkZzVDhkdjRzcUlMdURFVTFRTUE?oc=5",
+          "source": "Eatbook.sg",
+          "date": "2026-09-28T04:22:28.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Shanghai's Viral Sensation \"Hand-drawn Lamb\": 70% Revenue Contribution & Nationwide Internet Replication Trend - eu.36kr.com",
+          "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9SeGk3M2oxM1hOX3duakE4c2ptaEFxakJfUVA0dnVLSVNhcVp2Rzk1NktVWnBlQ01pRDVlNjNqblVocW5oS2dpSHJlTGxNdWIxOHlz?oc=5",
+          "source": "eu.36kr.com",
+          "date": "2026-09-28T01:40:36.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "New Starbucks fall menu - The Miami Hurricane",
+          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5aZ2U3dnJBa1FxV09vNjQtTXE3S2dqeXlrTWxlc2NqMzh1YVFKbmxrQTV0Q1VlbUZDZm5XMnkzdHJ3SlZWdTJjR2tkMFpCTHMxbEpjdVlwMmtROHdFblFEd3BkVEVScUdycnMydHRYOV9kcWc?oc=5",
+          "source": "The Miami Hurricane",
+          "date": "2026-09-27T21:45:44.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Matcha & Espresso Miyano-yu - Time Out Worldwide",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBia3JId2pQaWxxNExDTFN2YkdCa0RtbUxzd0xScTk4YmdzX3VNNHJ4QXA4OWtXRmc2Rl92Z0NyT3RTYVk1UHFJb1RibjlJd19XM1lSd1NQVDlFMm1RZ1VOTmhNOXp1N2tyaTVOOElUUUZURkJTclE?oc=5",
+          "source": "Time Out Worldwide",
+          "date": "2026-09-27T15:00:00.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "MATCHA POOL PARTY sa BG HOUSE - 8 Million Celebration",
+          "url": "https://www.youtube.com/watch?v=1YZJ12lxtaw",
+          "source": "Von Ordona",
+          "metric": "828.7K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "From Matcha To Whisky: What Is India Drinking Now? | The Palki Sharma Show | India Global Review",
+          "url": "https://www.youtube.com/watch?v=Q1dLvEdcF2Q",
+          "source": "India Global Review",
+          "metric": "218.2K views"
+        }
+      ],
+      "momentum": 94,
+      "velocityScore": 41,
+      "breadth": 1,
+      "overall": 79,
+      "lifecycle": "Cooling",
+      "spread": "cross-platform",
+      "dominantPlatform": "news",
+      "blrRelevance": 77,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "solo-travel",
+      "name": "Solo travel",
+      "category": "Travel",
+      "query": "solo travel",
+      "blr": {
+        "fit": 55,
+        "vertical": "Travel Services",
+        "zone": "Services",
+        "play": "Solo-traveller services: single-seat dining counters, safety/concierge services, compact travel kits.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": null,
+          "velocity": null
+        },
+        "youtube": {
+          "intensity": 95,
+          "velocity": 1,
+          "raw": {
+            "views7d": 2711716,
+            "views30d": 5647947,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 78,
+          "velocity": 0.95,
+          "raw": {
+            "items7d": 54,
+            "items1d_unsaturated": 18,
+            "items7d_unsaturated": 114,
+            "last48h": 14
+          }
+        }
+      },
+      "geo": {
+        "global": 78,
+        "asia": 88,
+        "india": 73,
+        "bengaluru": 62
+      },
+      "geoRaw": {
+        "global": 54,
+        "india": 23,
+        "asia": 37,
+        "bengaluru": 11
+      },
+      "series": [],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "This French-influenced Asian capital is a food lover’s dream - WAtoday",
+          "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOdGQzZWNsYm01WFQyTmJYSi0zU2ozZkl1OWI3YUxoZ0oza0dWXzNKQ2MtZnFMWk5rRG1tX0VTZHZTeGpObnBWbWxDdEp6Z3ZPNjRITlpmeUdKMXlMWGtSOVdZNEVZNVcxeXB3Y2VZZzUzTTd2RkJTZGxQVzZDYzdJRjNVOTliYmVlMUFRQUFyYVdLLXV5MFdoaGtnTDJkV1ZJd0tfNVJlZHh0QWFlUy1pQXlvLWxPblJTejhURUxDUmRHUlpNTkpiSURn?oc=5",
+          "source": "WAtoday",
+          "date": "2026-09-27T19:00:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Europe’s new entry system is shambolic – and it could see you mistakenly deported - The Age",
+          "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPM2tjdDNkOGxENGFSTzI3MnhRRUNXTjUtTzBOZnBYcEd1cTU3Qms0dDdtdGpfRWw5Um45blJjSHRydDF6bGVma0pIb2QzLW9IakpnUWptZG1ZczQxNXhsLVdhX0V5cFFkVDNjLUV1aTFRYTJZOHd5RThSTnN2N01RdHVnZGdZakcyZ3BjZFpPVl9zbEFMTHF5UGRNcVNpNFhwQzg5MjUwOWlQenpZT3RTZ2w0d182V2xkSUZvUm9Ib1VveUFRbUFXekE3WVJvMjlzdXBqaUJhaDl1SVJWZFpEdHpNZEUtQTJWaDc4?oc=5",
+          "source": "The Age",
+          "date": "2026-09-27T19:00:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "World Tourism Day 2026: Can AI Really Keep Solo Female Travellers Safe? How Smart Tools Are Making It Easier - Herzindagi",
+          "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxOeGxqb0dEMXR4aEJGbmlhR2VUVU1UMTlpWXg5cGtiM3I3N2hnTkZ3N3dBcG9odjdxMUZ0TGIxTUR5dHJ6V2Z5ZUxrWUhUSXlSNGpyLTRJQXYzbFk2OTBRQldwa1ZGc093Rm05U3pHOGMzb18zdlNqN2dyQWNJN09sVGpvcXhWem03NG9Rdm5UYVJhbHB6SUF5MXhSSVBzbTR2V2Y2NUcyT2plMGVFY1NodEJBR25RdzJuVHlFanlaNFIzUktoTHFrYUZNZ3J6dy1yREVhT1FPMmpKcmVVQUluTjdIa0NUVFlSZXd5VTRHVnFCbkpN0gH7AUFVX3lxTE4tUUEzOEwwWXN6WVN4aGZ1bVBLOXNZSFMtclB0QjE5Q1JHOUtNT1pzRk1pS0M3S2lVdF8zUncwTTBjN1V3WFMwbjdMcDYyLU1HbE52UUo3dzBkazZDc1lqeDZ3R0Vjd2c3bWZCLU0yX0l6ckpvdGREQnFqNThGZFE5UjBzMTNhN1l1RmFNVHdmdnNrNzlKMWxySmJ0Tk9qVHFVSUZsWFAtLTVrZXVGbGZPOVBxTGpDbDRSMjNZY2VMZXkzcnRqNmptZUJWTWVKek5jcUhSLTB4dDUxTkgxQy1RVXhFWHNxZ05wMmxUM0poNVhjdVBYT2JON1RR?oc=5",
+          "source": "Herzindagi",
+          "date": "2026-09-27T11:50:18.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Traveling Solo After 55? Travel Advisors Share the 3 Crucial Details to Check Before You Book - parade.com",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5EcGw5X2tSMzg1TmROYS1XZ0pEb28yaFgyaXM0OHl5RUtZbF80QjdhdzFoV1NBRC1RSi1HY1VWOVBCTjdYUjB4aVhtN1BnS1lrS1c2QmhQTmVoRm84RTZkStIBZ0FVX3lxTFBSbHNXeGRQUWlUaV9NSW8tLWhZcHh0TzBhVVB5ZkEzR0tRU3dUT0FEV1BNWGxiMUlBQVVxT1E3Y19FcG96bmVOaV9TdEZDX2pOSFQ1cE16cmFZUUhxSVgwazhtY0hrUDg?oc=5",
+          "source": "parade.com",
+          "date": "2026-09-27T11:10:00.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Solo Female Biker Welcomed Into a Remote Mountain Village in North Pakistan 🇵🇰 | Pakistan #5",
+          "url": "https://www.youtube.com/watch?v=ZJ4KXURrXf8",
+          "source": "Meike - Solo Female Travel",
+          "metric": "591.9K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Yamaha R2 vs NS400Z Drag Race",
+          "url": "https://www.youtube.com/watch?v=RxssvZu-MnU",
+          "source": "Solo Traveler",
+          "metric": "414.1K views"
+        }
+      ],
+      "momentum": 87,
+      "velocityScore": 48,
+      "breadth": 1,
+      "overall": 78,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 61,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "k-beauty",
+      "name": "K-Beauty",
+      "category": "Beauty",
+      "query": "k-beauty",
+      "wiki": "K-beauty",
+      "blr": {
+        "fit": 90,
+        "vertical": "Duty Free",
+        "zone": "T2 Intl departures",
+        "play": "K-beauty travel-exclusive bay — sheet masks, SPF, minis. Present at DXB/SIN/ICN, absent at BLR; the youngest outbound mix in India.",
+        "links": [
+          {
+            "label": "Foxtale — homegrown beauty opp",
+            "href": "/opportunities/opp-foxtale"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 46,
+          "velocity": 0.98,
+          "raw": {
+            "avgDaily30d": 82,
+            "last7avg": 83,
+            "prior28avg": 85
+          }
+        },
+        "youtube": {
+          "intensity": 71,
+          "velocity": 0.81,
+          "raw": {
+            "views7d": 340640,
+            "views30d": 875046,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 100,
+          "velocity": 2.07,
+          "raw": {
+            "items7d": 100,
+            "items1d_unsaturated": 29,
+            "items7d_unsaturated": 84,
+            "last48h": 22
+          }
+        }
+      },
+      "geo": {
+        "global": 100,
+        "asia": 100,
+        "india": 70,
+        "bengaluru": 68
+      },
+      "geoRaw": {
+        "global": 100,
+        "india": 20,
+        "asia": 64,
+        "bengaluru": 15
+      },
+      "series": [
+        68,
+        61,
+        71,
+        88,
+        132,
+        110,
+        150,
+        156,
+        157,
+        152,
+        155,
+        136,
+        116,
+        128,
+        120,
+        213,
+        272,
+        148,
+        138,
+        140,
+        110,
+        120,
+        126,
+        103,
+        123,
+        92,
+        101,
+        97,
+        108,
+        101,
+        68,
+        60,
+        79,
+        79,
+        68,
+        70,
+        80,
+        78,
+        88,
+        57,
+        72,
+        77,
+        87,
+        63,
+        108,
+        71,
+        79,
+        95,
+        165,
+        78,
+        72,
+        78,
+        72,
+        72,
+        86,
+        77,
+        82,
+        78,
+        163,
+        94,
+        70,
+        107,
+        107,
+        80,
+        73,
+        72,
+        86,
+        79,
+        62,
+        67,
+        70,
+        81,
+        65,
+        80,
+        72,
+        100,
+        62,
+        81,
+        116,
+        106,
+        82,
+        78,
+        79,
+        84,
+        99,
+        91,
+        70,
+        67,
+        88,
+        84
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Shinsegae Targets US Beauty Market with K-Beauty Retail Platform - Global Cosmetics News",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOLUgzOFAzc1hpSHFab3ZWZ2NPSWNXcTliOHpqakQ1R3M4enBUVEtsbXpjZXdKd2lleHM2ODVWSUZOTkNoX1RYeWtBbmhqRUxOS1l5UnVMQV94WHpLN3VUWkJxMjFISzBJOEpaYmdtSVYybVVta2x5ZzcwRGZDeTJ1Vm93dlNqaUZZdWwyc1JMdmNydmY1OHI1ODdDSGY2VURIWV9B?oc=5",
+          "source": "Global Cosmetics News",
+          "date": "2026-09-28T05:03:13.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "L’Oréal and Nykaa Partner to Invest in Emerging Indian Beauty Brands - Global Cosmetics News",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQVlJYejJQU01yVjRiRXNDT2xya1RydkI2TWRPenlEa1ZicXB4S3NNVzJMem1BbkJoQVBmN0tkT3lxNWxOMVQ3bFExNWpnSllTNnZpaEF0SnhrYnJTTXh0WkRxemxZcWVaSnNjZjVQazZLVC1oM2pLSWZObUJDVUtYZ1VkUElacUlBbnhYYVlLeFhvSEc1THMtby10cWF5b2hwalItbDRFUQ?oc=5",
+          "source": "Global Cosmetics News",
+          "date": "2026-09-28T05:03:13.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Korean beauty product trend: Why what works in Seoul does not always work in Tel Aviv - jpost.com",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNLUljZGVfV0VQM2MtYU9JS0VlWUExeXk5OEFNZ2t1TElRWk04bFdWQmVEY3BXal9TWXBkakxPc2MzWjhNaU5NMW0yUUJYc01FVDFRQmhYVkFpTlNCVmtkMXZXN2ptc04yQTlBdlY5elRRUHFpaUhZNmdXcnhtdXU4b2RxZGZleEticGhMZ0ppNjkzbWpndmR6dw?oc=5",
+          "source": "jpost.com",
+          "date": "2026-09-28T05:00:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "These Days, the Look Everyone Wants Is the “Grown-Woman” Look—Refined, Innocent Beauty Like Kim Ji-won and Shin Min-a - 스포츠조선",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNVnlLeVZWTlVKYkd5aFhZRlRGeHZFcWpvMmM5VEZDRlFnbDZNNkFHd3cwVGhJZk4xWThVYzZ6clR0eEhJM1hUaTFYZm5yS0c5QjI2STQyN1NMb192eGxETFRUcGVOZEdrRUZudlUzbFJTQkN5WUZZOEpnSEtXQ2YzQUF3?oc=5",
+          "source": "스포츠조선",
+          "date": "2026-09-28T04:54:29.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "TESTING NEW KBEAUTY AND CBEAUTY !! | YESSTYLE HAUL",
+          "url": "https://www.youtube.com/watch?v=z2S27AITxnA",
+          "source": "Robert Welsh",
+          "metric": "59.4K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Simple Everyday Makeup Tutorial",
+          "url": "https://www.youtube.com/watch?v=Rx1u2_b4ahk",
+          "source": "Tina Yong",
+          "metric": "55.1K views"
+        }
+      ],
+      "momentum": 69,
+      "velocityScore": 56,
+      "breadth": 1,
+      "overall": 71,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "news",
+      "blrRelevance": 77,
+      "verdict": "Act now"
+    },
+    {
+      "id": "lab-grown-diamonds",
+      "name": "Lab-grown diamonds",
+      "category": "Retail",
+      "query": "lab grown diamonds",
+      "wiki": "Synthetic diamond",
+      "blr": {
+        "fit": 64,
+        "vertical": "Retail",
+        "zone": "T2 luxury walk",
+        "play": "Lab-grown fine jewellery boutique — accessible luxury with a strong India supply story.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 64,
+          "velocity": 0.94,
+          "raw": {
+            "avgDaily30d": 309,
+            "last7avg": 290,
+            "prior28avg": 308
+          }
+        },
+        "youtube": {
+          "intensity": 76,
+          "velocity": 1.89,
+          "raw": {
+            "views7d": 1156851,
+            "views30d": 1275970,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 78,
+          "velocity": 0.72,
+          "raw": {
+            "items7d": 54,
+            "items1d_unsaturated": 14,
+            "items7d_unsaturated": 116,
+            "last48h": 8
+          }
+        }
+      },
+      "geo": {
+        "global": 78,
+        "asia": 85,
+        "india": 78,
+        "bengaluru": 90
+      },
+      "geoRaw": {
+        "global": 54,
+        "india": 31,
+        "asia": 31,
+        "bengaluru": 45
+      },
+      "series": [
+        341,
+        292,
+        280,
+        336,
+        274,
+        299,
+        258,
+        265,
+        329,
+        346,
+        282,
+        295,
+        318,
+        347,
+        516,
+        474,
+        381,
+        320,
+        309,
+        368,
+        336,
+        309,
+        340,
+        311,
+        318,
+        261,
+        310,
+        345,
+        341,
+        352,
+        365,
+        360,
+        294,
+        1130,
+        511,
+        414,
+        353,
+        339,
+        328,
+        256,
+        328,
+        279,
+        221,
+        217,
+        284,
+        296,
+        212,
+        309,
+        331,
+        278,
+        302,
+        315,
+        314,
+        328,
+        363,
+        219,
+        239,
+        251,
+        303,
+        371,
+        318,
+        369,
+        419,
+        222,
+        301,
+        303,
+        309,
+        290,
+        377,
+        319,
+        401,
+        316,
+        322,
+        305,
+        270,
+        282,
+        260,
+        307,
+        371,
+        300,
+        323,
+        263,
+        283,
+        302,
+        303,
+        310,
+        284,
+        253,
+        284,
+        295
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Signet Stock And The Lab Grown Diamond Shift Investors Should Watch - simplywall.st",
+          "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPZndXNURpLWNfNTJrM08zdk5CSG1QZGl6TkVwcm00Qk9WQTR2aDl4R056ZVg4eENxekRQcmtHOE1aVUdDdm80ZWFVcTZFdzJwQUo5UWoxbS1lY1FBU1lMOGczeUxqUHpvblY3azJHbGpDTk5ZTEhxMjlkcE1zVUxXTTI0a3Z0R19JdmMtNVBrdDZCX2tUdTlJazhPY2VJejZfcW5jMkRmRW1SYlJMb2trNVBNQ2NuTWpPcW1CbWt3SjFfcE1xSVduMmNITWVQT3lrQllLYzZYU2YwZ9IB2gFBVV95cUxPZndXNURpLWNfNTJrM08zdk5CSG1QZGl6TkVwcm00Qk9WQTR2aDl4R056ZVg4eENxekRQcmtHOE1aVUdDdm80ZWFVcTZFdzJwQUo5UWoxbS1lY1FBU1lMOGczeUxqUHpvblY3azJHbGpDTk5ZTEhxMjlkcE1zVUxXTTI0a3Z0R19JdmMtNVBrdDZCX2tUdTlJazhPY2VJejZfcW5jMkRmRW1SYlJMb2trNVBNQ2NuTWpPcW1CbWt3SjFfcE1xSVduMmNITWVQT3lrQllLYzZYU2YwZw?oc=5",
+          "source": "simplywall.st",
+          "date": "2026-09-27T22:19:53.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Brilliant Earth Launches the Elizabeth Taylor LAB GROWN Collection - IDEX Online",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBUUFJuU3k5cHJha3h5Mlg2M1NxdTFUQm90bzc1cXpVMDdaS2g3VWxlUUs1UFhCZEt3VTN6UUlDRm1WQUpxUk8xZEdNTjFfT29Bc0ZQcUdnVGdGM2c?oc=5",
+          "source": "IDEX Online",
+          "date": "2026-09-27T08:33:22.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Senco Gold’s promise of ‘affordable luxury’ with Sennes - fortuneindia.com",
+          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPcWMySHJWM3F2M09QOGN2enJ4TnBJUVZvbFNzNEI5bFNvVlEzXzBhM1hORUVvWjdCMEpEbkRYNEE2MEw4aU0zR3RPNFQ2UlpiTDBydkpZLUJtTjdLM3B3NlB6SVZhTFZ2Wlg4bFJnenBKbG90VUs0SXl3TW5vRWdUTEM4cVA0dlNxNENTVTdVX3hUaW9tdVRXdnBGb3dfRHZmYTBMaXp1SDFZWExm0gGsAUFVX3lxTE9xYzJIclYzcXYzT1A4Y3Z6cnhOcElRVm9sU3M0QjlsU29WUTNfMGEzWE5FRW9aN0IwSkRuRFg0QTYwTDhpTTNHdE80VDZSWmJMMHJ2SlktQm1ON0szcHc2UHpJVmFMVnZaWDhsUmd6cEpsb3RVSzRJeXdNbm9FZ1RMQzhxUDR2U3E0Q1NVN1VfeFRpb211VFd2cEZvd19EdmZhMExpenVIMVlYTGY?oc=5",
+          "source": "fortuneindia.com",
+          "date": "2026-09-27T03:11:04.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Natural diamond prices have fallen 51% in five years — CNBC - ua.news",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQX1U3TmJqRE1ObkdoQkhnUXd1NHZVYkxDaWJPaVR3M1piTzZQdXl0Nm5uTC1FcU9QVFUtM1RiN0FGYUkweHNoTlpYUVhSZUtkTXBNNmN1X1hGdUdQVWx6NmlTS3BMV0dKSnMzclhRR1ZabUhoM1A5UUsyak8xNzlGMXdQS3dhdkp4cGc?oc=5",
+          "source": "ua.news",
+          "date": "2026-09-26T13:29:05.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Why Diamond Prices Are Falling So Fast",
+          "url": "https://www.youtube.com/watch?v=xrg6QCGzQGc",
+          "source": "CNBC",
+          "metric": "406.0K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Why Diamond Prices Are Crashing: Are Lab-Grown Diamonds Changing The Game? | The Palki Sharma Show",
+          "url": "https://www.youtube.com/watch?v=ZHIs-peTRUo",
+          "source": "India Global Review",
+          "metric": "263.7K views"
+        }
+      ],
+      "momentum": 71,
+      "velocityScore": 52,
+      "breadth": 1,
+      "overall": 71,
+      "lifecycle": "Peak",
+      "spread": "cross-platform",
+      "dominantPlatform": "news",
+      "blrRelevance": 68,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "athleisure",
+      "name": "Athleisure",
+      "category": "Fashion",
+      "query": "athleisure",
+      "wiki": "Athleisure",
+      "blr": {
+        "fit": 70,
+        "vertical": "Retail",
+        "zone": "Airside fashion",
+        "play": "Travel-comfort athleisure (BlissClub — Bengaluru-born — or lululemon-class).",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 59,
+          "velocity": 1.22,
+          "raw": {
+            "avgDaily30d": 211,
+            "last7avg": 241,
+            "prior28avg": 197
+          }
+        },
+        "youtube": {
+          "intensity": 72,
+          "velocity": 1.5,
+          "raw": {
+            "views7d": 672198,
+            "views30d": 933418,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 76,
+          "velocity": 0.44,
+          "raw": {
+            "items7d": 51,
+            "items1d_unsaturated": 6,
+            "items7d_unsaturated": 81,
+            "last48h": 6
+          }
+        }
+      },
+      "geo": {
+        "global": 76,
+        "asia": 57,
+        "india": 72,
+        "bengaluru": 78
+      },
+      "geoRaw": {
+        "global": 51,
+        "india": 22,
+        "asia": 8,
+        "bengaluru": 26
+      },
+      "series": [
+        120,
+        148,
+        122,
+        160,
+        215,
+        235,
+        244,
+        243,
+        237,
+        257,
+        237,
+        233,
+        212,
+        248,
+        235,
+        209,
+        233,
+        217,
+        208,
+        233,
+        300,
+        241,
+        270,
+        226,
+        263,
+        202,
+        226,
+        235,
+        262,
+        216,
+        166,
+        115,
+        129,
+        132,
+        132,
+        118,
+        145,
+        159,
+        127,
+        145,
+        145,
+        140,
+        155,
+        128,
+        189,
+        170,
+        114,
+        132,
+        142,
+        162,
+        172,
+        153,
+        131,
+        113,
+        158,
+        137,
+        183,
+        199,
+        184,
+        178,
+        182,
+        171,
+        191,
+        176,
+        194,
+        170,
+        199,
+        211,
+        234,
+        289,
+        244,
+        217,
+        205,
+        258,
+        187,
+        196,
+        198,
+        154,
+        177,
+        158,
+        188,
+        185,
+        249,
+        286,
+        307,
+        249,
+        244,
+        193,
+        200,
+        205
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "5 Stylish Pickleball Pieces You Can Wear From The Court To Your Next Coffee Run - says.com",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPaVJQTTdKUXNsbVBNMktCb09sbXR3ODhiODRiUGpQTWE2amU2NTBNblVDSDJ6Y0lHdmJOd0VPb2dYblFLNjlxOXpvYmNUaTduWU1sMVZLcTltaGdVOXpJRF9RLXRFU0szNTQwRTVpUVotRFJGSEdhY1ZLYWhHTUpxd3ZQM1h4ejVNOXRTTm9VQm0wU3g2VVdPMDZNZUppLVJneEcyR294cE1NWE5IbFhvNkcxOGZGMUk?oc=5",
+          "source": "says.com",
+          "date": "2026-09-28T04:09:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Campus Activewear — \"Move Your Way\" Campaign - MarkHub24",
+          "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1aTzJlT3B5TzNwY21aS2J3TmU2M0RRTVpRaGlOdFNZZm1LTnpydlZDMGk2T0d1cE1Nc2lPbnJKXzZUZE1tT1Q5ZG9adlV0V0ozTzctRExjNWU0MXNoNElXUFZpUzZ1eHZaWFhZbUZ6Z21TR3FIMjkzdDRGNA?oc=5",
+          "source": "MarkHub24",
+          "date": "2026-09-28T03:30:10.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Campus Shoes’ Insight into Athleisure Adoption Among Youth - MarkHub24",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOVlZfWEgwQTVFdnN3NEoySlc1eUZBNGkyeGdPT0JJZTA1YThNbk4tY2t0ZWJzX01jMEY3Tl9DZHM3M0xvaHBJUjZWUlFHWFVKSTBITGFzS0FXTXo0TlhKVzB5c1dBZU03eW9Pd2VxdUhPM1ZrRVd4ZFVVbmNJd0h2RlV5YmlkM0htbU5BY3FhblpHdw?oc=5",
+          "source": "MarkHub24",
+          "date": "2026-09-28T03:30:02.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Cotton Kids Hoodies Market Forecast to 2035: Demand to Accelerate on Back-to-School and Athleisure Trends - IndexBox",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPYTVwZy13aWhNM2o5eFdqQ3Rlel93dUFKZWlzZnFYMzN4VmczZ1FsR1NjRUJSeTBJSjEtWHJkTlJQRnpzQ0Y2YlVkZ1ZFTG1icnlfalFyM283UTRZbm5kUmhXQmxOTEE1RlB4X3lxY2w0eXE2V2xjNjEwRmlnWVUtMUJfS0k0cEV4TUJtMlAtRWJZWUEySmNhWTU0VGxHcVJMaUUyYXQzSFpzcTQwUHV5aDZrbFo0NE1aaHYzOVlxbHluRnhZdjdwRmp5SVI1NUU?oc=5",
+          "source": "IndexBox",
+          "date": "2026-09-26T18:46:04.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Sweaty Betty September Drop | Autumn Newness",
+          "url": "https://www.youtube.com/watch?v=xOTUsptgadE",
+          "source": "SweatyBetty",
+          "metric": "502.0K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Why Did We Stop Dressing Nice?",
+          "url": "https://www.youtube.com/watch?v=c_KDTKzUrNs",
+          "source": "The fiscal historian and The Wealth Records",
+          "metric": "60.5K views"
+        }
+      ],
+      "momentum": 68,
+      "velocityScore": 50,
+      "breadth": 1,
+      "overall": 69,
+      "lifecycle": "Peak",
+      "spread": "cross-platform",
+      "dominantPlatform": "news",
+      "blrRelevance": 68,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "dubai-chocolate",
+      "name": "Dubai chocolate",
+      "category": "F&B",
+      "query": "dubai chocolate",
+      "wiki": "Dubai chocolate",
+      "blr": {
+        "fit": 70,
+        "vertical": "Duty Free",
+        "zone": "Confectionery / gifting",
+        "play": "Kunafa-pistachio bars as a confectionery SKU line — check lifecycle before committing shelf space.",
+        "links": [
+          {
+            "label": "Dubai shortlist",
+            "href": "/markets/dxb"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 78,
+          "velocity": 0.94,
+          "raw": {
+            "avgDaily30d": 824,
+            "last7avg": 776,
+            "prior28avg": 826
+          }
+        },
+        "youtube": {
+          "intensity": 74,
+          "velocity": 1.73,
+          "raw": {
+            "views7d": 880100,
+            "views30d": 1059521,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 41,
+          "velocity": 1.65,
+          "raw": {
+            "items7d": 18,
+            "items1d_unsaturated": 11,
+            "items7d_unsaturated": 40,
+            "last48h": 1
+          }
+        }
+      },
+      "geo": {
+        "global": 41,
+        "asia": 73,
+        "india": 42,
+        "bengaluru": 56
+      },
+      "geoRaw": {
+        "global": 18,
+        "india": 4,
+        "asia": 18,
+        "bengaluru": 8
+      },
+      "series": [
+        770,
+        832,
+        858,
+        846,
+        904,
+        896,
+        788,
+        818,
+        796,
+        859,
+        978,
+        1089,
+        1010,
+        849,
+        894,
+        941,
+        2322,
+        3496,
+        2153,
+        1647,
+        1301,
+        1253,
+        1132,
+        1086,
+        1138,
+        1180,
+        1134,
+        1005,
+        1114,
+        957,
+        952,
+        964,
+        1012,
+        959,
+        926,
+        846,
+        886,
+        894,
+        1124,
+        1055,
+        1048,
+        963,
+        966,
+        956,
+        848,
+        880,
+        936,
+        1041,
+        979,
+        835,
+        866,
+        818,
+        762,
+        932,
+        823,
+        813,
+        762,
+        750,
+        721,
+        780,
+        774,
+        956,
+        819,
+        676,
+        724,
+        905,
+        1005,
+        789,
+        848,
+        768,
+        680,
+        633,
+        696,
+        674,
+        924,
+        1044,
+        801,
+        758,
+        1014,
+        981,
+        825,
+        902,
+        1105,
+        810,
+        757,
+        741,
+        750,
+        753,
+        780,
+        840
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Exclusive: ISM Middle East plans gather pace for key 2026 edition - Confectionery Production",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOZHpjMGtvb3kzX3VGVlFHb0ZSa3NxTUpZazhJM1pZdE9LTU1SaEVnUnZvLWxLN1IxSC15T0N5TlBoS1FfQ29NcjdHOHQtclJIdDBHeExlc0MtUGs5RDhweFpJc2luaFVDUWNsT1VkOTNhT0FjY1ZnSjNtbEJYczNuYVBuUTNtRnM1NmNwdEE2b1lmWUJCcEVGZFppWThzZGMyRHhsQ09CeFRSRy04bGhPaG4zY1p0dHc?oc=5",
+          "source": "Confectionery Production",
+          "date": "2026-09-26T12:16:28.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "World of Sweets issues recall on Dubai-style chocolates - Asian Trader",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPMFpIcFUxWkowVk5xbGFsQ1dyTFZGXzNLZjFkZkJEM2FjNERubGdhR01CT1pXOVdfaUczRnRXME1ISldWcmFKRzl0Y0g2cG41Y05leDMzYV9FUXNURzdRYTJQRU1YdVdUM0RGS0Q5aC1yX3hKZ3JzdnRfSWIxbDlYamREdUJ0QQ?oc=5",
+          "source": "Asian Trader",
+          "date": "2026-09-25T10:27:19.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Lindt & Sprüngli to premiere Ube-inspired Bali Style Chocolate at TFWA - TRBusiness",
+          "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQVE9lN2twYjRQb3IyWGhFVXJFTmR2LXVpNnB0WHhESWtyWkl0YW81Uk5mVm1yMUJrc3o0a09tUkI0MWRvdU0tX3VCN1IyNV9XWmh0ZElBNVAydkdYV2RCb2lhYzk0ajNVUW9LaGxERDZXRlZZcWdXdTZyZDBHd1o5bnFkN1Bud1RUUUlYTzVVaHEtMGxLTHFWbE1BUWxMQk9IZDdZRkV1Wmw5Y0ZOM2RwQnB5VVRYYnZJbjhDRS0ydEhoaG84WnFhQ1Vn?oc=5",
+          "source": "TRBusiness",
+          "date": "2026-09-25T10:04:41.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Popular chocolates issued urgent food poisoning caution — 'do not eat' - Liverpool Echo",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNbE9hWURHdlZNODU4R1Fmd1ZXVkszdmxhTnZXZzR2dVBPSTFWU19NY1dYSkxjQ21qRG5SRTF2OGdHeFphaDg0WGwwbVVHQ3dzbEdzVUNpR2JMMU0wdEtJLVNweE1hZzVpMk5WYWlqLTdrbGdfTjB6WEZjU250OTV4NnQwdU80QVRKSWfSAY8BQVVfeXFMT24zT1d4ZUZhYU1BSXJ0UjdidU1LZTg4QnByR0xyTE9kcmh5WU85cEdtTGg3aDJCdFMyTEJGSnhnaDNPWW5fbDZJc2RrQUh1dElyeDRIWDdqOEp0SUxsM2VYWXpVTE1TS3BBZVhJajk4Y2Z4d2lkN2F2a1VhQlY1bkRkb2o1RkROWUZ4d3J5cms?oc=5",
+          "source": "Liverpool Echo",
+          "date": "2026-09-25T08:48:00.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Dubai-Style Chocolate Brownie, Pink Sugar Cookie Cake, & More! | Crumbl",
+          "url": "https://www.youtube.com/watch?v=TeVqnjRbghQ",
+          "source": "Crumbl",
+          "metric": "441.7K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Let's Try the Viral Crumbl Labubu Original vs Meme",
+          "url": "https://www.youtube.com/watch?v=kYth2hKUeE0",
+          "source": "Fortas",
+          "metric": "130.2K views"
+        }
+      ],
+      "momentum": 66,
+      "velocityScore": 64,
+      "breadth": 0.67,
+      "overall": 66,
+      "lifecycle": "Accelerating",
+      "spread": "mixed",
+      "dominantPlatform": "search",
+      "blrRelevance": 64,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "quick-commerce",
+      "name": "Quick commerce",
+      "category": "Retail",
+      "query": "quick commerce",
+      "wiki": "Q-commerce",
+      "blr": {
+        "fit": 60,
+        "vertical": "Services",
+        "zone": "Landside / pre-order",
+        "play": "Pre-order to gate or 10-minute landside pickup via a q-commerce partner.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 39,
+          "velocity": 1.13,
+          "raw": {
+            "avgDaily30d": 50,
+            "last7avg": 54,
+            "prior28avg": 48
+          }
+        },
+        "youtube": {
+          "intensity": 78,
+          "velocity": 1.27,
+          "raw": {
+            "views7d": 908255,
+            "views30d": 1491798,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 100,
+          "velocity": 1.3,
+          "raw": {
+            "items7d": 100,
+            "items1d_unsaturated": 10,
+            "items7d_unsaturated": 46,
+            "last48h": 11
+          }
+        }
+      },
+      "geo": {
+        "global": 100,
+        "asia": 93,
+        "india": 100,
+        "bengaluru": 100
+      },
+      "geoRaw": {
+        "global": 100,
+        "india": 95,
+        "asia": 46,
+        "bengaluru": 75
+      },
+      "series": [
+        80,
+        63,
+        51,
+        44,
+        40,
+        48,
+        49,
+        65,
+        57,
+        50,
+        52,
+        54,
+        48,
+        28,
+        55,
+        58,
+        60,
+        47,
+        43,
+        37,
+        40,
+        125,
+        58,
+        57,
+        47,
+        55,
+        44,
+        44,
+        46,
+        48,
+        49,
+        92,
+        38,
+        49,
+        30,
+        64,
+        112,
+        70,
+        47,
+        81,
+        73,
+        55,
+        40,
+        72,
+        70,
+        58,
+        44,
+        36,
+        119,
+        51,
+        89,
+        42,
+        54,
+        52,
+        33,
+        51,
+        36,
+        38,
+        58,
+        43,
+        46,
+        37,
+        49,
+        45,
+        47,
+        65,
+        52,
+        32,
+        41,
+        44,
+        64,
+        41,
+        55,
+        59,
+        52,
+        36,
+        52,
+        43,
+        55,
+        55,
+        47,
+        40,
+        53,
+        67,
+        62,
+        59,
+        64,
+        38,
+        43,
+        45
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "\"We Want To Cross Rs 1,000 Cr In Revenue,\" Says Plum's Shankar Prasad - BW Disrupt",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQaU9EdklqMUxkbzM2amZNMWFrMl9OME45aFgyMUxyU3BqZ1F0NzJkSUo1M2dKN01ua01lTkZsem1UWnBVd0U4UnViZ2stczNIZ3lPUXM3MXdmLW5idGVod2VHeWlybVQ4UkxtRUtnTzdBMEZNTnp1TTREMlBycm5ORDRUZUpKT2lmQnNMSjlLV2Y2TlEwVGVnczFxQ1VyQkp4SUljUDdYcGgxc0k?oc=5",
+          "source": "BW Disrupt",
+          "date": "2026-09-28T04:57:32.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Swiggy stock: JPMorgan maintains overweight call, cites growth in quick-commerce market - Business Today",
+          "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQbTUwYWNXQk9BT2llYVcwal9vM0VBdHZVSnZvY3FSaFlBOWlHMVRSNVF6NG16X05pUWY5MkR3UTlVd3hRdUtIWkxmTER2VlZGWTUxdHVTU0o1ZzhBdHZVWWVCS3Q0elVOTlRraGVYWVR0cHVhSjMyNkR6emM0ZDVZajE0NGFkdDl3RUhsRldvS2F6UE1VOFE1YVpiU0l1TDh6LURLbUQzcmkwVGt2NFE1U1RIQmV6YnpMdTQ2cmlaWkVTbk1TUUpFdnRRS0dMMFJKY1BTeDFhamNlZFhYN3Z0eFZ2T0tJV3BZ0gHuAUFVX3lxTE9jclI0NlAyNWw2Ulp4ck1YX3JpblA4VGZYRUZ5dDA1NHFISmptcDVXWENUQ0NHdjdGUzJkbmxuckNMZWcwcFM1VVRRMXlsaEUxYkIyaEhjaFJjaWZMelU1OFQtc3dSYWVONHV6QmFIMlJObmtic200NFFBR3ZER05jVlVyeWE2ZHhoeFNRa2xpLVc5QmJuLXFwdUlqWGNnMkt1SGpiM25WZ3B3T25yT1VLMHJSTlp2bTBMaWxXeHppTjhyd2hFVHdsckVNNVBxWlJXSnZ4U25hWFFSUGtkYXlRbGdrWjIxVFZPMjhJNFE?oc=5",
+          "source": "Business Today",
+          "date": "2026-09-28T04:09:43.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "₹17,600 crore and counting: India's retail media boom meets its first big transparency test - Storyboard18",
+          "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxNT093cWlaVkZKWF9zRGJmNjBuY2RBQ0FIamZpZEhFZTB3M2tBeHVLTmxnMzh3VzVORm1Lell2YTZyajV0YWdxX0QySm1TX3IzTlVPZENwMlc5bjVEdVpuYnVjZW5acmhvdkVPbE5Zb1oweFlZNUZRMV9CUHdOSi1ZZDcxSzc2bnpqYmFiN2tJOG5ZRXlUY3YwYjJXYnlCei1ZajN0c2xUR19rZTVPZjBxOTFkV3BVUHhFVkJpbndaZ0ZzMUFfX1liN0pkdE1adjNrNjlleGJn0gHWAUFVX3lxTE1PT3dxaVpWRkpYX3NEYmY2MG5jZEFDQUhqZmlkSEVlMHcza0F4dUtObGczOHdXNU5GbUt6WXZhNnJqNXRhZ3FfRDJKbVNfcjNOVU9kQ3AyVzluNUR1Wm5idWNlblpyaG92RU9sTllvWjB4WVk1RlExX0JQd05KLVlkNzFLNzZuempiYWI3a0k4bllFeVRjdjBiMldieUJ6LVlqM3RzbFRHX2tlNU9mMHE5MWRXcFVQeEVWQmlud1pnRnMxQV9fWWI3SmR0TVp2M2s2OWV4Ymc?oc=5",
+          "source": "Storyboard18",
+          "date": "2026-09-28T03:37:58.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "SUGAR Cosmetics’ Naveen Murali on how Qcom, creators, and experiences reshape festive marketing - Social Samosa",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPTm16d0dCUzYtd2I0RWFHY3gyY2o2QWpyRzBLV1Y0UlRITlJNdl9tM0l5MFZBRUJybzJPMFBFaklzWk5yU2ozSWU5YlkxYUZxUDNsdHFsaTZvX3FQYXUtdGVLLVdqU0VIWFdtUWJrbFYxckJQa3pNUGkwUkNKRUQ0RmRjM1F3LVV5WngtTHJIcUNvWEgyY19vY1UtTW9jMWZ1TjQwctIBpAFBVV95cUxPTm16d0dCUzYtd2I0RWFHY3gyY2o2QWpyRzBLV1Y0UlRITlJNdl9tM0l5MFZBRUJybzJPMFBFaklzWk5yU2ozSWU5YlkxYUZxUDNsdHFsaTZvX3FQYXUtdGVLLVdqU0VIWFdtUWJrbFYxckJQa3pNUGkwUkNKRUQ0RmRjM1F3LVV5WngtTHJIcUNvWEgyY19vY1UtTW9jMWZ1TjQwcg?oc=5",
+          "source": "Social Samosa",
+          "date": "2026-09-28T02:30:37.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Small-Town India Is Where 10-Minute Delivery Goes to Die",
+          "url": "https://www.youtube.com/watch?v=bT5wRE_o_N4",
+          "source": "Breakdown",
+          "metric": "123.5K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Bank Strike: Conflict erupts over 2-day closure, did the government go back on its word? What wil...",
+          "url": "https://www.youtube.com/watch?v=_E3G3AECJoU",
+          "source": "Money9",
+          "metric": "121.6K views"
+        }
+      ],
+      "momentum": 68,
+      "velocityScore": 61,
+      "breadth": 0.67,
+      "overall": 66,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "news",
+      "blrRelevance": 69,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "red-light-therapy",
+      "name": "Red light therapy",
+      "category": "Wellness",
+      "query": "red light therapy",
+      "wiki": "Light therapy",
+      "blr": {
+        "fit": 58,
+        "vertical": "Wellness",
+        "zone": "Lounge / wellness zone",
+        "play": "Recovery studio sessions (Hamad ORCHARD model) inside a lounge or wellness zone.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 53,
+          "velocity": 1.11,
+          "raw": {
+            "avgDaily30d": 132,
+            "last7avg": 142,
+            "prior28avg": 128
+          }
+        },
+        "youtube": {
+          "intensity": 77,
+          "velocity": 0.56,
+          "raw": {
+            "views7d": 368188,
+            "views30d": 1374446,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 81,
+          "velocity": 0.61,
+          "raw": {
+            "items7d": 58,
+            "items1d_unsaturated": 13,
+            "items7d_unsaturated": 127,
+            "last48h": 5
+          }
+        }
+      },
+      "geo": {
+        "global": 81,
+        "asia": 92,
+        "india": 75,
+        "bengaluru": 63
+      },
+      "geoRaw": {
+        "global": 58,
+        "india": 26,
+        "asia": 43,
+        "bengaluru": 12
+      },
+      "series": [
+        104,
+        119,
+        103,
+        106,
+        110,
+        110,
+        134,
+        171,
+        126,
+        146,
+        133,
+        145,
+        132,
+        133,
+        115,
+        123,
+        107,
+        112,
+        126,
+        116,
+        117,
+        140,
+        104,
+        102,
+        108,
+        125,
+        103,
+        143,
+        123,
+        105,
+        128,
+        104,
+        104,
+        125,
+        125,
+        99,
+        116,
+        109,
+        138,
+        128,
+        116,
+        135,
+        110,
+        111,
+        135,
+        93,
+        118,
+        136,
+        120,
+        96,
+        108,
+        122,
+        118,
+        169,
+        115,
+        116,
+        150,
+        113,
+        111,
+        105,
+        167,
+        131,
+        149,
+        135,
+        145,
+        126,
+        115,
+        110,
+        125,
+        141,
+        131,
+        163,
+        130,
+        116,
+        122,
+        122,
+        134,
+        158,
+        133,
+        105,
+        96,
+        109,
+        115,
+        185,
+        155,
+        146,
+        127,
+        143,
+        115,
+        124
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Red light therapy at home: Does it work, and how can you start? - Yahoo Creators",
+          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPUTdWZlJxMG0tYllDdk4yNFBkWnpfcXE1S01jQ29NUDdQdnMtdkpPMUpnYVhPd0QwYmg1Tkk0RlZtcmRRS1lWQUs1bUFSMXUxV0V5QVUyaDFLT3BwQ3Z6dVZoejhnV0NoQjhwWng1RkhzUWtZYVVCbE50dktaMXBUeTFObFN2M3RZUWZvTWtXa0Zhel9wbHotVzlZTFFZWkRpMDZ3a001dmhWLU1TWTZ3ekVZb3NGUjlMdEE?oc=5",
+          "source": "Yahoo Creators",
+          "date": "2026-09-28T05:24:39.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "FOX45 Doctor's Orders Giveaway Set Contest - WBFF",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNMVkzSU5hRHFYc2JneXhhU3Z0cXhYUXNUdWF3VEZEckRabkZIT01LRW5ldWdEczVleVVQaEYtUXdQRDFpSU5lOUwwQS1pNGVUMTRmaXVFdVRUc3pQdUpkdVJ3MkQ1SVdtcF9QMkpXak1oVHQwT052c1hfMnk1U2M4TE10SmVLVXh0RkYw?oc=5",
+          "source": "WBFF",
+          "date": "2026-09-28T04:13:35.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Woman-Owned NuYOU360 Prices FDA Cleared Red Light Therapy Masks - openPR.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQazMzX19ZWFhRV1d6Q1NMVWNYNG4zdDhIZEgzUmltVWVWMU9mcy03TXVxN0ZwZE9sY3c5TlhNOWUyTVdLMm5uM3Y3UXNjUjBtZjlSRVUxMmRNX0lHM1ctYTM2MXR0R002eWtLVGlxOW9KNnV2YWtFNG5rNWlmcl9sUjI1dENaUXJpMllROFhHS1BaVVd1bFIySGtTMDJKZDRm?oc=5",
+          "source": "openPR.com",
+          "date": "2026-09-27T14:50:05.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Best LED light therapy deal: Solawave runs BOGO sale on wands and masks - mashable.com",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9OYzBId2s4a3dZdEdzYUxvTFhyWjZiVzhOaWxDNVg1aG9HR2dqT0xjdHE4S2xEWnpCcGwyRWQwS1hlS2Rzd0ZYOEdSRGRIWXUzU1pvV0Npc2tyMHZBN0MtZUNBRDU0MFBR?oc=5",
+          "source": "mashable.com",
+          "date": "2026-09-26T14:10:46.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Red Light Therapy for Pets",
+          "url": "https://www.youtube.com/watch?v=Zebzm2GKcnY",
+          "source": "Capillus ",
+          "metric": "173.9K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "What They Just Found About Red Light and Skin Changes Everything",
+          "url": "https://www.youtube.com/watch?v=jdcxSkOo5EE",
+          "source": "Thomas DeLauer",
+          "metric": "90.4K views"
+        }
+      ],
+      "momentum": 68,
+      "velocityScore": 37,
+      "breadth": 1,
+      "overall": 65,
+      "lifecycle": "Cooling",
+      "spread": "cross-platform",
+      "dominantPlatform": "news",
+      "blrRelevance": 58,
+      "verdict": "Watch"
+    },
+    {
+      "id": "quiet-luxury",
+      "name": "Quiet luxury",
+      "category": "Fashion",
+      "query": "quiet luxury",
+      "wiki": "Quiet luxury",
+      "blr": {
+        "fit": 52,
+        "vertical": "Duty Free",
+        "zone": "T2 luxury walk",
+        "play": "Informs assortment tone of the luxury walk rather than a single tenant.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 49,
+          "velocity": 1.04,
+          "raw": {
+            "avgDaily30d": 105,
+            "last7avg": 108,
+            "prior28avg": 104
+          }
+        },
+        "youtube": {
+          "intensity": 66,
+          "velocity": 0.62,
+          "raw": {
+            "views7d": 169776,
+            "views30d": 572476,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 74,
+          "velocity": 0.98,
+          "raw": {
+            "items7d": 48,
+            "items1d_unsaturated": 14,
+            "items7d_unsaturated": 86,
+            "last48h": 9
+          }
+        }
+      },
+      "geo": {
+        "global": 74,
+        "asia": 82,
+        "india": 59,
+        "bengaluru": 83
+      },
+      "geoRaw": {
+        "global": 48,
+        "india": 11,
+        "asia": 27,
+        "bengaluru": 33
+      },
+      "series": [
+        110,
+        145,
+        126,
+        113,
+        86,
+        112,
+        152,
+        151,
+        126,
+        102,
+        104,
+        91,
+        85,
+        99,
+        114,
+        119,
+        100,
+        124,
+        102,
+        92,
+        102,
+        100,
+        98,
+        116,
+        92,
+        113,
+        93,
+        106,
+        82,
+        88,
+        97,
+        72,
+        79,
+        132,
+        137,
+        153,
+        186,
+        134,
+        118,
+        89,
+        112,
+        90,
+        89,
+        94,
+        122,
+        92,
+        100,
+        102,
+        94,
+        104,
+        103,
+        101,
+        101,
+        121,
+        103,
+        118,
+        86,
+        143,
+        92,
+        76,
+        99,
+        103,
+        104,
+        85,
+        91,
+        103,
+        103,
+        103,
+        105,
+        87,
+        95,
+        86,
+        97,
+        116,
+        109,
+        121,
+        122,
+        118,
+        110,
+        108,
+        111,
+        81,
+        133,
+        111,
+        118,
+        97,
+        110,
+        103,
+        134,
+        83
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Aditi Rao Hydari’s ₹2.72 lakh Tod’s handbag is the quiet luxury detail in her Milan look - Mathrubhumi English",
+          "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxObkFneGU0M0ZSOUZhVTRqeXNaSGRTR3BVY01IOEFlMlpobUh5WmM2UlJqYmZiMjNJQzI3aFJyM0J4Wmo5bGI2ZWZLS0VDaFBsMzdQczB0UGpYVGRwVmdsM05ILXliZzdUUmFXYnR0Um5qUEJjX1lEcGZhcDZNMTlzVkRjQlRhaFllSkVHU1FCVHJ4cm15eDZBTHdDY1VUS3pGeTJVb3BXQVNMaG5sR3BMR2J6TTZOVkEzdGNiM3p1RUY0V3VIejBldGloZmdLYV9Q0gHWAUFVX3lxTFBtM21PX1d1ZXZjeTJGRzJmX3VwcDR4YmNPQ0lJVE41VGVGa09MVDg4TlZoTE1lbjd2SG9BQVBXMUdLOEFaWkFCQWJjbk5PM0ZBZ2RGdkFJQkFQYjN2VUNMQXdRX2NKMHNBQ08wR3BxNEpUUmpvaGJ1bFFNQVI0cjQ1TVlqYXpHWmhLUDI4S1YzUDkwbkpWSmlHeDJycUVrZHhzNU1UTVk1Z0xsSnl0X2xlejRwS2Rzemp2Y1lITDBmdFFSVXZaNlNkcmt5TTV6SDRxQm9pTHc?oc=5",
+          "source": "Mathrubhumi English",
+          "date": "2026-09-27T13:29:22.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Nonnistics: Luxury 2027 Spring-Summer Ready-To-Wear - thesun.ng",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9zdkdNRGVwWnlTS3pGR1VXZVpLQXdiYWMzTUh1YWNLdlB1WTkwRFd2ZjlqMDhjM0ZWSlRPUl9jN0hhOXhDY0tVU2dTTGlneUZPMVdPdWVnZE0yZUdLU0EwNi1iUzZCdzA3MF9EWUtHMjNzcW5Gb0l1LQ?oc=5",
+          "source": "thesun.ng",
+          "date": "2026-09-26T23:33:47.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "WhatsApp fees, quiet luxury watches and law firm updates - NewsHub.co.uk",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPWC1yZU1NRzVZNEE0RnVub1o4cXNWYlM2MWF0UUMybEo5bHo4d0JlRjBCUmE2ZFUtMFFOSlU3R3JKVlYxMDdVLXlFaHcxekt1cG5rV1l4NU1uQ3hWaFF4RGhTQWhQVFdJb2xYdVRPZG5kdHhSd3pncVlpRFFMMmVsTWxCQjNOVDBNYjhSVGFNSUl4TFZGZldrcUJOX0k3ZnBZa1FjNmdjRUNyUnpVaG80RXBOS1E2WTBpS2ktQlpRU2FHelowRDlDZnpiNU81Zw?oc=5",
+          "source": "NewsHub.co.uk",
+          "date": "2026-09-26T16:26:14.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Southern California: Bhindi Jewelers’ new Glendale boutique embodies quiet luxury - Luxury Lifestyle Magazine",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPcjFNTDU2akNKZEt3bWFWZktLRzhQSTFpWlZ2a2htWTZlM3NKaVp4UDJJdXQwMkVTcVBfT0pnU0Q3RkxZejBIRzYxckotY052VmFoQ1RHeDBlSzBqazZ5UHJhYlFDWV9iTXd3SVZUakxsR2YwTkt2R1l6OVMtM0otVU84Z3drT0t3SXo1XzZrd2xVWUw4Ui1xQzNZVldRUE1IREljcEpJSTVUZEJ5V0dKS21Jdmd1VE1XbXliVWZNamRIVldyMFRaRzJxVDZzanc?oc=5",
+          "source": "Luxury Lifestyle Magazine",
+          "date": "2026-09-26T16:00:00.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Autumn Quiet Luxury & Old Money Fall Outfits Lookbook Radio ☕🍂 | Ageless Chic for Women 5060",
+          "url": "https://www.youtube.com/watch?v=LoD-ASmmaOA",
+          "source": "CodiMood · 코디무드",
+          "metric": "37.6K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "8 miles of low-key Florida luxury (why we keep coming back to this island)",
+          "url": "https://www.youtube.com/watch?v=rSq-BejWZ6s",
+          "source": "Explorcation",
+          "metric": "36.3K views"
+        }
+      ],
+      "momentum": 61,
+      "velocityScore": 44,
+      "breadth": 1,
+      "overall": 64,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "news",
+      "blrRelevance": 57,
+      "verdict": "Watch"
+    },
+    {
+      "id": "anime-merch",
+      "name": "Anime merchandise",
+      "category": "Culture",
+      "query": "anime merchandise",
+      "wiki": "One Piece",
+      "blr": {
+        "fit": 66,
+        "vertical": "Retail",
+        "zone": "T2 pop-up",
+        "play": "Anime IP pop-up (Toei Animation store model at Jewel Changi).",
+        "links": [
+          {
+            "label": "Singapore shortlist (Toei)",
+            "href": "/markets/sin"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 100,
+          "velocity": 1.06,
+          "raw": {
+            "avgDaily30d": 4200,
+            "last7avg": 4446,
+            "prior28avg": 4199
+          }
+        },
+        "youtube": {
+          "intensity": 85,
+          "velocity": 1.45,
+          "raw": {
+            "views7d": 1737849,
+            "views30d": 2492358,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 21,
+          "velocity": 0.55,
+          "raw": {
+            "items7d": 10,
+            "items1d_unsaturated": 2,
+            "items7d_unsaturated": 22,
+            "last48h": 3
+          }
+        }
+      },
+      "geo": {
+        "global": 21,
+        "asia": 62,
+        "india": 32,
+        "bengaluru": 24
+      },
+      "geoRaw": {
+        "global": 10,
+        "india": 2,
+        "asia": 10,
+        "bengaluru": 1
+      },
+      "series": [
+        4470,
+        4107,
+        4196,
+        5090,
+        4459,
+        4900,
+        4435,
+        4269,
+        4264,
+        4193,
+        4303,
+        4487,
+        4794,
+        4516,
+        4008,
+        3917,
+        4117,
+        3811,
+        4074,
+        4428,
+        4140,
+        4143,
+        4436,
+        4095,
+        4169,
+        4390,
+        4819,
+        4336,
+        4113,
+        3932,
+        3973,
+        3890,
+        3905,
+        4354,
+        4072,
+        3988,
+        3824,
+        3885,
+        3846,
+        4001,
+        4218,
+        3975,
+        3986,
+        3582,
+        3692,
+        3825,
+        3965,
+        4588,
+        4086,
+        3940,
+        3945,
+        4066,
+        4426,
+        4600,
+        5772,
+        4921,
+        4818,
+        4503,
+        4320,
+        4115,
+        4097,
+        4375,
+        4313,
+        4108,
+        4009,
+        4210,
+        4147,
+        4133,
+        4384,
+        4261,
+        3974,
+        3902,
+        4010,
+        4095,
+        3785,
+        4244,
+        4009,
+        4094,
+        4080,
+        3932,
+        4033,
+        4063,
+        4630,
+        4543,
+        4309,
+        4430,
+        4408,
+        4121,
+        4241,
+        5070
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Consumer Polarization Deepens in Japan as Experiential Spending Gains Momentum - Daily Tribune Media",
+          "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPRkpzZnZSeXEwZVJ3bDY1ZDlLTHdqdVhLMjEtejZKN1pSZS1ubUJXOFZUM1l3MlZmLVQ4QWd2aW5BbkY0Yk5MQzhWSGN6R1FfMXYydmhoZm0xYUdKVkFXNFhrZjVQUmdTcVYtc0t0S0xYbWw5cXdzcWs4TWtRTTFQSG1TRmdhdTFOd29rWjg3SENzd0lMV2hWejk3NGU3WWZMMXdtcU1fenIyVjd5ZDFBckpIcnhIZE8xaHRqOEp5dHdFaGotM3hRWHBubFlfX0dmY1psYUhqYm1yTFdQ?oc=5",
+          "source": "Daily Tribune Media",
+          "date": "2026-09-27T06:18:48.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "City Square Mall Brings Anime, Cosplay and Collectibles to Life with Anime Earth - Alvinology",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPdnMzdjFHZEVIdGpLYjlGOU1OeWlBNXp5OTQwa1hMNUgwSUpkSkd6d2V1TlY5dkJ4djFZYllGdUpXekdxeTVieDgxaGJWY1BYdzVMTGg4SzVtYjZLRHBTUTJIUG9kT25qbHhyWGh3b19XMU5GVHRTbUlMQXZlLThTUjF5bkZMQTM1blRUN3dKNDVQdmlzYk52dVlCS2NvOXp5bF9HeEdybFRIaXV3R1hUajJkeXg?oc=5",
+          "source": "Alvinology",
+          "date": "2026-09-26T23:00:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "\"Japan Days\" in Lviv draw hundreds of people to Rynok Square - Голос Сокальщини",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOM1RUdTRqUzNSelRBVVpTLTZVdlRUQmwyY1pFNTdEX19DY05jdEo1dVc3ZTdxM3FNMGVEeFAyTFVRUGltTXdLbi1Bc3dmeDNyU0R6TEVvMGVhcTVTV0g2S2U5dkhuUjlGdWVYMmJYalFIY1I0aEIxRHdMZUcwUGcyZjk4ek5XSV95TzZrZmpOeVdLUTNFY1JPaER5bURKOEhnQ0JOWFJFb3dJUzQ?oc=5",
+          "source": "Голос Сокальщини",
+          "date": "2026-09-26T16:48:41.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "New High School! Kimengumi Character Perfume Collection Now Available - haveagood-holiday.com",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQdWY2WUVwTUJUMkdsbW1aVHE2MGhVUEZtQkt3WFYzRXJQdE1MY08yQ1V0X1dkYnpBUnUwWHdlSmxicjBlRkZXWWJhRmtJaU1FNk1NTXNqZXhLdkZIVkRTcXEzdThJLTdUZG5jNHNKNHhRR0pzZUlmLW8yOXVSU3pGT1hTM0FUdGlPbzFpSmJR?oc=5",
+          "source": "haveagood-holiday.com",
+          "date": "2026-09-25T17:26:29.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "I Updated My Favourite Anime",
+          "url": "https://www.youtube.com/watch?v=H-2esT4HaVA",
+          "source": "Garnt",
+          "metric": "248.3K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "ROBLOX ANIME DICE..",
+          "url": "https://www.youtube.com/watch?v=ey5WNlXVSGE",
+          "source": "CashBlox",
+          "metric": "236.0K views"
+        }
+      ],
+      "momentum": 73,
+      "velocityScore": 48,
+      "breadth": 0.67,
+      "overall": 64,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "search",
+      "blrRelevance": 55,
+      "verdict": "Watch"
+    },
+    {
+      "id": "labubu",
+      "name": "Labubu / Pop Mart",
+      "category": "Culture",
+      "query": "labubu",
+      "wiki": "Labubu",
+      "blr": {
+        "fit": 74,
+        "vertical": "Retail",
+        "zone": "T2 Intl + landside",
+        "play": "Designer-toy / blind-box vending wall or Pop Mart robo-shop — high-velocity impulse retail with queue appeal.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 83,
+          "velocity": 0.77,
+          "raw": {
+            "avgDaily30d": 1253,
+            "last7avg": 983,
+            "prior28avg": 1268
+          }
+        },
+        "youtube": {
+          "intensity": 95,
+          "velocity": 0.58,
+          "raw": {
+            "views7d": 1605438,
+            "views30d": 5757715,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 39,
+          "velocity": 1.56,
+          "raw": {
+            "items7d": 17,
+            "items1d_unsaturated": 7,
+            "items7d_unsaturated": 27,
+            "last48h": 3
+          }
+        }
+      },
+      "geo": {
+        "global": 39,
+        "asia": 55,
+        "india": 37,
+        "bengaluru": 10
+      },
+      "geoRaw": {
+        "global": 17,
+        "india": 3,
+        "asia": 7,
+        "bengaluru": 0
+      },
+      "series": [
+        1014,
+        1027,
+        1001,
+        1094,
+        1093,
+        1103,
+        1045,
+        982,
+        1088,
+        994,
+        1106,
+        1013,
+        1096,
+        987,
+        914,
+        994,
+        1005,
+        990,
+        1009,
+        1093,
+        1005,
+        1282,
+        976,
+        1100,
+        1041,
+        919,
+        991,
+        1526,
+        1521,
+        1234,
+        1225,
+        1229,
+        1182,
+        1131,
+        1178,
+        1121,
+        1160,
+        1081,
+        1183,
+        1414,
+        1172,
+        1017,
+        1111,
+        963,
+        1073,
+        1051,
+        1029,
+        930,
+        957,
+        979,
+        1047,
+        1039,
+        1230,
+        968,
+        1001,
+        957,
+        952,
+        975,
+        922,
+        1000,
+        911,
+        934,
+        957,
+        1442,
+        6711,
+        1988,
+        1597,
+        1171,
+        1096,
+        1063,
+        953,
+        961,
+        951,
+        1008,
+        1063,
+        1099,
+        950,
+        999,
+        1019,
+        1023,
+        951,
+        908,
+        956,
+        1046,
+        974,
+        954,
+        959,
+        874,
+        930,
+        1144
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Labubu and Messi Jersey are sold out in China, Beer is just quiet - VOI.ID",
+          "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTFBwVEZ4NkdDYUxFLUhBWjNXWW5EalhIWGQtTHJrNFJNOFB5a2lTaXI1cW5YRHFPM1dTem5NMWxGcjd6dFEyUV8tMV9B0gFCQVVfeXFMT1VYZTA5cnA4MFVmbE1DejFIWVRsdVZXUTNYRFNXbDNfZm1GbExtUm0wSU5vV1hxb0FzY1oydV80MXZR?oc=5",
+          "source": "VOI.ID",
+          "date": "2026-09-27T01:55:28.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Meta’s Muse Is Adults-Only. Why Does It Look Like a Kids’ Toy? - wired.com",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPVkJsbXcxMThtdVU2QTZ1RGRpcVRNbzZncTZIa2Zsa3VpSTNCam9uSDlsYkNOQ1ZJMDRWVENmRllEOE1lOGl5R0pHM2R0ZElDV3FrRERaa0kyeC04T3VvNEFEZW85U2NUaTJzQkRIaXpPUkl1SGM1UUQwZDJITkJ2QUZjLUNDS2ROcUpUbUZlUkhBSTluOWc?oc=5",
+          "source": "wired.com",
+          "date": "2026-09-26T10:30:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Forget Labubu: Meta’s Muse Charm Wants to Make AI Your New Pocket Pet - dailycoin.com",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9IYnlROXdla0RQdFowYzE0XzlEaVByOGc3RUFITDdlOVNiVUw4WFQ4UzZDUVEtQm9KVGcyRXVWekFHd3RnSC1pbWI4SVB2c2tYQWluWVIxOUVxa0VVbGFreF9UcUFMZzRp?oc=5",
+          "source": "dailycoin.com",
+          "date": "2026-09-26T10:00:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Your Top Destination for League of Legends Esports News and Leaks - Sheep Esports",
+          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1wTWNkWEViLU9oeHZXWmNTMkFnVFJyelFxQVdNZmZjY3lnRzZVZElzOFNHY3NtamlFaFFsbzZSN0hFWUkySThHdG44LUpzdkRISGtBTlZFcldCQ3dU?oc=5",
+          "source": "Sheep Esports",
+          "date": "2026-09-26T04:07:14.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Everything You Need to Know About the Fall of Labubu",
+          "url": "https://www.youtube.com/watch?v=7eD8N0MmxJM",
+          "source": "Lóng",
+          "metric": "991.9K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Rose Dress, LEGO Dress or Labubu Dress? 👗",
+          "url": "https://www.youtube.com/watch?v=JH5eUBAQFHQ",
+          "source": "VaniMani Türkçe",
+          "metric": "278.4K views"
+        }
+      ],
+      "momentum": 74,
+      "velocityScore": 43,
+      "breadth": 0.67,
+      "overall": 63,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 57,
+      "verdict": "Watch"
+    },
+    {
+      "id": "protein-snacks",
+      "name": "High-protein snacks",
+      "category": "F&B",
+      "query": "protein snacks",
+      "wiki": "Protein bar",
+      "blr": {
+        "fit": 72,
+        "vertical": "F&B",
+        "zone": "Grab-and-go / convenience",
+        "play": "Protein-forward grab-and-go range in convenience and QSR (Basil-class kiosk).",
+        "links": [
+          {
+            "label": "Basil grab-and-go opp",
+            "href": "/opportunities/opp-basil"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 46,
+          "velocity": 1.01,
+          "raw": {
+            "avgDaily30d": 84,
+            "last7avg": 85,
+            "prior28avg": 84
+          }
+        },
+        "youtube": {
+          "intensity": 100,
+          "velocity": 0.43,
+          "raw": {
+            "views7d": 1682347,
+            "views30d": 8231921,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 46,
+          "velocity": 1.2,
+          "raw": {
+            "items7d": 21,
+            "items1d_unsaturated": 7,
+            "items7d_unsaturated": 35,
+            "last48h": 2
+          }
+        }
+      },
+      "geo": {
+        "global": 46,
+        "asia": 55,
+        "india": 51,
+        "bengaluru": 33
+      },
+      "geoRaw": {
+        "global": 21,
+        "india": 7,
+        "asia": 7,
+        "bengaluru": 2
+      },
+      "series": [
+        108,
+        93,
+        89,
+        92,
+        66,
+        83,
+        91,
+        98,
+        119,
+        110,
+        84,
+        101,
+        93,
+        92,
+        96,
+        105,
+        145,
+        99,
+        91,
+        90,
+        106,
+        112,
+        104,
+        93,
+        104,
+        120,
+        111,
+        138,
+        83,
+        133,
+        107,
+        92,
+        102,
+        102,
+        102,
+        131,
+        95,
+        93,
+        102,
+        86,
+        74,
+        84,
+        91,
+        96,
+        102,
+        105,
+        95,
+        69,
+        98,
+        90,
+        105,
+        102,
+        90,
+        96,
+        90,
+        91,
+        89,
+        88,
+        84,
+        100,
+        77,
+        63,
+        89,
+        102,
+        93,
+        88,
+        75,
+        82,
+        66,
+        97,
+        95,
+        86,
+        80,
+        81,
+        77,
+        97,
+        86,
+        95,
+        102,
+        78,
+        71,
+        65,
+        64,
+        91,
+        103,
+        77,
+        107,
+        77,
+        69,
+        72
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Jerky & Meat Snacks Market To 2035: Protein Demand Fuels Expansion - News and Statistics - IndexBox",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPZmp2bi1Bb05YODNaNkpBNGdva09wMFdZSDMwTldnVnFCbzhaQ25OS1R4czEzOEZKaFZmUkdCSm0zWTNMOFZjYlplTkFyaENTNzFTeUtDUElSbGNHTmdlMXBJamhFQ2xPWTJxdUtzYkZGS1dka2hNNWtpWEJnTUV6ODBPNmVxWWZQcUxiVEQ3ZmRKdUVacHZGdUNldHJ6bWhzZDBIQU5LSl9TWEpwbWc?oc=5",
+          "source": "IndexBox",
+          "date": "2026-09-27T21:01:04.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Utz Brands (UTZ) Looks Fully Valued After Its New Protein Snacks Debut - simplywall.st",
+          "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQVzNiS2NLYktKUDJlMUZkN2psdHRUUnprdDY1Vkg0dEdPeDB5VDBRbXkxRU9PTmFvWFFZODBITzY0bWdoS0NBX2s4dklmOTMxS3Z2WjB5TDg5bVIyRVJjMS0zUXR4WmJCTzFvZGNrUnNVYl9IU05MckV2YWFKbGRZb2RwZVBYRWdpY0dhNTAxTHBlNncxSnZXOWE3a2RreXlMSW5oVVFUTGpCQ3FUWU0xWU0wVWo5VjBRZFNIUFBmaDEzOEczSUFBT0F6OVo4SE5LYWJ0RzlB0gHbAUFVX3lxTFByZUxFbUxFdHIyMVJ6cGFQaXdEMHpFdHlCTEU5OV8tcDR2NkROTklGbjVJeWdJWnM2T2xXRDdtSk01cGRFa1lWWEtQMWxIMmlWM0tubENoWTl2WW5uZDI2eUJheEVqaVJCRE1HM2JIZ1YxRDFrZmptdXBqeHRmVC1uM3NrcUVMZmF0RTBRcTg4MVFHUC1Fdm8xZkFhRU5MYVp1d014RTRkNWM3Y2M5UVpJeXZqbFFybTV3RU1QT0FBbm1DUzJRS2pPanRXdHF6empOQ3F2OGhrTmFNSQ?oc=5",
+          "source": "simplywall.st",
+          "date": "2026-09-27T09:41:19.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Creatine-Enhanced Protein Bars - Trend Hunter",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9lVm42SHJlYlRRNFhTZkZqNXFfbkVHSmlMd0pWdkVjLUZ6U3N0OFlfMjd3MzVtNExldzRLcVNDRDFIekF6eklJVXl0UWFLc1JUUTBSUWV3LXFyekw0QWI4V0djV0lDRUU5eDl5Yg?oc=5",
+          "source": "Trend Hunter",
+          "date": "2026-09-25T21:47:50.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Protein-Enhanced Pretzel Bites - Trend Hunter",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE15bHlDTThrV0NTSGl1UHFDY3c5SGNGQWZ1ajZUblFfMEFDazFmQ0tLWkdKOTlEOXZXbE54NDF1SWxZaS1wQkJCU1gyRXVpeUVxb0pDMjFrcEdEQU5uNXlWbmhxWkY?oc=5",
+          "source": "Trend Hunter",
+          "date": "2026-09-25T21:47:50.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "I ONLY Ate \"High Protein\" Snacks For 72 Hours",
+          "url": "https://www.youtube.com/watch?v=aMwVRVz4R3k",
+          "source": "James Li",
+          "metric": "446.6K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "I Tested Iconic Junk Food Turned Protein",
+          "url": "https://www.youtube.com/watch?v=g6YskxxC8eA",
+          "source": "The Takedown Twins",
+          "metric": "216.8K views"
+        }
+      ],
+      "momentum": 61,
+      "velocityScore": 43,
+      "breadth": 1,
+      "overall": 63,
+      "lifecycle": "Peak",
+      "spread": "platform-specific",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 60,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "niche-fragrance",
+      "name": "Niche fragrance",
+      "category": "Beauty",
+      "query": "niche perfume",
+      "wiki": "Perfume",
+      "blr": {
+        "fit": 78,
+        "vertical": "Duty Free",
+        "zone": "T2 Intl beauty",
+        "play": "Niche/Indian-attar fragrance discovery bar with travel minis.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 68,
+          "velocity": 1.05,
+          "raw": {
+            "avgDaily30d": 422,
+            "last7avg": 438,
+            "prior28avg": 417
+          }
+        },
+        "youtube": {
+          "intensity": 73,
+          "velocity": 1.4,
+          "raw": {
+            "views7d": 698289,
+            "views30d": 1040637,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 18,
+          "velocity": 2,
+          "raw": {
+            "items7d": 9,
+            "items1d_unsaturated": 4,
+            "items7d_unsaturated": 12,
+            "last48h": 3
+          }
+        }
+      },
+      "geo": {
+        "global": 18,
+        "asia": 40,
+        "india": 10,
+        "bengaluru": 10
+      },
+      "geoRaw": {
+        "global": 9,
+        "india": 0,
+        "asia": 3,
+        "bengaluru": 0
+      },
+      "series": [
+        415,
+        399,
+        411,
+        368,
+        441,
+        376,
+        461,
+        477,
+        510,
+        473,
+        460,
+        414,
+        396,
+        458,
+        390,
+        411,
+        434,
+        305,
+        445,
+        365,
+        346,
+        350,
+        415,
+        393,
+        322,
+        406,
+        357,
+        395,
+        442,
+        393,
+        348,
+        371,
+        353,
+        411,
+        379,
+        407,
+        351,
+        364,
+        376,
+        356,
+        384,
+        409,
+        375,
+        400,
+        429,
+        404,
+        387,
+        423,
+        395,
+        477,
+        406,
+        427,
+        413,
+        391,
+        518,
+        429,
+        482,
+        360,
+        336,
+        469,
+        483,
+        438,
+        410,
+        463,
+        468,
+        423,
+        453,
+        409,
+        458,
+        461,
+        445,
+        435,
+        378,
+        360,
+        357,
+        391,
+        424,
+        401,
+        416,
+        392,
+        370,
+        364,
+        396,
+        408,
+        414,
+        490,
+        494,
+        422,
+        371,
+        468
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Seinde Signature unveils 2026 niche perfume advent calendar - Head Topics",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPa05jVmQ0d3d5RHl2ZXdfV21JeFFqbjNzTU5ndjJSNHQzT0RqZlRkcDIzT0lwY19YajZPOTVtTXNNRHU5VHRCZ3dUb2xFbDlROFc5WTJ1ZnVnUnphMjRsWU9pVFQ3bFdvQjkwZHp1b05YbVN2TzZWWlVjLW0zVHI0bzNIRjBJczNJU05pQlFhM3JNbzZMWWdCTXVtQzVabEIt?oc=5",
+          "source": "Head Topics",
+          "date": "2026-09-27T14:04:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Seinde Signature unveils 2026 edition of Nigeria’s first perfume advent calendar - Premium Times Nigeria",
+          "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQOUlQeGZPd0lpVXUzeDVhVG9adXYwNndUaE9pN09MeUN5amVXdE1BMEJDaXpPWmtnM01peWZQbEFwTXhNNXgtc1NhYmo1bllQTlVsSTNqd00xdnM4dkFSc0lQXy1QYzhFSUtRN3FIWDVudk9WVklhTnNrQXBEY2d4X01MZTIyeGYwVmtWY09yTnVkZ2t2ZTBlWFdrYW5xWmRNbEFYWlpXLW55S3p4eEkwS2JSem1oaS1WaVA4LW1LMzBKNXdWUV9DY0s5TlJ6M0g5NldTLTFGWFB5VHBSaU55VGF3X2Q?oc=5",
+          "source": "Premium Times Nigeria",
+          "date": "2026-09-27T13:54:49.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "This new €29.99 perfume brand just landed at Sephora and it’s shaking up the classics - Paris Select Book",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQT05wM3BGQzRsMlpQelNOMDQydnFXYVZBZW9OLU5xTUU4VlVzenhxSzZhVF9YV0ZhVUQ3ck5vTDFYZXhYMDN3MjFONDJVTk1hLUk3c00yT1MyXzJzMnZPMEFnSXEyeGlEamx1QXRJRVJ4bXI0bXBDaW5TYkwtZGdabHMyVQ?oc=5",
+          "source": "Paris Select Book",
+          "date": "2026-09-26T20:34:12.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Fashion Month Has Been a Lot So Far. Here Are the Parts We Actually Want to Talk About. - PAPER Magazine",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxObTk2cnRyLU10TWtyM0YyZW53SkNWRW0wWGpHR3A4aTBqMTUySlc0N0Q4SE10bEhia3FhQUJLeFFqdklOX1FGRFV4cDdodzJ3M2lXNzh3alhCLUo2YWdiZFN0WU5SQmtMTkxLTzlYaldCTEZLSlVCVWFKck9yVXltR3ZOWksyQmRjeDBOSS14S1F4YWdjYTRmYXhtc01BdnM0UFJWbG5wSnJEMkVGWU1z?oc=5",
+          "source": "PAPER Magazine",
+          "date": "2026-09-26T02:43:07.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "15 CHEAP Clone Fragrances That Make The Original OBSOLETE",
+          "url": "https://www.youtube.com/watch?v=nKFVnAkL_JQ",
+          "source": "Gents Scents",
+          "metric": "165.5K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "10 Cheap Fragrances That OUTLAST Expensive Colognes",
+          "url": "https://www.youtube.com/watch?v=m3dDv-yY5wk",
+          "source": "Gents Scents",
+          "metric": "100.8K views"
+        }
+      ],
+      "momentum": 55,
+      "velocityScore": 66,
+      "breadth": 0.67,
+      "overall": 61,
+      "lifecycle": "Accelerating",
+      "spread": "mixed",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 59,
+      "verdict": "Watch"
+    },
+    {
+      "id": "filter-coffee",
+      "name": "South Indian filter coffee",
+      "category": "F&B",
+      "query": "filter coffee",
+      "wiki": "Indian filter coffee",
+      "blr": {
+        "fit": 82,
+        "vertical": "F&B",
+        "zone": "T1 + T2, gifting",
+        "play": "Bengaluru-signature filter-coffee counter + packaged decoction gifting — local identity product.",
+        "links": [
+          {
+            "label": "Sweet Karam Coffee opp",
+            "href": "/opportunities/opp-sweetkaram"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 50,
+          "velocity": 1.03,
+          "raw": {
+            "avgDaily30d": 113,
+            "last7avg": 115,
+            "prior28avg": 112
+          }
+        },
+        "youtube": {
+          "intensity": 79,
+          "velocity": 1.66,
+          "raw": {
+            "views7d": 1258441,
+            "views30d": 1581918,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 39,
+          "velocity": 1.06,
+          "raw": {
+            "items7d": 17,
+            "items1d_unsaturated": 6,
+            "items7d_unsaturated": 34,
+            "last48h": 1
+          }
+        }
+      },
+      "geo": {
+        "global": 39,
+        "asia": 55,
+        "india": 57,
+        "bengaluru": 90
+      },
+      "geoRaw": {
+        "global": 17,
+        "india": 10,
+        "asia": 7,
+        "bengaluru": 46
+      },
+      "series": [
+        91,
+        94,
+        106,
+        92,
+        111,
+        138,
+        102,
+        98,
+        123,
+        137,
+        101,
+        121,
+        123,
+        109,
+        125,
+        104,
+        91,
+        88,
+        101,
+        110,
+        90,
+        124,
+        113,
+        107,
+        94,
+        102,
+        103,
+        105,
+        85,
+        127,
+        87,
+        109,
+        103,
+        129,
+        115,
+        94,
+        109,
+        109,
+        108,
+        92,
+        128,
+        104,
+        96,
+        124,
+        99,
+        94,
+        139,
+        121,
+        122,
+        101,
+        93,
+        100,
+        97,
+        132,
+        122,
+        96,
+        148,
+        118,
+        102,
+        98,
+        103,
+        121,
+        107,
+        126,
+        118,
+        95,
+        99,
+        116,
+        134,
+        130,
+        98,
+        106,
+        93,
+        131,
+        117,
+        125,
+        106,
+        101,
+        120,
+        99,
+        108,
+        102,
+        120,
+        114,
+        112,
+        120,
+        117,
+        102,
+        105,
+        138
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "International Coffee Day 2026: How India’s Coffee Culture Is Evolving Beyond The Cup - slurrp.com",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQTVFTajM0S2VoRGlmZG9MbXZjSXIzNWVNRmUwR0JvX0hYbGJ4SVJWS3hfQWJKNjFjeGIwdTlZMFdMcEkxNTF1QWIyMUJOdk82bEFMZWhmc3k5QkdpWllkbVpCVlJ2WTJXS2d4bXpwUEwyYnhpVjNOOEZJR1hmSmVDVVFwUEZSVEl1RV8xNlBVU05IcjlIazA3alk3VFVuWlkxUk1XaDFfb1l5R2NsX0hzVUNKTHV1SUNmNmNhYmhEQnZrR2l4dGfSAcsBQVVfeXFMTjBHVm9qdHo5bTNJMm1Cd3l3ajAtQVJ1aC16ODdTN1BvRG8zbjZSMjdJVnNVYndZMy1hb0NsdVZIN01wRUFERWRvTVZKMW5FNlhISjRyaExKM0w4eUVCM255WjRaX3JkMVg0YTFHN1BoUGV4VG1MeFpabXpKZ2tfbVhEdFJTLV9NcWpnVDZXcW50NnY3OUY4VTRqYVc1VG90NFVpNUcwTWNtU3lxTV9zdkdieGo0Wm44Z0V3ckFicDNsNnJsb2I5bzhpNkU?oc=5",
+          "source": "slurrp.com",
+          "date": "2026-09-27T10:21:12.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Do any coffee-flavoured drinks come close to the real thing? - The Guardian",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPOHhHSmg1cy1ZOG5UMktzNUNjMHdUcHhad0x2WXcyc2VMZmRRdmlhRG94M1lWVTNUWHlaZ3lFUk9JU0F2WGs3aEk2VGdSRDNKQXNrdWxINnFicTlXeHFnM2hsalJheXdCOTVsY0VwWHYzS2lrcnV2Z0t1U0JDQm9VVE0wOExWcmVXQ3l2T2hQUUNscE9zY2xEYl8tdmVEVE0?oc=5",
+          "source": "The Guardian",
+          "date": "2026-09-24T12:00:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Mumbai’s Rameshwaram Cafe To Host Heritage Walk With Hearty Breakfast On Sept 26; Deets Here! - curlytales.com",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPWk5LaXR6eUl0dmo0UWlxQ0dQcXFvXzFiRFM0MU5rNEs2eUVUX1pwMjhibVlvRHB4WlhiYzNKXzNFSFhFZEVwUC1vSC05QVBNLVpsVVZNNGxFWnlfdmliRTllbXJtaGlPUmU3d0tNdEUyLTVQVDR3SVM3aWFfWGpudEQwdThfTDdDdWFPZXJzbW1WdlotTVE3ZFVWQW0xdVJUSlRzenRhOW53eVgxREV5clM0cjNkQ3V4cG1QcTNnMNIBxAFBVV95cUxNNmUzb2VyWWROU2RmVHZyUTlVTEQyZHJFd3FEbXVHZ2twLWlQazZPSUpFOWZiTlBKNDlGSVJXUGVzZkNqYmFZUkFMU2pPTm5PZFB4bVpBbTEwU0JrOWtESzRPem1ZRkViMS0tVWlZZ2JkYUFudHpoM3ZQUVZzbDc0U3ZlNkUydkdnYkFHZmJpQnpydURzaVozc09BMFJycEpNbHFWSzlObElpbGQ4SEVVOWM5dmlUd3BlZ0RId01vSW93aW1T?oc=5",
+          "source": "curlytales.com",
+          "date": "2026-09-24T08:52:14.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Two Arizona coffee brewers honored in Global Coffee Awards - Axios",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQd0lLOHotaUpwUUxRWUdqR211dElIU0hzTjRrRXFleWg4SmFsMXRtclMtYkRPcGllTkQ0OFJaejI5OEs0VlRTcVRtZDZDTDN3UHVIVHlUUFVzaEJsczczY2l5QWZsYzBuSlhQbmo5ZndadUh6bnRGdV9hU0FvZ2dJNk5Ib2F3UW1nMlhUWTFuSEwzQjFQemRBUm5GU01ORm5nYXZPUndnZ3ptYjg?oc=5",
+          "source": "Axios",
+          "date": "2026-09-23T13:24:27.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Jason Sanjay Exclusive Interview | Master The Blaster | Mirchi Vijay | FilterCopy Enga Area",
+          "url": "https://www.youtube.com/watch?v=TXI1FigAQ7Q",
+          "source": "FilterCopy Enga Area",
+          "metric": "826.9K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "பூரி மசாலாவும் FILTER COFFEE-யும் - விதவிதமாக அசத்தும் உப்பார வீதி Ayyar Mess !! ",
+          "url": "https://www.youtube.com/watch?v=eVbNd1UqQCM",
+          "source": "Banana Leaf Unlimited",
+          "metric": "121.9K views"
+        }
+      ],
+      "momentum": 55,
+      "velocityScore": 59,
+      "breadth": 0.67,
+      "overall": 59,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 72,
+      "verdict": "Act now"
+    },
+    {
+      "id": "specialty-coffee",
+      "name": "Specialty coffee",
+      "category": "F&B",
+      "query": "specialty coffee",
+      "wiki": "Specialty coffee",
+      "blr": {
+        "fit": 84,
+        "vertical": "F&B",
+        "zone": "Airside piers",
+        "play": "Craft roaster flagship with brew-bar theatre (Subko / Third Wave class).",
+        "links": [
+          {
+            "label": "Subko opportunity",
+            "href": "/opportunities/opp-subko"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 44,
+          "velocity": 1.04,
+          "raw": {
+            "avgDaily30d": 73,
+            "last7avg": 75,
+            "prior28avg": 73
+          }
+        },
+        "youtube": {
+          "intensity": 76,
+          "velocity": 0.28,
+          "raw": {
+            "views7d": 172519,
+            "views30d": 1263364,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 88,
+          "velocity": 0.78,
+          "raw": {
+            "items7d": 71,
+            "items1d_unsaturated": 15,
+            "items7d_unsaturated": 116,
+            "last48h": 7
+          }
+        }
+      },
+      "geo": {
+        "global": 88,
+        "asia": 81,
+        "india": 69,
+        "bengaluru": 88
+      },
+      "geoRaw": {
+        "global": 71,
+        "india": 19,
+        "asia": 26,
+        "bengaluru": 41
+      },
+      "series": [
+        58,
+        60,
+        69,
+        62,
+        45,
+        44,
+        54,
+        67,
+        40,
+        40,
+        57,
+        51,
+        61,
+        58,
+        136,
+        129,
+        102,
+        80,
+        59,
+        63,
+        63,
+        77,
+        58,
+        81,
+        96,
+        55,
+        69,
+        59,
+        63,
+        62,
+        51,
+        55,
+        54,
+        59,
+        71,
+        67,
+        58,
+        55,
+        58,
+        77,
+        65,
+        76,
+        73,
+        82,
+        88,
+        68,
+        70,
+        80,
+        69,
+        69,
+        70,
+        62,
+        70,
+        57,
+        80,
+        75,
+        80,
+        85,
+        80,
+        70,
+        71,
+        87,
+        74,
+        72,
+        74,
+        57,
+        66,
+        64,
+        60,
+        79,
+        84,
+        82,
+        77,
+        70,
+        76,
+        85,
+        69,
+        64,
+        75,
+        57,
+        65,
+        77,
+        65,
+        86,
+        91,
+        71,
+        68,
+        60,
+        75,
+        77
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Agoda Brews Up Six Asian Escapes for Coffee-Loving Travelers - The Malaysian Reserve",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPZGV0Y0dwampVT1RyRTBvSWJzZVBaa0hQbFB4OG5MamJLcjhtbHB4TEtTbHpfRVpqdEREVHBFOElOMHB6OFBJT2Y1WGJIYVBrR3k2Mmozekt4ZWRIby1mak8wSTBRc2x0MmJDRHZwSi1wbm1BaDRPUzkwb1VDdW1pTXA2NEd3RUhESDhINWVOR1k2dEJrWVplRllmTmpITVZUQWE0RVlzSQ?oc=5",
+          "source": "The Malaysian Reserve",
+          "date": "2026-09-28T04:36:04.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "10 Cities With the Most Remarkable Coffee Cultures in the World - ColombiaOne.com",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOaEs3Vkc0WFFHRU4xbS03MHE0ajJCelRvNHZvREc3bk1icm9LQmlDWHFkeWREOVRzNFJnMHdlN04xelhjMkxwWWhDaHkwTS1qS0lZbjF5d09IS1NUUmhLNVlKN0RuVVMxUUJxemVpaWdVQzA3ekZ4cER2ZFJPREVncE45ZEFVTmFrNzZr?oc=5",
+          "source": "ColombiaOne.com",
+          "date": "2026-09-27T20:00:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Brewing new opportunities: Australia’s MDF and Kahawatte Plantations partner to grow Sri Lanka’s specialty coffee sector - Island.lk",
+          "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNYlNfS3k0QTU4djBHQVRuYkhKcDExZ3gyUUUyZXVnREZyM2YtQVVsUXdDc2VlMEh5S3VSZ3Z0eDdabmxPWHRUT2IwTWhNSVJFYnRIN0QxbURCbUJKa2wweUlyQW9EUW9NZmYwRENyeUxRYmt1TDQxT3pudnNSREh2ZE9NYmU0N09UWkplMTUyUW9HeENFY1FvUzRvbmlYbzhIMXZOYlV5QW5obTR3cHpyU3d3SXloOGhHbVhMV0FRY2wxZHhwMmxhaVVYckc4bTVF?oc=5",
+          "source": "Island.lk",
+          "date": "2026-09-27T06:01:56.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "100 Best Coffee Shops in the World 2026, First Place Onyx Coffee Lab Arkansas - VOI.ID",
+          "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE9JX3RMV09YUDVBUWhVVUFEWVhaVGNJZ3FEcUlPOHZqR2piVXI0dUpiTHlTTzdaZXNQaVZHNTQ3TmtHNGtDUGRGYjZR0gFCQVVfeXFMUFlzLTRKTE52Z1FrT3JVYUV4aTZ3X0NTN3k4RUZEdm9kcjh3VzlpNTdUQ1I3X2RrWjV5UEhqcmZ6YzFR?oc=5",
+          "source": "VOI.ID",
+          "date": "2026-09-26T21:35:53.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "How He Runs a Coffee Shop From a MINI Cooper | Tiny Mobile Café | Relaxing Barista Work Life 4K",
+          "url": "https://www.youtube.com/watch?v=qE1NedvtPSk",
+          "source": "Tasty Inside",
+          "metric": "42.8K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Where Tokyo Locals Actually Eat (All-Day Food Tour)",
+          "url": "https://www.youtube.com/watch?v=FvpTIJQJ9GA",
+          "source": "TabiEats",
+          "metric": "36.9K views"
+        }
+      ],
+      "momentum": 66,
+      "velocityScore": 35,
+      "breadth": 0.67,
+      "overall": 57,
+      "lifecycle": "Cooling",
+      "spread": "mixed",
+      "dominantPlatform": "news",
+      "blrRelevance": 70,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "run-clubs",
+      "name": "Run clubs",
+      "category": "Wellness",
+      "query": "run club",
+      "wiki": "Running club",
+      "blr": {
+        "fit": 40,
+        "vertical": "Experiences",
+        "zone": "Campus events",
+        "play": "Community partnership (BLR campus runs) rather than a retail play.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 10,
+          "velocity": 1.28,
+          "raw": {
+            "avgDaily30d": 5,
+            "last7avg": 7,
+            "prior28avg": 5
+          }
+        },
+        "youtube": {
+          "intensity": 75,
+          "velocity": 0.64,
+          "raw": {
+            "views7d": 356180,
+            "views30d": 1150220,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 75,
+          "velocity": 1.79,
+          "raw": {
+            "items7d": 49,
+            "items1d_unsaturated": 31,
+            "items7d_unsaturated": 104,
+            "last48h": 17
+          }
+        }
+      },
+      "geo": {
+        "global": 75,
+        "asia": 80,
+        "india": 78,
+        "bengaluru": 60
+      },
+      "geoRaw": {
+        "global": 49,
+        "india": 30,
+        "asia": 25,
+        "bengaluru": 10
+      },
+      "series": [
+        8,
+        10,
+        6,
+        3,
+        13,
+        5,
+        6,
+        5,
+        10,
+        7,
+        8,
+        6,
+        3,
+        14,
+        8,
+        9,
+        4,
+        4,
+        5,
+        5,
+        7,
+        7,
+        6,
+        8,
+        8,
+        2,
+        7,
+        9,
+        5,
+        8,
+        8,
+        6,
+        6,
+        6,
+        3,
+        4,
+        5,
+        12,
+        8,
+        2,
+        3,
+        7,
+        3,
+        10,
+        7,
+        6,
+        2,
+        5,
+        8,
+        3,
+        7,
+        6,
+        2,
+        10,
+        1,
+        5,
+        7,
+        6,
+        15,
+        8,
+        2,
+        3,
+        4,
+        5,
+        3,
+        6,
+        7,
+        6,
+        2,
+        10,
+        6,
+        4,
+        2,
+        4,
+        1,
+        3,
+        6,
+        2,
+        8,
+        6,
+        1,
+        5,
+        7,
+        8,
+        9,
+        5,
+        8,
+        5,
+        8,
+        3
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "BLoved Run Club hosts monthly community run in downtown Tupelo - WTVA",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQUUFlRmllc3FZRVMzOWU1ckJ2NktWQ003RlE0ZEdVMHFZSkFhR3did3hFODEwbHlQZG5LM1hxQ0hVZGRub2tja3Qxdi1pZ1pQVEF2RGsza2dhanpTYWN1ZHpLNnY3VlRCMXVUMTdfVDZGRngxelNtUTRiWWMydVIxbGxBcmNOa2FrQUE5UU50XzlxYl82RGx30gGrAUFVX3lxTE5kTGRsUnlpd1FIY1VrdjdCTW9BdXdBS1l5eWJJTW9aWEJXR21DUk1FRG95VFhvSVlDTm9XZl9sS2poTXZWY09Lbld1V0x0dEx5TExDLWQ4eHJYTlk4S1hKTzdjc0tnbGhaQWRCdHhycnFRZGVCa2g0Vjg2aFN5Qi13SGhJRllxZ1J1RDhZdEdIRmZYV2FXMEFxOTRwNUE4Y2F4YUl2cXQxVndnaw?oc=5",
+          "source": "WTVA",
+          "date": "2026-09-28T05:28:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "BLoved Run Club hosts monthly community run in downtown Tupelo - KOLD",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxObHNXS2l5N2NlYjNTRFFLdTJrRllGVGtOZnMzSndyZEtrMHVNTG9iOUNQaGh2NGdhTDZHWTZCTTJMd1hJRkgxSTR4MnBfd3BLV1lIb3NvcXpXRFdEaklIMzN6bnF4QzJrN0JGa1djbWkwR1pOUHNrUGVPdWI1bU1XcEdZeUV4VHJyejhmMk8yM1hCRm90SzFrYnRKekpaOWc?oc=5",
+          "source": "KOLD",
+          "date": "2026-09-28T05:27:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "BLoved Run Club hosts monthly community run in downtown Tupelo - WKYT",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPSlg1MUxJRGUwMjEtbVJXQnM1UndHazlwc1dwX29CNFhOeG1lSENCMmxubWpNV2JTb3RQRW9tVUhVTVdCUFpXY3h2d09GVjdaYW4xVlljX3hDbjYxLWI1TXc5cGlYbGk1VjVZOFZLSUlOdThXempFZEJyZWh4dHhkVjQxcGhIbkxQUDc1WE9qRTJGUWtGelBYVW1HTjlBa0k?oc=5",
+          "source": "WKYT",
+          "date": "2026-09-28T05:27:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "BLoved Run Club hosts monthly community run in downtown Tupelo - WTOC",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPYUFIMnlWYVd3NldsS2hleFhqSmdwZHdxSEFCSlZVbW5qZTRveWtPTFlCbDY3TW1JbVRTNDZfOVI5MGtHSjRkNGhjOW5oTHBnQklsQ0d2anlxM0g5WlR0cTltanRBUHNudm02bnFwV1VLYkprSExZVHFacEhWOE5wOXB1ZnhVZndzN2NDemhZazFaZ1ZwN2lJXzZsUHVvYU0?oc=5",
+          "source": "WTOC",
+          "date": "2026-09-28T05:27:00.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "I Left the NCAA and Now I Run an Olympic Qualifying Time",
+          "url": "https://www.youtube.com/watch?v=-R01MenoaFs",
+          "source": "Phily Bowden",
+          "metric": "61.1K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "The Race That Changed European Distance Running Forever",
+          "url": "https://www.youtube.com/watch?v=L4VkpxO4HOU",
+          "source": "Eamonn Kichuk",
+          "metric": "42.6K views"
+        }
+      ],
+      "momentum": 47,
+      "velocityScore": 57,
+      "breadth": 0.67,
+      "overall": 54,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 51,
+      "verdict": "Watch"
+    },
+    {
+      "id": "hojicha",
+      "name": "Hojicha",
+      "category": "F&B",
+      "query": "hojicha",
+      "wiki": "Hōjicha",
+      "blr": {
+        "fit": 62,
+        "vertical": "F&B",
+        "zone": "Café menus",
+        "play": "Menu-level add-on to matcha/specialty coffee operators rather than a standalone unit.",
+        "links": [
+          {
+            "label": "Dubai shortlist (Puzzle Coffee)",
+            "href": "/markets/dxb"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 72,
+          "velocity": 1.03,
+          "raw": {
+            "avgDaily30d": 533,
+            "last7avg": 534,
+            "prior28avg": 518
+          }
+        },
+        "youtube": {
+          "intensity": 47,
+          "velocity": 1.94,
+          "raw": {
+            "views7d": 718313,
+            "views30d": 135292,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 18,
+          "velocity": 0.43,
+          "raw": {
+            "items7d": 9,
+            "items1d_unsaturated": 1,
+            "items7d_unsaturated": 14,
+            "last48h": 0
+          }
+        }
+      },
+      "geo": {
+        "global": 18,
+        "asia": 40,
+        "india": 32,
+        "bengaluru": 39
+      },
+      "geoRaw": {
+        "global": 9,
+        "india": 2,
+        "asia": 3,
+        "bengaluru": 3
+      },
+      "series": [
+        314,
+        381,
+        432,
+        384,
+        468,
+        477,
+        501,
+        387,
+        406,
+        350,
+        366,
+        400,
+        436,
+        323,
+        402,
+        381,
+        369,
+        380,
+        417,
+        389,
+        348,
+        346,
+        340,
+        366,
+        393,
+        432,
+        450,
+        403,
+        389,
+        348,
+        401,
+        415,
+        486,
+        491,
+        403,
+        416,
+        382,
+        410,
+        387,
+        466,
+        490,
+        337,
+        418,
+        387,
+        417,
+        488,
+        526,
+        510,
+        484,
+        412,
+        474,
+        475,
+        492,
+        612,
+        546,
+        449,
+        432,
+        502,
+        419,
+        443,
+        522,
+        510,
+        446,
+        447,
+        551,
+        507,
+        534,
+        654,
+        608,
+        530,
+        483,
+        459,
+        502,
+        538,
+        599,
+        647,
+        476,
+        447,
+        465,
+        569,
+        530,
+        632,
+        601,
+        529,
+        423,
+        514,
+        511,
+        508,
+        663,
+        588
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "JENKI’s Autumn Menu is here - Battersea Power Station",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5SZXBxemh4TVFBSVlmbzdnbURpb1NXQ0V4MGc3R2JvWG5wNjlHSDM5dXVUUHNsVXpfVUwwb2VaYjV5NXY0R283djNYc2lVd01YNlhPc2dOYWpNdHozLXNwVjA2Qzl6UFAxQm9YWXV2NWRZVHpOcjRCVU5B?oc=5",
+          "source": "Battersea Power Station",
+          "date": "2026-09-24T21:47:11.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "10 Types Of Coffee Drinkers You’ll Meet At Every Cafe In Dubai - curlytales.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPMklma292bzAxT2tMU1NOY1VNYUl1Z1Jzc0lkNlpiSnFDRTlfRkhTSzlxUjJlZkhGeEtSQnZRR1A4c1RJTDExV3dZZ0ZYMC04WEIxeWRlLUN3SzlIOEZJMk54Z3ZQM3QxamdLc1phREUwYm15Q0psQTBBOTI5cG9KMDhMT2IwWXVYUG1pSS1kMUlNVWItZHc0VFpoMmFMSXhW0gGmAUFVX3lxTE9PUjF2MW5wMTE4Tm5BamdiOF9MdE9zZTNoNDhFaFQ4QzBUQWhUTVJ0clNXVnNndTkxa2JwZ2ZlNmNtU1Fkbk5QdGxpYjU0V0lWOGcxNkNTQlFyZXFrWnlXZU9sSG5OUkpUYzkyUV94MzU0SlIxOVYteVl0WDF3c2J5cmFhMDVndDk5TWV4YnB3YjNsMXY0c0hLaDdUYUZhRHpzQjV6Mnc?oc=5",
+          "source": "curlytales.com",
+          "date": "2026-09-24T10:25:29.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "BLACK SHEEP COFFEE LAUNCHES AUTUMN MENU WITH INVENTIVE NEW HOJICHA AND MATCHA FLAVOURS - London TV",
+          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxONy1SNFNVN251MEhrUzZlekdoTTl5b0dLVTRJTlVRcXZBUTRYWmFNSXhJVlhQTlhESnRETjRwZldNY3BGWXdfZkxWdXM4QUhYbkhOV011ZTdIR2Q1MGQzb2xTeTZjeGQtc0twR2ZmZURqNEhBVlYzV3pzNFdIbUxSSFpIdXY0MG9kc1NCVU1Na0tsNU9ZR1FxdEJCTDJ1M1E5eVZiY0VxQ3hwRG9QNm85Sg?oc=5",
+          "source": "London TV",
+          "date": "2026-09-24T09:46:13.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Stand nails everything except the experience of eating there - Review - Miami - The Infatuation",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFByUzRrenFUYkY1WkxvbTJ6b2pzQ2JWemVDM3hqQUVZRFRNSFhNZzcxQ2hTQWZTa3RqZkhWTHFaZ0JmVXUtWVFyZHltZHlVaHZvZmhGcTc2SUdIYkk4RnNZ?oc=5",
+          "source": "The Infatuation",
+          "date": "2026-09-24T07:00:00.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "A Japanese Inn That Looks Like Demon Slayer’s Infinity Castle | Kyoto Onsen Ryokan",
+          "url": "https://www.youtube.com/watch?v=8PBgQxzmlNQ",
+          "source": "わた旅",
+          "metric": "239.0K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "From Matcha To Whisky: What Is India Drinking Now? | The Palki Sharma Show | India Global Review",
+          "url": "https://www.youtube.com/watch?v=Q1dLvEdcF2Q",
+          "source": "India Global Review",
+          "metric": "218.2K views"
+        }
+      ],
+      "momentum": 49,
+      "velocityScore": 49,
+      "breadth": 0.67,
+      "overall": 53,
+      "lifecycle": "Peak",
+      "spread": "platform-specific",
+      "dominantPlatform": "search",
+      "blrRelevance": 53,
+      "verdict": "Watch"
+    },
+    {
+      "id": "digiyatra",
+      "name": "DigiYatra / biometric travel",
+      "category": "Technology",
+      "query": "digiyatra",
+      "wiki": "Digi Yatra",
+      "blr": {
+        "fit": 68,
+        "vertical": "Technology",
+        "zone": "Processors",
+        "play": "Biometric identity as a retail and personalisation layer (walk-through lanes, pay-by-face).",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 46,
+          "velocity": 0.88,
+          "raw": {
+            "avgDaily30d": 81,
+            "last7avg": 75,
+            "prior28avg": 86
+          }
+        },
+        "youtube": {
+          "intensity": 50,
+          "velocity": 1.27,
+          "raw": {
+            "views7d": 106538,
+            "views30d": 174440,
+            "videos7d": 33,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 18,
+          "velocity": null,
+          "raw": {
+            "items7d": 9,
+            "items1d_unsaturated": 0,
+            "items7d_unsaturated": 21,
+            "last48h": 0
+          }
+        }
+      },
+      "geo": {
+        "global": 18,
+        "asia": 40,
+        "india": 55,
+        "bengaluru": 66
+      },
+      "geoRaw": {
+        "global": 9,
+        "india": 9,
+        "asia": 3,
+        "bengaluru": 14
+      },
+      "series": [
+        62,
+        61,
+        62,
+        79,
+        57,
+        44,
+        55,
+        60,
+        76,
+        63,
+        59,
+        48,
+        67,
+        56,
+        49,
+        64,
+        45,
+        63,
+        54,
+        59,
+        40,
+        39,
+        60,
+        64,
+        88,
+        65,
+        49,
+        64,
+        75,
+        54,
+        50,
+        74,
+        54,
+        69,
+        60,
+        64,
+        65,
+        64,
+        71,
+        69,
+        63,
+        98,
+        61,
+        77,
+        65,
+        68,
+        74,
+        101,
+        86,
+        107,
+        79,
+        130,
+        87,
+        107,
+        95,
+        107,
+        118,
+        88,
+        93,
+        85,
+        83,
+        78,
+        93,
+        85,
+        87,
+        82,
+        79,
+        73,
+        84,
+        93,
+        85,
+        79,
+        91,
+        89,
+        67,
+        72,
+        77,
+        80,
+        83,
+        94,
+        114,
+        67,
+        75,
+        96,
+        96,
+        61,
+        75,
+        74,
+        66,
+        59
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Nagpur Airport Introduces Single-Step DigiYatra Face Recognition for Faster Entry - IndianEagle",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPV0psa0JjaU9SaXhQZVRkSG85ckYwZldZb1pCMkxxNV9KV1ZWT3JVNHRjZGY3SXBBc0hNemhnS3ZuRVp3LWFWSWZ1V2Q1b2hmaU9ZazZRTWxudHdqS0JPLWJRaXdIOVFscDlzbldYUnR0U0R5STV5bHlDSy1oUzJHSnNzdzRJSmE5MU91SlVza0VSelA3eG53VU13?oc=5",
+          "source": "IndianEagle",
+          "date": "2026-09-23T07:12:30.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "DigiYatra launched at airport for passengers’ convenience - thehitavada.com",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPckNwb18tUEJRcmhJSVBlNWxRSkFkWW1jWUFfdTNUT3FVaklkREI2UkJMdFUtdy1aUElEX0ZNNWhyT0JfazljZ2E2LTlkZ1lhNmhvME9vajJ4SFdpakhUa2drTG5femtRcGhhc2JNak5teklDRjY5ZFhLalhzZXY0bDBCUlYzU2lTSWZTTmFSZUE0dktnU0lBSWoybWxDVkxTTVBMNFprTVA?oc=5",
+          "source": "thehitavada.com",
+          "date": "2026-09-23T06:07:31.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Nagpur airport introduces single-step face recognition at DigiYatra gates - The Times of India",
+          "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOd0drT1NXN1NGdVVFYzI3YUJPMHVmbkhZeXVrakF4Vy15b0lvN3NLcHVWSE85eUVzNWdFclpqcmR3ZlUyVkRlOXJSaC1kMTFsTGJqNnk5a0QtSExCNzg1ajZiSmFjWHZZQ3hjUEpSVXUwYy1rZTBocE1pNmFhOVR6b0Y4QUJIZTF0R1hPcFRiN3k4UHdxWWpuXy1QSnNZbzd3X3BRSDlRYjhkMDRTNFNZTk5OWm9GaUh1QVRXTWNtZVhQRG1SdndJX0YxdjVrM2pPcUJheWo4YjNGMHgybUkzRdIB5gFBVV95cUxNSWVzeEVXeVJpbDFFR25YMjlSdHhRVVVBNmV1c05VOGNkcUF6b2pqYW9KNlRZWFk0T2NkT09OZmhkTktGREtWckdFX19vYW9XR29HN2FBYm5laEFzSi1uZS0weHRkWXNTLV9CNWlHNEVDY2ZDNG45bGdERzlTdHFfbm40ZkF2YVc5VDlhbWszNVd0c2h6WXdMbWtENzJvUnU5OUQyVmJKV2ZucHRPWkJyeVJkdW5DaVVlQ3ZjQmNDZzRJcXZRVWVUZFZ1WF9najNsQ3BlV19VeWlEU2k2S2puSENWZDZudw?oc=5",
+          "source": "The Times of India",
+          "date": "2026-09-22T19:03:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Digi Yatra and Udan Yatri Cafe launched at Jammu and Srinagar airports - goodreturns.in",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQQWs0YnF3ZVFtVDFYNTRITlBJa1V5aFJ3VGVOTm1CS0VyWXdGQmY5WEtnZkREX2c5MmlwUldpMjdhcWdveUR3cEkyTG9QRG9XMXdiMElyZ0ZfQ1dKYldrM0dUMW5Wa1k3M2hZRE1ONUEtSldlRGU5VktyaFBLeVRmNE91clVKbG1na0NmQnNSTUdlZndIQlM5NldpV29yMnI5anNCcGw0ZnQwWXBjcFEwdGdJYnFVSmRUR0Rj?oc=5",
+          "source": "goodreturns.in",
+          "date": "2026-09-22T15:00:43.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Tu Juliet Jatt Di NEW PROMO |",
+          "url": "https://www.youtube.com/watch?v=hqjpYPBGSa0",
+          "source": "Telly Tales",
+          "metric": "48.2K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "Nepali Festival Indrajatra stories of Kumari, Yalambar, Indra Dhoj, Lakhe & Bala Maiju love story",
+          "url": "https://www.youtube.com/watch?v=WAA8DxA-rAM",
+          "source": "Nepali Folk Tales",
+          "metric": "45.3K views"
+        }
+      ],
+      "momentum": 39,
+      "velocityScore": 51,
+      "breadth": 0.67,
+      "overall": 48,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 60,
+      "verdict": "Pilot"
+    },
+    {
+      "id": "sleep-tourism",
+      "name": "Sleep tourism",
+      "category": "Travel",
+      "query": "sleep tourism",
+      "wiki": "Sleep tourism",
+      "blr": {
+        "fit": 76,
+        "vertical": "Wellness",
+        "zone": "T2 transit",
+        "play": "Bookable sleep pods / nap lounge for red-eye and transit passengers.",
+        "links": [
+          {
+            "label": "Dubai shortlist (sleep pods)",
+            "href": "/markets/dxb"
+          }
+        ]
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 14,
+          "velocity": 1.04,
+          "raw": {
+            "avgDaily30d": 7,
+            "last7avg": 7,
+            "prior28avg": 7
+          }
+        },
+        "youtube": {
+          "intensity": 65,
+          "velocity": 0.44,
+          "raw": {
+            "views7d": 112670,
+            "views30d": 532117,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 10,
+          "velocity": 1,
+          "raw": {
+            "items7d": 7,
+            "items1d_unsaturated": 2,
+            "items7d_unsaturated": 12,
+            "last48h": 2
+          }
+        }
+      },
+      "geo": {
+        "global": 10,
+        "asia": 40,
+        "india": 32,
+        "bengaluru": 24
+      },
+      "geoRaw": {
+        "global": 7,
+        "india": 2,
+        "asia": 3,
+        "bengaluru": 1
+      },
+      "series": [
+        9,
+        3,
+        7,
+        10,
+        1,
+        2,
+        6,
+        7,
+        5,
+        8,
+        2,
+        9,
+        3,
+        6,
+        2,
+        6,
+        5,
+        2,
+        7,
+        6,
+        4,
+        3,
+        12,
+        4,
+        2,
+        1,
+        14,
+        6,
+        5,
+        8,
+        6,
+        5,
+        5,
+        5,
+        6,
+        11,
+        4,
+        5,
+        9,
+        4,
+        5,
+        5,
+        9,
+        11,
+        4,
+        10,
+        5,
+        9,
+        7,
+        9,
+        7,
+        10,
+        2,
+        8,
+        7,
+        6,
+        2,
+        6,
+        4,
+        7,
+        8,
+        7,
+        9,
+        6,
+        13,
+        10,
+        6,
+        5,
+        11,
+        7,
+        4,
+        3,
+        3,
+        5,
+        11,
+        4,
+        7,
+        10,
+        14,
+        8,
+        7,
+        6,
+        4,
+        7,
+        5,
+        11,
+        6,
+        6,
+        11,
+        4
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "Ethiopian Airlines announces daily Durban–Addis Ababa flights - Bona Magazine",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPajd6dl9sMVFsNVk4QkExSVJZeXRpU0dsVmN2a1N3ejVTcUNsdHEzd3lTQ3pNWHRqWjVmWUxiUTNHVGdYa25ZVi13aDFfWkEzU2JlSE9uaDZyalpNWUlpWEpYN1BURXQxMVB2UGV6NlVBVmNoa3JjWlhOdFBIWlBwWHN3dllRQnUwOTVLbURSeXhDMWhEN3k0UjhOQk5mZw?oc=5",
+          "source": "Bona Magazine",
+          "date": "2026-09-27T15:07:48.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Would You Take a Vacation Just to Sleep? Inside the Sleepcation Trend - Kiplinger",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNcG82Zmd4TnNlNmxWNTk1VVBQSV9CNk5ZSmx6YXVVdkc4NlRYbUhiLVBOdTlVVW8zQ3BFdjBMUGZBMnZvLWo5NGd5d29RRGZxT3pBYlFqM0xUaDRza3J5MnNfRHZUMjlEUmR6N1BXaTEzOFF4VlBoY1hWcU85MTd6ci1JSkE2SlAyUTdkbA?oc=5",
+          "source": "Kiplinger",
+          "date": "2026-09-27T12:15:00.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Could Sri Lanka sell rest, not just rooms? - Daily FT",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPYXRkbUpFZ1J0YWNuNnhuMzZBMnV4bWxrX2JpRDZfZ0tvMUd4RDE0ZDE2R2xvY2ZNXzJWekhkaVRuYnZraEgwNjJUQjgzTFZMRk13WlZtNzFaVHIyV3FtMlFjejVRX2J5MG5PejZ5WkJUZXpXamhFdHhpdlF3UUY5WjBlSkYzVDVTczlV?oc=5",
+          "source": "Daily FT",
+          "date": "2026-09-25T12:25:03.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Spa Ceylon Brings Experts Together to Unlock the Power of Sleep - Colombo Gazette",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNWE1Tay1EOHFSRUJnRWdVMUdUUHl2bzE5RkhkRnh2VWRBdUhJRFZsWTY5YS1PSmNpNWJxenJiZTFqS2lfZ3phNGtRbnh4cGFCZm1qX2F3WnlJV19kakJpSktpWHZhdTRzMWdvRVBaTXJvVFh0Z3FfdVpieTlDWXg3eHRHeVZoQXdHR2htQzVNMVpQTTVNRlpWVDRmUFF3Yll1ZFdV?oc=5",
+          "source": "Colombo Gazette",
+          "date": "2026-09-25T09:32:55.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Camping During a Violent Thunderstorm | Building a Cozy Shelter Deep in the Woods",
+          "url": "https://www.youtube.com/watch?v=Ac2KUWW7dWs",
+          "source": "Quiet Campcraft",
+          "metric": "29.6K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "[4K HDR] 3 Hours Seoul Night Walk: Myeongdong, Hangang Park & Hongdae Sleep ASMR",
+          "url": "https://www.youtube.com/watch?v=fzckrXp4zIg",
+          "source": "Seoul Walker",
+          "metric": "19.8K views"
+        }
+      ],
+      "momentum": 27,
+      "velocityScore": 41,
+      "breadth": 0.33,
+      "overall": 32,
+      "lifecycle": "Cooling",
+      "spread": "platform-specific",
+      "dominantPlatform": "youtube",
+      "blrRelevance": 52,
+      "verdict": "Watch"
+    },
+    {
+      "id": "mushroom-coffee",
+      "name": "Mushroom coffee",
+      "category": "Wellness",
+      "query": "mushroom coffee",
+      "wiki": "Medicinal fungi",
+      "blr": {
+        "fit": 45,
+        "vertical": "F&B",
+        "zone": "Wellness shelf",
+        "play": "SKU test inside a wellness/pharmacy shelf only.",
+        "links": []
+      },
+      "platforms": {
+        "instagram": {
+          "intensity": null,
+          "velocity": null
+        },
+        "x": {
+          "intensity": null,
+          "velocity": null
+        },
+        "facebook": {
+          "intensity": null,
+          "velocity": null
+        },
+        "search": {
+          "intensity": 29,
+          "velocity": 1.12,
+          "raw": {
+            "avgDaily30d": 24,
+            "last7avg": 26,
+            "prior28avg": 23
+          }
+        },
+        "youtube": {
+          "intensity": 10,
+          "velocity": null,
+          "raw": {
+            "views7d": 107070,
+            "views30d": 7787,
+            "videos7d": 50,
+            "videos30d": 50
+          }
+        },
+        "reddit": {
+          "intensity": null,
+          "velocity": null
+        },
+        "news": {
+          "intensity": 10,
+          "velocity": 0.86,
+          "raw": {
+            "items7d": 7,
+            "items1d_unsaturated": 1,
+            "items7d_unsaturated": 7,
+            "last48h": 0
+          }
+        }
+      },
+      "geo": {
+        "global": 10,
+        "asia": 10,
+        "india": 10,
+        "bengaluru": 10
+      },
+      "geoRaw": {
+        "global": 7,
+        "india": 0,
+        "asia": 0,
+        "bengaluru": 0
+      },
+      "series": [
+        24,
+        19,
+        29,
+        27,
+        13,
+        31,
+        25,
+        17,
+        23,
+        16,
+        20,
+        15,
+        26,
+        28,
+        22,
+        23,
+        26,
+        16,
+        16,
+        20,
+        12,
+        26,
+        20,
+        17,
+        25,
+        28,
+        22,
+        26,
+        27,
+        11,
+        23,
+        31,
+        16,
+        12,
+        26,
+        36,
+        26,
+        44,
+        29,
+        22,
+        23,
+        21,
+        25,
+        24,
+        24,
+        25,
+        19,
+        31,
+        25,
+        27,
+        29,
+        25,
+        18,
+        26,
+        20,
+        23,
+        23,
+        12,
+        19,
+        30,
+        28,
+        28,
+        18,
+        26,
+        22,
+        41,
+        24,
+        26,
+        23,
+        22,
+        24,
+        30,
+        16,
+        19,
+        23,
+        19,
+        25,
+        20,
+        18,
+        14,
+        21,
+        21,
+        22,
+        20,
+        34,
+        29,
+        21,
+        25,
+        22,
+        28
+      ],
+      "evidence": [
+        {
+          "platform": "news",
+          "title": "The best coffee subscriptions of 2026 offer global roasts and tailored delivery - streamlinefeed.co.ke",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQcXkyaWdZUHFsUk1yTEFZMkhUZFVVZzg0NjhRY0pLS2MxVGo4dmxFeDh1QS13cVdkV1RoRDZOMm14RjlCUll2UHVkQnpERW1vZFdyb1ZpWEZjN0Z5QzMwc1FYX3JPekE1Z1ZYbnJzUU54NHkyYVN4MnJYTVhYX1FNVHRUQV8xLUp5YXVBSVdxNTZWTnllX3dmOEdhOVl1LW0tQm1MYXlUUXVzSHhmX0dmTXRtOA?oc=5",
+          "source": "streamlinefeed.co.ke",
+          "date": "2026-09-25T14:39:34.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "BioBru: A different kind of daily brew - FOX21 News Colorado",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPVXBCU05XdE5XbHBOaFZmcXl0ek9rYWRIQ2xodWNvU05TcFdaRFhtdTB0Ym92emlTUUYzbjJIc0pieWZjU0czOXJ3OVBtRWYyN1FBMFM1aDR5MVdhMTJxU1lyZUg3NFJIMEJ1cFhSNndXbHFGWUMxby1LZUsxT0Vpd0E5b2pCQnpt0gGIAUFVX3lxTE9VcEJTTld0TldscE5oVmZxeXR6T2thZEhDbGh1Y29TTlNwV1pEWG11MHRib3Z6aVNRRjNuMkhzSmJ5ZmNTRzM5cnc5UG1FZjI3UUEwUzVoNHkxV2ExMnFTWXJlSDc0UkgwQnVwWFI2d1dscUZZQzFvLUtlSzFPRWl3QTlvakJCem0?oc=5",
+          "source": "FOX21 News Colorado",
+          "date": "2026-09-25T11:24:10.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Functional mushroom suppliers expand manufacturing and formulation options - Nutraceutical Business Review",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNUlpZUWt5VW5yOERnZkE0OF81ZDdaYjF0TU90TDdoaDJmN195b2kwczlQV0dsamJLRUlBV0NVN3ZSMVFZdFo3VzY1OWU3bDl4OW5mbUZOSlRLX2pOVEpkT1o5clZSV3psSzV6dTQwYThhUU5FMUpWNkpMd1o1RElLV0RDRGl1VXhTa1VtZ1pGSDBwRDBVb2xnX2N1STAtTXEwZXZhWmZyQVlZVF9iNThr?oc=5",
+          "source": "Nutraceutical Business Review",
+          "date": "2026-09-24T14:18:21.000Z"
+        },
+        {
+          "platform": "news",
+          "title": "Web Stories in Gujarati | ગુજરાતી વેબ સ્ટોરીઝ | Visual Stories in Gujarati - Sandesh",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPUHM2VkhOVVZMOXRVZktrRmRpRlRiX2VVLWFOanhLZl9YcWdWQTNOV2FXaThYc25mM1ZEdDJhVHNfdk5pNzhpYVFoYVRPYV82QnMzYWQ5amFqODNRbUZpU2dNVFpQZnpnZUFfT2Y5Z293N3BQLThCRzl6S0FKME1JTTdGdWJMVnB1Wm9xWGU0R0tXaGJTcmR3?oc=5",
+          "source": "Sandesh",
+          "date": "2026-09-24T10:26:33.000Z"
+        },
+        {
+          "platform": "youtube",
+          "title": "Coffee with MarkZ. 09/21/2026",
+          "url": "https://www.youtube.com/watch?v=E4BksYNI6ls",
+          "source": "theoriginalmarkz",
+          "metric": "38.7K views"
+        },
+        {
+          "platform": "youtube",
+          "title": "The Art of Winning As an Ecommerce Brand",
+          "url": "https://www.youtube.com/watch?v=O_syAKtd3Us",
+          "source": "Noah Haynes",
+          "metric": "18.5K views"
+        }
+      ],
+      "momentum": 18,
+      "velocityScore": 50,
+      "breadth": 0,
+      "overall": 24,
+      "lifecycle": "Peak",
+      "spread": "mixed",
+      "dominantPlatform": "search",
+      "blrRelevance": 35,
+      "verdict": "Low relevance"
+    }
+  ],
+  "trendingNow": [
+    {
+      "geo": "IN",
+      "title": "কৃষক বন্ধু প্রকল্প",
+      "traffic": "1000+",
+      "url": "https://www.thewall.in/west-bengal/krishak-bandhu-scheme-old-beneficiaries-verification-10-days/tid/205725",
+      "news": "কৃষক বন্ধু প্রকল্পে ফের যাচাই, ১০ দিনের সময়সীমা ঘোষণা রাজ্যের",
+      "at": "2026-09-28T05:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "स्मृति ईरानी",
+      "traffic": "1000+",
+      "url": "https://www.livehindustan.com/national/bjp-is-considering-to-send-smriti-irani-to-rajya-sabha-election-from-uttar-pradesh-chunav-201790557177677.html",
+      "news": "स्मृति ईरानी बनेंगी मंत्री? UP से राज्यसभा चुनाव लड़ सकती हैं; कई नाम आगे",
+      "at": "2026-09-28T05:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "govinda",
+      "traffic": "1000+",
+      "url": "https://www.ndtv.com/entertainment/komal-rani-reacts-to-affair-rumours-with-govinda-nobody-can-be-a-homebreaker-in-already-broken-house-12101437",
+      "news": "Komal Rani Hits Back At Sunita Ahuja Amid Affair Rumours With Govinda: \"Stop Using My Name To Serve Your Agenda\"",
+      "at": "2026-09-28T05:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "ధర",
+      "traffic": "1000+",
+      "url": "https://www.eenadu.net/telugu-news/business/gold-and-silver-prices-under-pressure/0101/126175518",
+      "news": "Gold Price: దిగొస్తున్న బంగారం, వెండి ధరలు.. 10 గ్రాముల ధర ఎంతంటే..?",
+      "at": "2026-09-28T05:30:00.000Z",
+      "commercial": true
+    },
+    {
+      "geo": "IN",
+      "title": "प्रधानमंत्री ग्रामीण आवास योजना",
+      "traffic": "2000+",
+      "url": "https://www.bhaskar.com/local/bihar/saran/taraiya/news/gram-sabha-in-seven-panchayats-approval-of-list-of-9472-pm-housing-beneficiaries-dbp-139171674.html",
+      "news": "सात पंचायतों में ग्रामसभा, 9472 पीएम आवास लाभुकों की सूची का अनुमोदन",
+      "at": "2026-09-28T04:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "tcs share price",
+      "traffic": "2000+",
+      "url": "https://m.economictimes.com/markets/stocks/stock-liveblog/tcs-share-price-live-updates-28-sep-2026/liveblog/134530063.cms",
+      "news": "TCS Share Price Live Updates: TCS reports negative returns over the last quarter",
+      "at": "2026-09-28T04:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "ബാങ്ക്",
+      "traffic": "2000+",
+      "url": "https://www.manoramaonline.com/news/latest-news/2026/09/27/bank-strike-withdrawn-major-relief-for-bank-customers.html",
+      "news": "സമരം പിൻ‌വലിച്ചു; ബാങ്കുകൾ തുറന്ന് പ്രവർത്തിക്കും; സേവനങ്ങൾ സാധാരണ നിലയിൽ",
+      "at": "2026-09-28T04:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "orient cables ipo gmp",
+      "traffic": "500+",
+      "url": "https://finshots.in/markets/orient-cables-ipo-explained/",
+      "news": "The Orient Cables IPO Explained",
+      "at": "2026-09-28T04:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "पितृपक्ष",
+      "traffic": "500+",
+      "url": "https://www.bhaskar.com/g/local/bihar/gayaji/news/gaya-devghat-vishnupad-electric-litter-picker-launch-mayor-ganesh-139171049.html",
+      "news": "गयाजी में इलेक्ट्रिक लिटर पिकर मशीन से होगी सफाई: देवघाट और विष्णुपद पर मेयर ने किया शुभारंभ, कम समय में ज्...",
+      "at": "2026-09-28T04:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "IN",
+      "title": "jio finance share price",
+      "traffic": "1000+",
+      "url": "https://m.economictimes.com/markets/stocks/stock-liveblog/jio-financial-services-stock-price-livestock-price-today-live-updates-28-sep-2026/liveblog/134530372.cms",
+      "news": "Jio Financial Services Share Price Live Updates: Jio Financial Services reports a monthly return drop",
+      "at": "2026-09-28T04:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "kirsten han public assembly charges",
+      "traffic": "500+",
+      "url": "https://www.channelnewsasia.com/singapore/6-charged-public-assembly-lim-kay-siu-neo-swee-lin-6414561",
+      "news": "6 charged over public assemblies including Phua Chu Kang actors Lim Kay Siu and Neo Swee Lin",
+      "at": "2026-09-28T05:50:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "anita mui",
+      "traffic": "200+",
+      "url": "https://www.thestar.com.my/lifestyle/entertainment/2026/09/25/anita-mui039s-brother-holds-roadside-memorial-for-mother-after-being-excluded-from-funeral",
+      "news": "Anita Mui&apos;s brother holds roadside memorial for mother after being excluded from funeral",
+      "at": "2026-09-28T05:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "tuas",
+      "traffic": "200+",
+      "url": "https://www.channelnewsasia.com/singapore/drugs-tuas-checkpoint-smuggling-1-million-two-men-arrested-6414576",
+      "news": "More than S$1 million worth of drugs seized following initial detection at Tuas Checkpoint",
+      "at": "2026-09-28T04:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "india vs afghanistan",
+      "traffic": "20000+",
+      "url": "https://www.cricinfo.com/series/asian-games-men-s-cricket-competition-2026-1552449/afghanistan-vs-india-2nd-quarter-final-1552773/live-cricket-score",
+      "news": "2nd Quarter-Final, Nisshin, September 28, 2026, Asian Games Men&apos;s Cricket Competition",
+      "at": "2026-09-28T04:10:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "tun siti hasmah",
+      "traffic": "200+",
+      "url": "https://www.channelnewsasia.com/asia/malaysia-siti-hasmah-mahathir-wife-dies-6414626",
+      "news": "Siti Hasmah, wife of former Malaysian PM Mahathir, dies aged 100",
+      "at": "2026-09-28T03:10:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "mahathir mohamad",
+      "traffic": "2000+",
+      "url": "https://www.channelnewsasia.com/asia/malaysia-siti-hasmah-mahathir-wife-dies-6414626",
+      "news": "Siti Hasmah, wife of former Malaysian PM Mahathir, dies aged 100",
+      "at": "2026-09-28T03:00:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "pakistan vs hong kong",
+      "traffic": "500+",
+      "url": "https://www.cricinfo.com/series/asian-games-men-s-cricket-competition-2026-1552449/hong-kong-vs-pakistan-1st-quarter-final-1552772/match-report",
+      "news": "Pakistan through to Asian Games semi-finals after washout against Hong Kong",
+      "at": "2026-09-28T00:00:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "star alliance",
+      "traffic": "200+",
+      "url": "https://www.prnewswire.com/apac/news-releases/plaza-premium-group-wins-the-worlds-best-airport-lounge-group-marking-a-decade-of-skytrax-wins-302883374.html",
+      "news": "Plaza Premium Group Wins the World&apos;s Best Airport Lounge Group, Marking a Decade of Skytrax Wins",
+      "at": "2026-09-27T23:20:00.000Z",
+      "commercial": true
+    },
+    {
+      "geo": "SG",
+      "title": "puripol boonson",
+      "traffic": "100+",
+      "url": "https://www.olympics.com/en/news/asian-games-2026-men-200m-heats-puripol-boonson",
+      "news": "Asian Games Aichi-Nagoya 2026: Man on fire Puripol Boonson shatters 200m Games record in heats",
+      "at": "2026-09-27T23:10:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "SG",
+      "title": "columbus vs inter miami",
+      "traffic": "2000+",
+      "url": "https://www.espn.com/soccer/story/_/id/50048622/lionel-messi-free-kick-goal-inter-miami-columbus-crew",
+      "news": "Columbus stuns Miami late after Messi&apos;s free-kick golazo",
+      "at": "2026-09-27T22:50:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "uae national day break travel",
+      "traffic": "10000+",
+      "url": "https://www.khaleejtimes.com/business/5-day-uae-national-day-holidays-airfares-set-to-double-to-popular-tourist-destinations",
+      "news": "UAE National Day break: Airfares could double for popular tourist destinations",
+      "at": "2026-09-28T04:20:00.000Z",
+      "commercial": true
+    },
+    {
+      "geo": "AE",
+      "title": "nifty 50",
+      "traffic": "200+",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/stock-market-live-updates-today-bse-sensex-tumbles-over-600-points-nse-nifty50-opens-below-23000/articleshow/134531143.cms",
+      "news": "Stock market live updates today: BSE Sensex tumbles over 900 points, NSE Nifty50 trades below 22,900",
+      "at": "2026-09-28T04:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "india vs afghanistan",
+      "traffic": "20000+",
+      "url": "https://www.cricinfo.com/series/asian-games-men-s-cricket-competition-2026-1552449/afghanistan-vs-india-2nd-quarter-final-1552773/live-cricket-score",
+      "news": "2nd Quarter-Final, Nisshin, September 28, 2026, Asian Games Men&apos;s Cricket Competition",
+      "at": "2026-09-28T04:00:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "benjamin netanyahu",
+      "traffic": "1000+",
+      "url": "https://www.thehindu.com/news/international/israeli-media-says-netanyahu-made-unannounced-visit-to-uae/article71517298.ece",
+      "news": "Israeli media says Netanyahu made unannounced visit to UAE",
+      "at": "2026-09-28T02:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "curaçao vs nicaragua",
+      "traffic": "200+",
+      "url": "https://www.bbc.co.uk/sport/football/live/c6n9wnxxepj2t",
+      "news": "Curaçao vs Nicaragua: Concacaf Nations League stats & head-to-head",
+      "at": "2026-09-28T01:40:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "pakistan national cricket team",
+      "traffic": "100+",
+      "url": "https://www.pcb.com.pk/press-release-detail/azan-ahmed-to-lead-pakistan-u17-squad-for-sri-lanka-series.html",
+      "news": "Azan Ahmed to lead Pakistan U17 squad for Sri Lanka series",
+      "at": "2026-09-28T00:00:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "بنيامين نتنياهو",
+      "traffic": "500+",
+      "url": "https://www.aljazeera.net/news/2026/9/27/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1-%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84%D9%8A%D8%A9-%D9%86%D8%AA%D9%86%D9%8A%D8%A7%D9%87%D9%88-%D8%B2%D8%A7%D8%B1-%D8%A3%D8%A8%D9%88-%D8%B8%D8%A8%D9%8A",
+      "news": "تقارير إعلامية: نتنياهو زار أبو ظبي والتقى رئيس الإمارات محمد بن زايد",
+      "at": "2026-09-27T23:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "pakistan vs hong kong",
+      "traffic": "20000+",
+      "url": "https://www.cricinfo.com/series/asian-games-men-s-cricket-competition-2026-1552449/hong-kong-vs-pakistan-1st-quarter-final-1552772/match-report",
+      "news": "Pakistan through to Asian Games semi-finals after washout against Hong Kong",
+      "at": "2026-09-27T23:10:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "الامارات",
+      "traffic": "100+",
+      "url": "https://www.emaratalyoum.com/business/local/2026-09-28-1.2087143",
+      "news": "إطلاق معرض «جواهر الإمارات» في العين يناير 2027",
+      "at": "2026-09-27T22:50:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "AE",
+      "title": "columbus vs inter miami",
+      "traffic": "10000+",
+      "url": "https://onefootball.com/en/video/messi-erzielt-einen-traum-freistoss-aus-einem-unmoeglichen-winkel-in-der-mls-3Jw4tHQDq2CUz1xQTkZD1oS3ZAz",
+      "news": "Messi erzielt einen Traum-Freistoß aus einem unmöglichen Winkel in der MLS",
+      "at": "2026-09-27T22:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "patient zero music video",
+      "traffic": "200+",
+      "url": "https://www.theguardian.com/music/2026/sep/25/taylor-swift-the-life-of-a-showgirl-the-encore-review",
+      "news": "Taylor Swift: The Life of a Showgirl: The Encore review – flashes of humanity and bafflingly vindictive love songs",
+      "at": "2026-09-28T05:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "found",
+      "traffic": "200+",
+      "url": "https://www.theguardian.com/uk-news/2026/sep/17/noah-woods-brantham-suffolk-village-loss",
+      "news": "Father of Noah, three, thanks those who searched for his son as village reels from loss",
+      "at": "2026-09-28T05:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "rotten tomatoes",
+      "traffic": "2000+",
+      "url": "https://editorial.rottentomatoes.com/article/godzilla-minus-zero-first-reviews/",
+      "news": "Godzilla Minus Zero First Reviews: Bigger, Bolder, and Somehow More Visually Impressive than Minus One",
+      "at": "2026-09-28T05:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "kate upton",
+      "traffic": "500+",
+      "url": "https://www.theguardian.com/sport/2026/sep/26/justin-verlander-final-game-detroit-tigers-daughter-retirement",
+      "news": "Justin Verlander leaves field in tears with daughter after final start of 21-year career",
+      "at": "2026-09-28T05:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "halo",
+      "traffic": "100+",
+      "url": "https://news.xbox.com/en-us/2026/09/22/continuing-our-reset/",
+      "news": "Continuing Our Reset",
+      "at": "2026-09-28T04:40:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "thames water",
+      "traffic": "500+",
+      "url": "https://www.theguardian.com/commentisfree/2026/sep/27/the-guardian-view-on-thames-water-andy-burnham-should-nationalise-this-failed-monopoly",
+      "news": "The Guardian view on Thames Water: Andy Burnham should nationalise this failed monopoly | Editorial",
+      "at": "2026-09-28T04:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "tabasco",
+      "traffic": "200+",
+      "url": "https://tabasco.quadratin.com.mx/principal/jalapa-inundado-y-sin-electricidad-debido-a-fuerte-tromba-del-domingo/",
+      "news": "Jalapa, inundado y sin electricidad debido a fuerte tromba del domingo",
+      "at": "2026-09-28T04:30:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "queen camilla",
+      "traffic": "500+",
+      "url": "https://www.marieclaire.com/celebrity/royals/queen-camilla-stepped-in-princess-kate-distracted-royal-event/",
+      "news": "Queen Camilla Used Her Quick Thinking to \"Step In\" When Princess Kate Got \"Distracted\" at One Important Royal Event",
+      "at": "2026-09-28T04:20:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "polar vortex",
+      "traffic": "2000+",
+      "url": "https://www.bbc.co.uk/news/articles/cwyvzlvq5e18o",
+      "news": "&apos;You never know&apos;: The people preparing for the worst",
+      "at": "2026-09-28T03:50:00.000Z",
+      "commercial": false
+    },
+    {
+      "geo": "GB",
+      "title": "news",
+      "traffic": "2000+",
+      "url": "https://news.sky.com/story/thursdays-newspaper-front-pages-12427754",
+      "news": "Monday&apos;s newspaper front pages | UK News",
+      "at": "2026-09-28T03:50:00.000Z",
+      "commercial": false
+    }
+  ],
+  "notes": [
+    "Intensity is cohort-relative (log-scaled across all tracked trends), so 100 = strongest tracked trend on that platform, not an absolute volume.",
+    "Google News RSS returns at most 100 items per query/edition; very large topics saturate, which compresses the top of the News column.",
+    "Search = Wikipedia pageviews as a proxy for search interest. Google Trends' explore endpoint rejects scripted clients (HTTP 429).",
+    "Platforms marked 'not connected' show no number — they are never estimated."
+  ]
+}

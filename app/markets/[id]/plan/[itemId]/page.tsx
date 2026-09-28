@@ -72,7 +72,7 @@ export default async function BusinessPlanPage({
         <div className="card" style={{ padding: 20, marginTop: 12 }}>
           <div style={{ display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap" }}>
             <DomainBadge vertical={plan.vertical} />
-            <span className="badge">🌍 {plan.city}</span>
+            <span className="badge">{plan.city}</span>
             {plan.generatedFrom === "heuristic" && (
               <span className="badge" style={{ borderColor: "#f0d28a", color: "var(--warn)" }}>⚠ First-pass — not yet a validated Opportunity</span>
             )}
@@ -85,7 +85,7 @@ export default async function BusinessPlanPage({
 
         <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 14, marginTop: 14 }}>
           <div className="card" style={{ padding: 20 }}>
-            <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>📍 The Plan</h2>
+            <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>The Plan</h2>
             <Field label="Market Signal" value={plan.marketSignal} />
             <Field label="Why Now?" value={plan.whyNow} />
             <Field label="BIAL Gap" value={plan.bialGap} />
@@ -95,7 +95,7 @@ export default async function BusinessPlanPage({
               <Mini label="Target Passenger" value={plan.targetPassenger} />
             </div>
             <div style={{ marginTop: 14, padding: 14, borderRadius: 10, background: "var(--accent-soft)", border: "1px solid var(--line-strong)" }}>
-              <div style={{ fontSize: 11, color: "var(--accent)", textTransform: "uppercase", letterSpacing: ".05em", fontWeight: 700 }}>💰 Commercial Model — Planning Assumption</div>
+              <div style={{ fontSize: 11, color: "var(--accent)", textTransform: "uppercase", letterSpacing: ".05em", fontWeight: 700 }}>Commercial Model — Planning Assumption</div>
               <div style={{ marginTop: 6, fontSize: 13.5, lineHeight: 1.55 }}>{plan.commercialModelNote}</div>
             </div>
             <div style={{ marginTop: 14, padding: 14, borderRadius: 10, background: "rgba(240,180,41,.08)", border: "1px solid rgba(240,180,41,.24)" }}>
@@ -105,7 +105,7 @@ export default async function BusinessPlanPage({
           </div>
 
           <div className="card" style={{ padding: 20 }}>
-            <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>⚠ Risks to Validate</h2>
+            <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Risks to Validate</h2>
             <div style={{ display: "grid", gap: 8 }}>
               {plan.risks.map((r, i) => (
                 <div key={i} style={{ display: "flex", gap: 8, fontSize: 12.5, lineHeight: 1.5 }}>
@@ -113,7 +113,7 @@ export default async function BusinessPlanPage({
                 </div>
               ))}
             </div>
-            <h2 style={{ marginTop: 20, fontSize: 15, fontWeight: 750 }}>🔍 Evidence</h2>
+            <h2 style={{ marginTop: 20, fontSize: 15, fontWeight: 750 }}>Evidence</h2>
             {plan.evidence.length === 0 ? (
               <div className="muted" style={{ fontSize: 12.5 }}>No linkable source captured yet.</div>
             ) : (
@@ -127,8 +127,8 @@ export default async function BusinessPlanPage({
         </div>
 
         <div className="card" style={{ padding: 20, marginTop: 14 }}>
-          <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>🗓 Phased Path to Action</h2>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${plan.phases.length}, 1fr)`, gap: 12, marginTop: 14 }}>
+          <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Phased Path to Action</h2>
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 180px), 1fr))`, gap: 12, marginTop: 14 }}>
             {plan.phases.map((p, i) => (
               <div key={i} style={{ padding: 14, borderRadius: 10, border: "1px solid var(--line)", background: "var(--surface-2)" }}>
                 <div style={{ fontSize: 10, color: "var(--muted-2)", textTransform: "uppercase", letterSpacing: ".05em" }}>{p.timeframe}</div>

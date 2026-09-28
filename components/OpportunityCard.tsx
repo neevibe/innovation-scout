@@ -4,8 +4,6 @@ import { ScoreDonut, TierPill } from "@/components/ScoreBadge";
 import { DomainBadge } from "@/components/DomainBadge";
 import { Icon } from "@/components/Icon";
 
-const FLAG: Record<string, string> = { India: "🇮🇳", UAE: "🇦🇪", Singapore: "🇸🇬", "United Kingdom": "🇬🇧" };
-
 export function OpportunityCard({ o }: { o: ScoredOpportunity }) {
   const contact = o.contacts[0];
   return (
@@ -28,7 +26,7 @@ export function OpportunityCard({ o }: { o: ScoredOpportunity }) {
 
       {/* Body */}
       <div style={{ padding: "15px 17px 17px" }}>
-        <div style={{ fontSize: 11.5, color: "var(--muted-2)" }}>{FLAG[o.country] || "🌐"} {o.city}, {o.country}</div>
+        <div style={{ fontSize: 11.5, color: "var(--muted-2)" }}>{o.city}, {o.country}</div>
         <div style={{ fontSize: 17.5, fontWeight: 600, lineHeight: 1.22, marginTop: 3, letterSpacing: "-0.02em" }}>{o.brand}</div>
         <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
           {o.recommendation.marketSignal}

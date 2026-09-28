@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
-import { AmbientBackdrop } from "@/components/AmbientBackdrop";
+import { ConsoleHeader } from "@/components/ConsoleHeader";
 
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-inter", display: "swap" });
+// One type system across the product — the same trio the live globe console uses.
+const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--ti-serif", display: "swap" });
+const sans = Instrument_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--ti-sans", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--ti-mono", display: "swap" });
 
 export const metadata: Metadata = {
   title: "BIAL Innovation Scout — Commercial Intelligence",
@@ -14,14 +16,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
       <body>
         <div className="app-bg" aria-hidden />
-        <AmbientBackdrop />
-        <div className="app-shell" style={{ display: "flex", minHeight: "100vh" }}>
-          <Sidebar />
-          <main style={{ flex: 1, minWidth: 0 }}>{children}</main>
-        </div>
+        <div className="console-grid" aria-hidden />
+        <ConsoleHeader />
+        <main className="app-shell" style={{ minWidth: 0 }}>{children}</main>
       </body>
     </html>
   );

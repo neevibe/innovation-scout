@@ -35,7 +35,7 @@ export default async function AgentsPage() {
               </div>
               <div>
                 <div className="eyebrow" style={{ fontSize: 9.5 }}>Mode</div>
-                <div style={{ fontSize: 14, fontWeight: 650, marginTop: 3 }}>{latestRun.mode === "live" ? "🟢 Live" : "⚪ Offline"}</div>
+                <div style={{ fontSize: 14, fontWeight: 650, marginTop: 3 }}>{latestRun.mode === "live" ? "● Live" : "○ Offline"}</div>
               </div>
               <div>
                 <div className="eyebrow" style={{ fontSize: 9.5 }}>Total queries</div>
@@ -53,7 +53,7 @@ export default async function AgentsPage() {
 
             {/* Per-scraper results */}
             <div className="eyebrow" style={{ marginBottom: 12 }}>Individual scraping agents — what each one found</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(380px,1fr))", gap: 14, marginBottom: 34 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,380px),1fr))", gap: 14, marginBottom: 34 }}>
               {latestRun.agents.map((a) => (
                 <div key={a.providerId} className="card" style={{ padding: 16 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

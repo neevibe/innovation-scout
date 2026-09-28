@@ -50,6 +50,10 @@ export function Topbar({ title, subtitle, mode, lastRefresh }: { title: string; 
     }
   }
 
+  const words = title.split(" ");
+  const tail = words.pop() || "";
+  const head = words.join(" ");
+
   const live = mode === "live";
   const verdict = mastery && mastery.topScore >= 75 ? "strong" :
                   mastery && mastery.topScore >= 50 ? "moderate" :
@@ -64,9 +68,12 @@ export function Topbar({ title, subtitle, mode, lastRefresh }: { title: string; 
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}
     >
-      <div>
-        <h1 style={{ margin: 0, fontSize: 25, fontWeight: 600, letterSpacing: "-0.024em", lineHeight: 1.1 }}>{title}</h1>
-        {subtitle && <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 5 }}>{subtitle}</div>}
+      <div style={{ minWidth: 0 }}>
+        {subtitle && <div className="topbar-kicker">{subtitle}</div>}
+        {/* Console hero: serif title, last word set in gold italic (same register as the globe). */}
+        <h1 className="topbar-title">
+          {head}{head ? " " : ""}<span className="topbar-accent">{tail}</span>
+        </h1>
       </div>
       <div className="topbar-actions" style={{ display: "flex", alignItems: "center", gap: 10 }}>
         {mastery && mastery.topScore > 0 && (

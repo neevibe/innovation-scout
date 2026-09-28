@@ -10,7 +10,8 @@ const GROUPS: { title: string; items: { href: string; label: string; icon: strin
     items: [
       { href: "/", label: "Overview", icon: "dashboard" },
       { href: "/signals", label: "Live Signals", icon: "spark" },
-      { href: "/trends", label: "Trends", icon: "trend" },
+      { href: "/trends", label: "Evidence Pulse", icon: "trend" },
+      { href: "/trends-intelligence", label: "Trend Intelligence", icon: "trend" },
       { href: "/cities", label: "Cities", icon: "globe" },
     ],
   },

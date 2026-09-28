@@ -34,7 +34,7 @@ export function AdminClient({ config, cities }: { config: ScoutConfig; cities: C
     <div style={{ padding: 28, maxWidth: 900 }}>
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 style={{ margin: 0, fontSize: 15, fontWeight: 750 }}>⚖️ Scoring Weights</h2>
+          <h2 style={{ margin: 0, fontSize: 15, fontWeight: 750 }}>Scoring Weights</h2>
           <span className="badge" style={{ borderColor: Math.round(total) === 100 ? "#a7e0b8" : "#f0d28a", color: Math.round(total) === 100 ? "var(--ok)" : "var(--warn)", background: Math.round(total) === 100 ? "rgba(127,214,160,0.15)" : "rgba(224,184,119,0.15)" }}>
             Total {total.toFixed(0)}% {Math.round(total) === 100 ? "✓" : "(auto-normalised)"}
           </span>
@@ -54,7 +54,7 @@ export function AdminClient({ config, cities }: { config: ScoutConfig; cities: C
       </div>
 
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>🎚️ Thresholds</h2>
+        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Thresholds</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           <Num label="Immediate ≥" v={thresholds.immediate} on={(v) => setThresholds({ ...thresholds, immediate: v })} />
           <Num label="High Potential ≥" v={thresholds.highPotential} on={(v) => setThresholds({ ...thresholds, highPotential: v })} />
@@ -66,17 +66,17 @@ export function AdminClient({ config, cities }: { config: ScoutConfig; cities: C
       </div>
 
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>🌍 Pilot Cities</h2>
+        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Pilot Cities</h2>
         <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 10 }}>Editable via <span className="kbd">PUT /api/cities</span>. Current pilot set:</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {cities.map((c) => (
-            <span key={c.id} className="badge">{c.kind === "domestic" ? "🏠" : "✈️"} {c.name} · {c.benchmarkAirport}</span>
+            <span key={c.id} className="badge">{c.kind === "domestic" ? "DOM ·" : "INTL ·"} {c.name} · {c.benchmarkAirport}</span>
           ))}
         </div>
       </div>
 
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>🔐 Data Sources & Keys (Super Admin only)</h2>
+        <h2 style={{ marginTop: 0, fontSize: 15, fontWeight: 750 }}>Data Sources & Keys (Super Admin only)</h2>
         <div style={{ fontSize: 13, color: "var(--muted)" }}>
           Mode <span className="kbd">{config.mode}</span>. Set <span className="kbd">SCOUT_MODE=live</span> plus a search provider + <span className="kbd">AI_GATEWAY_API_KEY</span> in env to enable real collection. API keys are never exposed to non-admin roles.
         </div>

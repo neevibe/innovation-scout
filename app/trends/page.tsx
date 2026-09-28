@@ -22,7 +22,7 @@ export default async function TrendsPage() {
 
   return (
     <>
-      <Topbar title="Trend Intelligence" subtitle={`Six-month evidence window · ${report.windowLabel}`} mode={config.mode} lastRefresh={config.lastRefreshAt} />
+      <Topbar title="Six-Month Evidence Pulse" subtitle={`Six-month evidence window · ${report.windowLabel}`} mode={config.mode} lastRefresh={config.lastRefreshAt} />
       <div style={{ padding: "28px 34px 48px" }}>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 18 }}>
           {Object.entries(byType).map(([t, n]) => (

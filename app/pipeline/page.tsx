@@ -24,18 +24,18 @@ export default async function PipelinePage() {
             return (
               <div key={stage} style={{ minWidth: 250, flexShrink: 0 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 4px 10px" }}>
-                  <span style={{ fontSize: 13, fontWeight: 700 }}>{stage}</span>
+                  <span className="cx-kicker" style={{ color: "var(--head)" }}>{stage}</span>
                   <span className="badge">{items.length}</span>
                 </div>
                 <div style={{ display: "grid", gap: 10 }}>
                   {items.map((o) => (
                     <Link key={o.id} href={`/opportunities/${o.id}`} className="card" style={{ padding: 12, display: "block", borderLeft: `3px solid ${TIER_META[o.tier].color}` }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <span style={{ fontWeight: 700, fontSize: 13 }}>{o.brand}</span>
-                        <b style={{ fontSize: 15 }}>{o.score}</b>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10 }}>
+                        <span className="cx-serif" style={{ fontSize: 22, lineHeight: 1.1 }}>{o.brand}</span>
+                        <span className="cx-serif" style={{ fontSize: 26, lineHeight: 1, color: "var(--gold)" }}>{o.score}</span>
                       </div>
-                      <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 4 }}>{o.vertical} · {o.city}</div>
-                      <div style={{ fontSize: 12, marginTop: 8, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{o.recommendation.recommendedNextAction}</div>
+                      <div className="cx-kicker" style={{ fontSize: 9, marginTop: 6 }}>{o.vertical} · {o.city}</div>
+                      <div style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.5, marginTop: 8, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{o.recommendation.recommendedNextAction}</div>
                     </Link>
                   ))}
                   {items.length === 0 && <div style={{ fontSize: 12, color: "var(--muted)", padding: 8, border: "1px dashed var(--line)", borderRadius: 10, textAlign: "center" }}>—</div>}
