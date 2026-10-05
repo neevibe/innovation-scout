@@ -16,3 +16,7 @@ next-env.d.ts
 .gstack/
 .vercel
 .env*
+
+# Local social-scraper toolchain + login sessions (never commit)
+.venv-social/
+.social/

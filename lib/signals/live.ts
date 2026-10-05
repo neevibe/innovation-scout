@@ -27,9 +27,23 @@ const MAX_SIGNALS = 150; // Data Cache entries are capped at 2 MB
 async function collect(): Promise<LiveFeed> {
   // Fast HTTP providers only — the subprocess scrapers (scrapling, X, …) are
   // too slow for a page request. Tavily is licensed for production use;
-  // Google News is the keyless dev fallback.
+  // Google News is the keyless dev fallback. Bluesky, Mastodon, Lemmy and HN
+  // are open APIs; Reddit and YouTube join when their free keys are set.
   const { signals, meta } = await collectSignalsDetailed({
-    providerIds: [process.env.TAVILY_API_KEY ? "tavily" : "googlenews"],
+    providerIds: [
+      process.env.TAVILY_API_KEY ? "tavily" : "googlenews",
+      // Social layer — official/open APIs that are safe to run in production.
+      // Priority platforms first: Instagram, Facebook, YouTube (official APIs,
+      // active once their free keys are set — see docs/SOCIAL_SETUP.md).
+      ...(process.env.META_ACCESS_TOKEN && process.env.IG_USER_ID ? ["instagram"] : []),
+      ...(process.env.META_ACCESS_TOKEN ? ["facebook"] : []),
+      ...(process.env.YOUTUBE_API_KEY ? ["youtube"] : []),
+      "bluesky",
+      "mastodon",
+      "lemmy",
+      "hackernews",
+      ...(process.env.REDDIT_CLIENT_ID ? ["reddit"] : []),
+    ],
   });
   // Don't cache a failed pass for six hours — throw so the next request retries.
   console.log(`[live-signals] live=${meta.live} queries=${meta.queriesRun} docs=${meta.docsFound} signals=${signals.length} failed=${meta.failedProviders.join(",") || "none"}`);

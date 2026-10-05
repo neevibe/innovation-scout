@@ -10,7 +10,8 @@ import { tavilyProvider } from "./providers/tavily";
 import { gdeltProvider } from "./providers/gdelt";
 import { googleNewsProvider } from "./providers/googlenews";
 import { githubProvider } from "./providers/github";
-import { redditProvider } from "./providers/reddit";
+import { instagramProvider, facebookProvider } from "./providers/meta";
+import { blueskyProvider, redditRssProvider, mastodonProvider, lemmyProvider, hackerNewsProvider } from "./providers/social";
 import { youtubeProvider } from "./providers/youtube";
 import { arxivProvider } from "./providers/arxiv";
 import { scraplingProvider } from "./providers/scrapling";
@@ -55,7 +56,7 @@ export const ALL_PROVIDERS: Record<string, SearchProvider> = {
   gdelt: gdeltProvider,
   googlenews: googleNewsProvider,
   github: githubProvider,
-  reddit: redditProvider,
+  reddit: redditRssProvider, // JSON API now 403s without OAuth
   youtube: youtubeProvider,
   arxiv: arxivProvider,
   scrapling: scraplingProvider,
@@ -63,6 +64,12 @@ export const ALL_PROVIDERS: Record<string, SearchProvider> = {
   scrapegraphai: scrapegraphaiProvider,
   google: googleSearch,
   x: xSearch,
+  instagram: instagramProvider,
+  facebook: facebookProvider,
+  bluesky: blueskyProvider,
+  mastodon: mastodonProvider,
+  lemmy: lemmyProvider,
+  hackernews: hackerNewsProvider,
 };
 
 export interface CollectionResult {
@@ -178,7 +185,7 @@ async function collectLive(providerIds?: string[]): Promise<CollectionResult> {
       batch.map((t) =>
         searchWithFallback(
           // try this provider first, then the fallback chain (minus self)
-          [t.provider, ...fallback.filter((p) => p.id !== t.provider.id)],
+          t.provider.fallback === false ? [t.provider] : [t.provider, ...fallback.filter((p) => p.id !== t.provider.id)],
           t.query,
           { city: t.city, country: t.country, timespanMonths: months },
         ).then((docs) => ({ provider: t.provider, docs })),

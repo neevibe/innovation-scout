@@ -22,6 +22,8 @@ export interface SearchProvider {
    *  refresh stays bounded — e.g. 1 restricts to the single most relevant
    *  lens (duty free / travel retail) instead of all 6. */
   readonly maxLenses?: number;
+  /** false = an empty result is a real answer; don't fall back to news search. */
+  readonly fallback?: boolean;
   search(query: string, opts: { city: string; country: string; timespanMonths: number }): Promise<RawDoc[]>;
 }
 
