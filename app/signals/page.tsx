@@ -41,7 +41,8 @@ export default async function SignalsPage() {
   let feed: LiveFeed | null = null;
   try {
     feed = await getLiveFeed();
-  } catch {
+  } catch (err) {
+    console.error("[signals] live feed unavailable:", err);
     feed = null; // live research unavailable — fall back to the stored signals
   }
   // Live signals first, then anything in the store they don't already cover.

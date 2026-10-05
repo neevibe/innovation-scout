@@ -32,15 +32,21 @@ async function collect(): Promise<LiveFeed> {
     providerIds: [process.env.TAVILY_API_KEY ? "tavily" : "googlenews"],
   });
   // Don't cache a failed pass for six hours — throw so the next request retries.
-  if (meta.live && (meta.failedProviders.includes("*") || signals.length === 0)) throw new Error("live collection failed");
+  console.log(`[live-signals] live=${meta.live} queries=${meta.queriesRun} docs=${meta.docsFound} signals=${signals.length} failed=${meta.failedProviders.join(",") || "none"}`);
+  // Only cache a genuine live pass. Throwing keeps an offline or failed result
+  // out of the shared cache, so the next request simply retries.
+  if (!meta.live) throw new Error("live mode is off (SCOUT_MODE)");
+  if (meta.failedProviders.includes("*") || signals.length === 0) throw new Error("live collection failed");
   const { consolidated } = consolidate(signals);
+  const NOISE = /trip report|things to do|itinerary|travel guide|best places to|share price|stock price|\bipo\b/i;
   const recent = consolidated
+    .filter((s) => !NOISE.test(`${s.trend} ${s.description}`))
     .sort((a, b) => stamp(b) - stamp(a))
     .slice(0, MAX_SIGNALS)
     .map((s) => ({ ...s, description: s.description.slice(0, 400) }));
   const feed = {
     collectedAt: new Date().toISOString(),
-    live: meta.live && !meta.failedProviders.includes("*"),
+    live: true,
     providers: meta.providersUsed,
     queries: meta.queriesRun ?? 0,
     docs: meta.docsFound ?? 0,
@@ -51,7 +57,9 @@ async function collect(): Promise<LiveFeed> {
   return feed;
 }
 
-export const getLiveFeed = unstable_cache(collect, ["live-signals-v1"], {
+// The Data Cache is shared across deployments: key by environment so a preview
+// can never serve (or overwrite) production's feed.
+export const getLiveFeed = unstable_cache(collect, ["live-signals-v2", process.env.VERCEL_ENV || "local"], {
   revalidate: 6 * 3600,
   tags: ["live-signals"],
 });

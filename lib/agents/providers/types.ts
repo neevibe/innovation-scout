@@ -27,6 +27,9 @@ export interface SearchProvider {
 
 // Small helper: strip HTML tags + collapse whitespace from RSS/HTML snippets.
 export function stripHtml(s: string): string {
+  // RSS descriptions are often entity-encoded HTML (&lt;a href…&gt;): decode
+  // the angle brackets first so the tag pass below removes them too.
+  s = s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;nbsp;/g, " ");
   return s
     .replace(/<!\[CDATA\[/g, "")
     .replace(/\]\]>/g, "")
