@@ -1,0 +1,587 @@
+{
+  "ranAt": "2026-10-05T06:59:48.086Z",
+  "durationMs": 19270,
+  "provider": "googlenews",
+  "audit": [
+    {
+      "surface": "The Scout Daily",
+      "asOf": "2026-10-05T06:59:46.330Z",
+      "ageDays": 0,
+      "status": "fresh",
+      "detail": "Edition dated 5 OCTOBER 2026"
+    },
+    {
+      "surface": "Globe signal evidence",
+      "asOf": "2026-10-05T06:59:30.454Z",
+      "ageDays": 0,
+      "status": "fresh",
+      "detail": "13 cities with live evidence"
+    },
+    {
+      "surface": "BLR opportunities (Daily)",
+      "asOf": "2026-10-05T06:59:46.330Z",
+      "ageDays": 0,
+      "status": "fresh",
+      "detail": "3 re-ranked by fresh buzz"
+    },
+    {
+      "surface": "Trend Intelligence snapshot",
+      "asOf": "2026-10-05T06:58:56.648Z",
+      "ageDays": 0,
+      "status": "fresh",
+      "detail": "Rebuilt by `npm run freshness` (needs yt-dlp; runs locally, then redeploy)"
+    }
+  ],
+  "daily": {
+    "date": "5 OCTOBER 2026",
+    "generatedAt": "2026-10-05T06:59:46.330Z",
+    "provider": "googlenews",
+    "topStory": {
+      "kicker": "TOP STORY · F&B",
+      "headline": "TWG Tea opens largest flagship at Changi Airport amid global expansion",
+      "url": "https://www.businesstimes.com.sg/international/global/twg-tea-opens-largest-flagship-changi-airport-amid-global-expansion",
+      "publisher": "The Business Times",
+      "age": "3 DAYS AGO",
+      "paragraphs": [
+        "The Business Times reported it 3 days ago: TWG Tea opens largest flagship at Changi Airport amid global expansion.",
+        "The story is being carried by 3 publishers (The Business Times, cnaluxury.channelnewsasia.com, Time Out Worldwide), and 10 further f&b moves surfaced in the same sweep of 82 fresh stories.",
+        "For BLR the question is format fit: whether this f&b move can work in a 40–60 sqm airside footprint for Bengaluru's outbound mix."
+      ],
+      "related": [
+        {
+          "title": "TWG Tea opens its largest store in the world at Changi Airport – with its first permanent museum",
+          "url": "https://cnaluxury.channelnewsasia.com/experiences/twg-tea-largest-store-changi-airport-295691",
+          "publisher": "cnaluxury.channelnewsasia.com",
+          "age": "1 DAY AGO",
+          "publishedAt": "2026-10-04T03:44:29.000Z",
+          "category": "F&B"
+        },
+        {
+          "title": "TWG Tea opens world's largest store at Changi with first tea museum and tea-infused ice cream",
+          "url": "https://www.timeout.com/singapore/news/twg-tea-opens-worlds-largest-store-at-changi-with-first-tea-museum-and-tea-infused-ice-cream-100226",
+          "publisher": "Time Out Worldwide",
+          "age": "3 DAYS AGO",
+          "publishedAt": "2026-10-02T00:05:00.000Z",
+          "category": "F&B"
+        }
+      ],
+      "image": {
+        "url": "/scout-globe/brand-img/auto/ded4324aaab2.webp",
+        "credit": "The Business Times",
+        "sourceUrl": "https://www.businesstimes.com.sg/international/global/twg-tea-opens-largest-flagship-changi-airport-amid-global-expansion",
+        "via": "og:image"
+      }
+    },
+    "india": [
+      {
+        "title": "Up to 25% off! Flying abroad soon? Air India & Adani Airports launch online duty-free shopping with pre-or",
+        "url": "https://m.economictimes.com/industry/transportation/airlines-/-aviation/air-india-adani-airports-launch-online-duty-free-shopping-platform-for-international-travellers/articleshow/134542884.cms",
+        "publisher": "The Economic Times",
+        "age": "6 DAYS AGO",
+        "publishedAt": "2026-09-28T12:36:13.000Z",
+        "category": "DUTY-FREE"
+      },
+      {
+        "title": "The Filter Coffee makes airport debut",
+        "url": "https://www.fnbnews.com/Top-News/the-filter-coffee-makes-airport-debut-89003",
+        "publisher": "fnbnews.com",
+        "age": "1 DAY AGO",
+        "publishedAt": "2026-10-03T13:01:11.000Z",
+        "category": "F&B"
+      },
+      {
+        "title": "Retail India News: Miraggio Opens New Fashion Accessories Store in Vashi",
+        "url": "https://www.indianretailer.com/news/retail-india-news-miraggio-opens-new-fashion-accessories-store-vashi",
+        "publisher": "Indian Retailer",
+        "age": "3 DAYS AGO",
+        "publishedAt": "2026-10-01T09:13:50.000Z",
+        "category": "FASHION"
+      }
+    ],
+    "global": [
+      {
+        "title": "SSP opens eight new outlets at Vilnius Airport",
+        "url": "https://www.traveldailynews.com/aviation/ssp-opens-eight-new-outlets-vilnius-airport/",
+        "publisher": "Travel Daily News International",
+        "age": "4 DAYS AGO",
+        "publishedAt": "2026-09-30T07:23:46.000Z",
+        "category": "RETAIL"
+      },
+      {
+        "title": "Lotte Duty Free announces strategic partnership with William Grant & Sons",
+        "url": "https://www.dfnionline.com/latest-news/lotte-duty-free-announces-strategic-partnership-with-william-grant-sons-02-10-2026/",
+        "publisher": "DFNI",
+        "age": "2 DAYS AGO",
+        "publishedAt": "2026-10-02T13:27:02.000Z",
+        "category": "DUTY-FREE"
+      },
+      {
+        "title": "Mars Wrigley ITR to open new M&M’s Experience shop-in-shop at Kuwait Airport",
+        "url": "https://www.dfnionline.com/latest-news/mars-wrigley-itr-to-open-new-mms-experience-shop-in-shop-at-kuwait-airport-30-09-2026/",
+        "publisher": "DFNI",
+        "age": "4 DAYS AGO",
+        "publishedAt": "2026-09-30T22:13:06.000Z",
+        "category": "EXPERIENCE"
+      },
+      {
+        "title": "Plaza Premium Group officially opens new lounges at Bangkok Suvarnabhumi Airport",
+        "url": "https://asianaviation.com/posts/plaza-premium-group-officially-opens-new-lounges-at-bangkok-suvarnabhumi-airport",
+        "publisher": "Asian Aviation",
+        "age": "1 DAY AGO",
+        "publishedAt": "2026-10-04T05:39:27.000Z",
+        "category": "LOUNGES"
+      },
+      {
+        "title": "New luxury stores open at Heathrow Terminal 5",
+        "url": "https://ww.fashionnetwork.com/news/New-luxury-stores-open-at-heathrow-terminal-5,1870837.html",
+        "publisher": "FashionNetwork - The World's Fashion Business News",
+        "age": "6 DAYS AGO",
+        "publishedAt": "2026-09-28T08:20:42.000Z",
+        "category": "RETAIL"
+      },
+      {
+        "title": "Qatar Duty Free ranks first in Advantage Group International travel retailer rankings",
+        "url": "https://moodiedavittreport.com/qatar-duty-free-ranks-first-in-advantage-group-international-travel-retailer-rankings/",
+        "publisher": "Moodie Davitt Report",
+        "age": "5 DAYS AGO",
+        "publishedAt": "2026-09-29T08:00:50.000Z",
+        "category": "DUTY-FREE"
+      },
+      {
+        "title": "IAADFS rebrands as Travel Retail Alliance of the Americas",
+        "url": "https://www.dfnionline.com/latest-news/iaadfs-rebrands-as-travel-retail-alliance-of-the-americas-30-09-2026/",
+        "publisher": "DFNI",
+        "age": "4 DAYS AGO",
+        "publishedAt": "2026-09-30T10:20:57.000Z",
+        "category": "DUTY-FREE"
+      }
+    ],
+    "brandMoves": [
+      {
+        "kind": "AIRPORT ENTRY",
+        "brand": "TWG Tea",
+        "place": "SIN",
+        "category": "F&B",
+        "headline": "TWG Tea opens largest flagship at Changi Airport amid global expansion",
+        "url": "https://www.businesstimes.com.sg/international/global/twg-tea-opens-largest-flagship-changi-airport-amid-global-expansion",
+        "publisher": "The Business Times",
+        "age": "3 DAYS AGO",
+        "image": {
+          "url": "/scout-globe/brand-img/auto/ded4324aaab2.webp",
+          "credit": "The Business Times",
+          "sourceUrl": "https://www.businesstimes.com.sg/international/global/twg-tea-opens-largest-flagship-changi-airport-amid-global-expansion",
+          "via": "og:image"
+        }
+      },
+      {
+        "kind": "AIRPORT ENTRY",
+        "brand": "Tribe Amrapali",
+        "place": "MAA",
+        "category": "RETAIL",
+        "headline": "Tribe Amrapali Opens 43rd Retail Store in India at Chennai Airport",
+        "url": "https://www.indianretailer.com/franchisetv/archives/news/tribe-amrapali-opens-43rd-retail-store-india-chennai-airport",
+        "publisher": "Indian Retailer",
+        "age": "5 DAYS AGO",
+        "image": null
+      },
+      {
+        "kind": "AIRPORT ENTRY",
+        "brand": "Air India & Adani Airports",
+        "place": "GLOBAL",
+        "category": "DUTY-FREE",
+        "headline": "Up to 25% off! Flying abroad soon? Air India & Adani Airports launch online duty-free shopping with pre-or",
+        "url": "https://m.economictimes.com/industry/transportation/airlines-/-aviation/air-india-adani-airports-launch-online-duty-free-shopping-platform-for-international-travellers/articleshow/134542884.cms",
+        "publisher": "The Economic Times",
+        "age": "6 DAYS AGO",
+        "image": {
+          "url": "/scout-globe/brand-img/auto/0b225abff412.png",
+          "credit": "The Economic Times",
+          "sourceUrl": "https://m.economictimes.com/industry/transportation/airlines-/-aviation/air-india-adani-airports-launch-online-duty-free-shopping-platform-for-international-travellers/articleshow/134542884.cms",
+          "via": "og:image"
+        }
+      }
+    ],
+    "categoryWatch": [
+      {
+        "category": "RETAIL",
+        "count": 30
+      },
+      {
+        "category": "DUTY-FREE",
+        "count": 15
+      },
+      {
+        "category": "F&B",
+        "count": 11
+      },
+      {
+        "category": "EXPERIENCE",
+        "count": 3
+      },
+      {
+        "category": "JEWELLERY",
+        "count": 3
+      },
+      {
+        "category": "LOUNGES",
+        "count": 2
+      }
+    ],
+    "opportunities": [
+      {
+        "brand": "Third Wave Coffee",
+        "city": "Kolkata",
+        "category": "Specialty Coffee",
+        "score": 80,
+        "freshMentions": 6,
+        "latest": {
+          "title": "Third Wave Coffee marks 250th cafe milestone, accelerates national expansion across emerging and established..",
+          "url": "https://hospitality.economictimes.indiatimes.com/news/restaurants/third-wave-coffee-marks-250th-cafe-milestone-accelerates-national-expansion-across-emerging-and-established-markets/134498771?utm_source",
+          "publisher": "hospitality.economictimes.indiatimes.com",
+          "age": "6 DAYS AGO",
+          "publishedAt": "2026-09-28T12:33:45.000Z",
+          "category": "F&B"
+        },
+        "image": {
+          "url": "/scout-globe/brand-img/auto/60026e20e148.jpg",
+          "credit": "hospitality.economictimes.indiatimes.com",
+          "sourceUrl": "https://hospitality.economictimes.indiatimes.com/news/restaurants/third-wave-coffee-marks-250th-cafe-milestone-accelerates-national-expansion-across-emerging-and-established-markets/134498771?utm_source",
+          "via": "og:image"
+        }
+      },
+      {
+        "brand": "FiLLi",
+        "city": "Dubai",
+        "category": "Regional Beverage / Grab-and-Go",
+        "score": 82,
+        "freshMentions": 1,
+        "latest": {
+          "title": "134 lbs Semifinal - Peter Filli, Homegrown - HSC vs Scott Young, State College - HSC",
+          "url": "https://www.flowrestling.org/video/16180486-134-lbs-semifinal-peter-filli-homegrown-hsc-vs-scott-young-state-college-hsc?classic",
+          "publisher": "FloWrestling",
+          "age": "21 DAYS AGO",
+          "publishedAt": "2026-09-13T07:00:00.000Z",
+          "category": "RETAIL"
+        },
+        "image": {
+          "url": "/scout-globe/brand-img/auto/24d3ac27e9dd.png",
+          "credit": "Wikimedia Commons",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Filli_Cafe",
+          "via": "wikipedia"
+        }
+      },
+      {
+        "brand": "Balaram Mullick & Radharaman Mullick",
+        "city": "Kolkata",
+        "category": "Heritage Bengali Sweets / Gifting",
+        "score": 79,
+        "freshMentions": 2,
+        "latest": {
+          "title": "Balaram Mullick to Don Giovannis: Top Kolkata eateries face food safety action",
+          "url": "https://indianexpress.com/article/cities/kolkata/balaram-mullick-to-don-giovannis-licences-of-40-kolkata-eateries-suspended-for-food-safety-violations-10869186/",
+          "publisher": "The Indian Express",
+          "age": "25 DAYS AGO",
+          "publishedAt": "2026-09-09T07:00:00.000Z",
+          "category": "F&B"
+        },
+        "image": {
+          "url": "/scout-globe/brand-img/auto/d3034d934f5c.jpg",
+          "credit": "The Indian Express",
+          "sourceUrl": "https://indianexpress.com/article/cities/kolkata/balaram-mullick-to-don-giovannis-licences-of-40-kolkata-eateries-suspended-for-food-safety-violations-10869186/",
+          "via": "og:image"
+        }
+      }
+    ]
+  },
+  "globe": {
+    "generatedAt": "2026-10-05T06:59:30.454Z",
+    "cities": {
+      "BOM": {
+        "days": 4,
+        "image": null,
+        "evid": [
+          [
+            "INDIAN RETAILER",
+            "4 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Zigly Pet Care Acquires Prolife Speciality Vet Clinic to Expand Mumbai Presence",
+            "https://www.indianretailer.com/news/zigly-pet-care-acquires-prolife-speciality-vet-clinic-expand-mumbai-presence"
+          ]
+        ]
+      },
+      "MAA": {
+        "days": 3,
+        "image": null,
+        "evid": [
+          [
+            "INDIAN RETAILER",
+            "3 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Hettich Opens Second Exclusive Store in Chennai, Expands South India Presence",
+            "https://www.indianretailer.com/news/hettich-opens-second-exclusive-store-chennai-expands-south-india-presence"
+          ],
+          [
+            "INDIAN RETAILER",
+            "5 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Tribe Amrapali Opens Third Chennai Store at Domestic Airport",
+            "https://www.indianretailer.com/franchisetv/archives/news/tribe-amrapali-opens-third-chennai-store-domestic-airport"
+          ],
+          [
+            "BUSINESSLINE",
+            "17 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Popeyes opens new restaurant in Navalur, Chennai",
+            "https://www.thehindubusinessline.com/news/national/popeyes-expands-chennai-presence-to-12-restaurants-with-new-navalur-outlet/article71476689.ece"
+          ]
+        ]
+      },
+      "CCU": {
+        "days": 16,
+        "image": null,
+        "evid": [
+          [
+            "INDIAN RETAILER",
+            "16 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Retail India News: Bvlgari Opens First Kolkata Boutique at Quest Mall",
+            "https://www.indianretailer.com/news/retail-india-news-bvlgari-opens-first-kolkata-boutique-quest-mall"
+          ]
+        ]
+      },
+      "PNQ": {
+        "days": 24,
+        "image": null,
+        "evid": [
+          [
+            "IFAB MEDIA",
+            "24 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Mothercare Strengthens India Retail Footprint With New Store At Seasons Mall, Pune",
+            "https://infashionbusiness.com/home/news_details/8533/15"
+          ]
+        ]
+      },
+      "COK": {
+        "days": 6,
+        "image": null,
+        "evid": [
+          [
+            "INDIAN RETAILER",
+            "6 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "PVR INOX Opens Five-Screen Cinema at MyMoon Kochi",
+            "https://www.indianretailer.com/franchisetv/archives/news/pvr-inox-opens-five-screen-cinema-mymoon-kochi"
+          ]
+        ]
+      },
+      "JAI": {
+        "days": 4,
+        "image": null,
+        "evid": [
+          [
+            "LIFESTYLE ASIA HONG KONG",
+            "4 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Where Heritage Holds the Floor: Inside Jaipur Rugs’ Mumbai store",
+            "https://www.lifestyleasia.com/ind/living/where-heritage-holds-the-floor-inside-jaipur-rugs-mumbai-store/"
+          ],
+          [
+            "INDIAN RETAILER",
+            "10 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "H&M Opens Jaipur Store as India Network Reaches 75 Outlets",
+            "https://www.indianretailer.com/franchisetv/archives/news/hm-opens-jaipur-store-india-network-reaches-75-outlets"
+          ],
+          [
+            "LOCAL SAMOSA",
+            "19 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Jaipur Rugs Newest Flagship in Empire Mills Brings the Art of Indian Craft to Mumbai",
+            "https://www.localsamosa.com/news/jaipur-rugs-newest-flagship-in-empire-mills-12534571"
+          ]
+        ]
+      },
+      "ICN": {
+        "days": 20,
+        "image": null,
+        "evid": [
+          [
+            "THE KOREA TIMES",
+            "20 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Interactive quizzes guide Chinese travelers through Seoul's best retail spots",
+            "https://www.koreatimes.co.kr/lifestyle/trends/20260914/interactive-quizzes-guide-chinese-travelers-through-seouls-best-retail-spots"
+          ]
+        ]
+      },
+      "DXB": {
+        "days": 2,
+        "image": null,
+        "evid": [
+          [
+            "HOTEL & CATERING",
+            "2 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "OFF THE HOOK UNVEILS REFRESHED DUBAI FESTIVAL CITY BRANCH AS BRAND ENTERS SECOND DECADE",
+            "https://hotelandcatering.com/news/off-the-hook-unveils-refreshed-dubai-festival-city-branch-as-brand-enters-second-decade"
+          ],
+          [
+            "TIME OUT DUBAI",
+            "10 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Two new-season dining experiences to try at Four Seasons Dubai",
+            "https://www.timeoutdubai.com/food-drink/two-new-season-dining-experiences-to-try-at-four-seasons-dubai"
+          ],
+          [
+            "TIME OUT DUBAI",
+            "23 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "10 exciting new malls set to open in Dubai",
+            "https://www.timeoutdubai.com/news/new-malls-dubai-coming-soon-september-2026"
+          ]
+        ]
+      },
+      "SIN": {
+        "days": 1,
+        "image": null,
+        "evid": [
+          [
+            "INSIDE RETAIL ASIA",
+            "TODAY",
+            "TRADE PRESS",
+            "0.90",
+            "TWG Tea opens largest global flagship at Changi Airport",
+            "https://insideretail.asia/2026/10/05/twg-tea-opens-largest-global-flagship-at-changi-airport/"
+          ],
+          [
+            "AD HOC NEWS",
+            "1 DAY AGO",
+            "NEWS",
+            "0.82",
+            "Jewel Changi opens Toei Animation Store on 3 October",
+            "https://www.ad-hoc-news.de/unterhaltung/reisen/jewel-changi-opens-toei-animation-store-on-3-october/70222785"
+          ],
+          [
+            "DFNI",
+            "4 DAYS AGO",
+            "TRADE PRESS",
+            "0.90",
+            "VIVEL and FNA to open confectionery pop-up at Singapore Changi",
+            "https://www.dfnionline.com/brand-news/vivel-and-fna-to-open-confectionery-pop-up-at-singapore-changi-30-09-2026/"
+          ]
+        ]
+      },
+      "BKK": {
+        "days": 3,
+        "image": null,
+        "evid": [
+          [
+            "AIRPORT SUPPLIERS",
+            "3 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Plaza Premium Group opens dual lounge offering at Bangkok Suvarnabhumi Airport",
+            "https://www.airport-suppliers.com/plaza-premium-group-opens-dual-lounge-offering-at-bangkok-suva/"
+          ],
+          [
+            "WILLFLYFORFOOD.NET",
+            "18 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "25 Bangkok Street Food Stalls You’ll Want to Fly For",
+            "https://www.willflyforfood.net/bangkok-street-food/"
+          ]
+        ]
+      },
+      "HKG": {
+        "days": 1,
+        "image": null,
+        "evid": [
+          [
+            "SAFARIINDIA.COM",
+            "1 DAY AGO",
+            "NEWS",
+            "0.82",
+            "Hong Kong International Airport Opens Terminal 2 Departure Facilities",
+            "https://safariindia.com/hong-kong-international-airport-opens-departure/"
+          ],
+          [
+            "VISASNEWS",
+            "17 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Hong Kong launches “Go Hong Kong” to speed up immigration clearance for frequent visitors",
+            "https://visasnews.com/en/hong-kong-launches-go-hong-kong-to-speed-up-immigration-clearance-for-frequent-visitors/"
+          ]
+        ]
+      },
+      "DOH": {
+        "days": 3,
+        "image": null,
+        "evid": [
+          [
+            "GLOBAL TRAVEL RETAIL MAGAZIN",
+            "3 DAYS AGO",
+            "TRADE PRESS",
+            "0.90",
+            "Building momentum: Qatar Duty Free builds on 2025-26 growth at Hamad International Airport",
+            "https://www.gtrmag.com/blog/building-momentum-qatar-duty-free-builds-on-2025-26-growth-at-hamad-international-airport"
+          ],
+          [
+            "DFNI",
+            "5 DAYS AGO",
+            "TRADE PRESS",
+            "0.90",
+            "Qatar Duty Free tops global supplier benchmark",
+            "https://www.dfnionline.com/latest-news/qatar-duty-free-tops-global-supplier-benchmark-29-09-2026/"
+          ],
+          [
+            "MOODIE DAVITT REPORT",
+            "5 DAYS AGO",
+            "TRADE PRESS",
+            "0.90",
+            "Qatar Duty Free ranks first in Advantage Group International travel retailer rankings",
+            "https://moodiedavittreport.com/qatar-duty-free-ranks-first-in-advantage-group-international-travel-retailer-rankings/"
+          ]
+        ]
+      },
+      "JFK": {
+        "days": 1,
+        "image": null,
+        "evid": [
+          [
+            "FUTURE TRAVEL EXPERIENCE",
+            "TODAY",
+            "NEWS",
+            "0.82",
+            "JFK Terminal 5 welcomes Shake Shack opening as part of $100 million customer experience refresh",
+            "https://www.futuretravelexperience.com/2026/10/jfk-terminal-5-welcomes-shake-shack-opening-as-part-of-100-million-refresh/"
+          ],
+          [
+            "APEX.AERO",
+            "17 DAYS AGO",
+            "NEWS",
+            "0.82",
+            "Air France to Open Largest International Lounge at JFK’s New Terminal One",
+            "https://apex.aero/articles/air-france-to-open-largest-international-lounge-at-jfks-new-terminal-one/"
+          ]
+        ]
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="/scout-globe/scout-daily.js"></script>
 </head>
 <body>
 <x-dc>
@@ -227,7 +228,7 @@ window.dispatchEvent(new Event('three-ready'));
         <div style="pointer-events:auto; width:min(1020px,88vw);">
           <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; color:#B98BFF;">BRAND MOVEMENT — EVIDENCE LAYER</span>
           <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(34px,3.8vw,54px); line-height:1.04; margin:12px 0 24px; color:#F4F0E8;">Detected this week</h2>
-          <div data-r="3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
+          <scout-brand-moves><div data-r="3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
             <article style="border:1px solid rgba(255,255,255,.09); background:rgba(7,10,16,.7); backdrop-filter:blur(12px);">
               <div style="position:relative; height:190px;"><image-slot id="scout-brand-1" shape="rect" placeholder="Mokobara store — drop image"></image-slot></div>
               <div style="padding:16px 18px 18px;">
@@ -255,7 +256,7 @@ window.dispatchEvent(new Event('three-ready'));
                 <p style="font-size:13px; line-height:1.6; color:#98A2B1; margin:12px 0 0;">Transit-format trials. High dwell-time relevance for departures.</p>
               </div>
             </article>
-          </div>
+          </div></scout-brand-moves>
           <div style="display:flex; align-items:center; gap:14px; margin-top:18px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; color:#5C6675;"><span style="color:#F0B429;">WHY?</span><span>SOURCE · DATE · EXTRACT · TYPE · CONFIDENCE · LINK ATTACHED TO EVERY SIGNAL</span></div>
         </div>
       </div>
@@ -415,58 +416,11 @@ window.dispatchEvent(new Event('three-ready'));
           <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(40px,5vw,76px); line-height:1; margin:8px 0 0; color:#F4F0E8;">The Scout Daily</h2>
         </div>
         <div style="display:flex; align-items:center; gap:20px;">
-          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em; color:#8894A3;">26 AUGUST 2026</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em; color:#8894A3;"><scout-daily-date></scout-daily-date></span>
           <button onClick="{{ toggleDaily }}" style="background:none; border:1px solid rgba(255,255,255,.16); color:#EDE9E1; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; padding:9px 13px; cursor:pointer;" style-hover="border-color:#F0B429; color:#F0B429;">CLOSE</button>
         </div>
       </div>
-      <div data-r="2" style="display:grid; grid-template-columns:1.7fr 1fr; gap:38px; margin-top:32px;">
-        <article>
-          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#F0B429;">TOP STORY</div>
-          <h3 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(30px,3.6vw,52px); line-height:1.04; margin:10px 0 16px; color:#F4F0E8;">K-Beauty is moving into airport retail — and India is the last major gap</h3>
-          <div style="position:relative; height:320px; margin-bottom:18px;"><image-slot id="scout-daily-hero" shape="rect" placeholder="Top story image — drop here"></image-slot></div>
-          <div data-cols="2" style="columns:2; column-gap:28px; font-size:14.5px; line-height:1.75; color:#B4BDC8;">
-            <p style="margin:0 0 14px;">Three of the four highest-spend transit hubs in Asia and the Gulf now carry a dedicated Korean beauty format in departures. Footprints have compressed from mall-scale to 40–60 square metres, and assortment has narrowed to travel-legal sizes and gifting sets.</p>
-            <p style="margin:0 0 14px;">Bengaluru's outbound passenger mix into Seoul, Singapore and the Gulf skews younger than any other Indian metro hub, and the category already converts for those passengers on the outbound leg.</p>
-            <p style="margin:0;">The scout's reading is not that the trend is new. It is that the airport channel has caught up with it everywhere except here.</p>
-          </div>
-        </article>
-        <aside style="display:flex; flex-direction:column; gap:26px;">
-          <div>
-            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#6E7A8A; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:8px;">INDIA NOW · 3 MOVEMENTS</div>
-            <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px; font-size:14px; line-height:1.55; color:#B4BDC8;">
-              <div><strong style="color:#F4F0E8; font-weight:600;">Mokobara</strong> opens in two premium Mumbai malls.</div>
-              <div><strong style="color:#F4F0E8; font-weight:600;">Blue Tokai</strong> trials a transit-format bar.</div>
-              <div><strong style="color:#F4F0E8; font-weight:600;">Craft jewellery</strong> expands beyond Jaipur into metro flagships.</div>
-            </div>
-          </div>
-          <div>
-            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#6E7A8A; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:8px;">GLOBAL NOW · 7 MOVEMENTS</div>
-            <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px; font-size:14px; line-height:1.55; color:#B4BDC8;">
-              <div><strong style="color:#F4F0E8; font-weight:600;">ICN</strong> extends beauty concessions airside.</div>
-              <div><strong style="color:#F4F0E8; font-weight:600;">DXB</strong> adds two chef-led dining formats.</div>
-              <div><strong style="color:#F4F0E8; font-weight:600;">SIN</strong> converts a duty-free bay to experience retail.</div>
-            </div>
-          </div>
-          <div>
-            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#6E7A8A; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:8px;">CATEGORY WATCH</div>
-            <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:12px;">
-              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">RETAIL</span>
-              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">F&amp;B</span>
-              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">JEWELLERY</span>
-              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">DUTY-FREE</span>
-              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; border:1px solid rgba(255,255,255,.14); padding:6px 10px; color:#EDE9E1;">SERVICES</span>
-            </div>
-          </div>
-          <div style="border:1px solid rgba(240,180,41,.3); padding:16px 18px;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; color:#F0B429;">BLR OPPORTUNITIES · 3</div>
-            <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.08em; color:#C6CDD7;">
-              <div style="display:flex; justify-content:space-between;"><span>PREMIUM K-BEAUTY</span><span style="color:#F0B429;">88</span></div>
-              <div style="display:flex; justify-content:space-between;"><span>CHEF-LED DINING</span><span style="color:#F0B429;">74</span></div>
-              <div style="display:flex; justify-content:space-between;"><span>CRAFT JEWELLERY</span><span style="color:#F0B429;">69</span></div>
-            </div>
-          </div>
-        </aside>
-      </div>
+      <scout-daily-feed></scout-daily-feed>
     </div>
   </div>
 
@@ -581,7 +535,7 @@ window.dispatchEvent(new Event('three-ready'));
               <div style="background:#070A10; padding:14px 14px;">
                 <div style="display:flex; justify-content:space-between; gap:12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em;"><span style="color:#EDE9E1;">{{ e.s }}</span><span style="color:#5C6675;">{{ e.d }}</span></div>
                 <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.16em; color:{{ e.qc }}; margin-top:6px;">{{ e.t }} · SOURCE QUALITY {{ e.q }}</div>
-                <p style="font-size:13px; line-height:1.6; color:#98A2B1; margin:9px 0 0;">“{{ e.x }}”</p>
+                <a href="{{ e.u }}" target="_blank" rel="noopener" style="display:block; text-decoration:none; font-size:13px; line-height:1.6; color:#98A2B1; margin:9px 0 0;">“{{ e.x }}”</a>
               </div>
             </sc-for>
           </div>
@@ -770,6 +724,23 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    // Freshness Agent: swap the built-in evidence for live, dated coverage.
+    fetch('/api/globe-fresh').then(r => r.ok ? r.json() : null).then(g => {
+      if (!g || !g.cities || this._unmounted) return;
+      Object.keys(g.cities).forEach(code => {
+        const live = g.cities[code];
+        if (!live || !live.evid || !live.evid.length) return;
+        const base = SIG[code] || SIG_DEFAULT[code];
+        if (!base) return;
+        base.evid = live.evid;
+        base.days = live.days;
+      });
+      const focusCode = this.state.focus && this.state.focus.ci.c;
+      this.signals = CITIES.map(ci => signalFor(ci));
+      this.signals.slice().sort((a, b) => b.total - a.total).forEach((s, i) => { s.rank = i + 1; });
+      const nf = focusCode ? this.signals.find(s => s.ci.c === focusCode) : null;
+      this.setState(nf ? { focus:nf } : {});
+    }).catch(() => {});
     this._onScroll = () => {
       this.scrollY = window.scrollY || window.pageYOffset;
       if (this.introDone) { try { this.updateScroll(0.016); } catch (e) {} }
@@ -803,6 +774,7 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
+    this._unmounted = true;
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('keydown', this._onKey);
     window.removeEventListener('resize', this._onResize);
@@ -1248,6 +1220,7 @@ class Component extends DCLogic {
 
   openFocus(sig) {
     if (!sig) return;
+    sig = (this.signals || []).find(s => s.ci.c === sig.ci.c) || sig;
     this.skipIntro();
     this.focusLock = { lat:sig.ci.lat, lon:sig.ci.lon, d:1.62 };
     this.userSpin = false;
@@ -2043,7 +2016,7 @@ function signalFor(ci) {
     why:s.why || ['Coverage is consistent across ' + s.pub + ' publishers.', 'Velocity of +' + s.vel + '% week-on-week clears the tracking threshold.'],
     src:top.map(([name, pct, q]) => ({ name, q, pct:pct + '%', w:pct + '%', color:SRC_COLOR[name] || '#8894A3' })),
     evid:(s.evid || [['AGGREGATED CRAWL', s.days + ' DAYS AGO', 'CRAWL', '0.7', 'Signal assembled from ' + s.pub + ' publisher records and public discussion, deduplicated to a single entity.']])
-      .map(([sname, d, t, q, x]) => ({ s:sname, d, t, q, x, qc:parseFloat(q) >= 0.85 ? '#6FE3A8' : parseFloat(q) >= 0.75 ? '#F0B429' : '#8894A3' })),
+      .map(([sname, d, t, q, x, u]) => ({ s:sname, d, t, q, x, u:u || '#', qc:parseFloat(q) >= 0.85 ? '#6FE3A8' : parseFloat(q) >= 0.75 ? '#F0B429' : '#8894A3' })),
     rel:s.rel || (s.fit >= 0.7 ? 'HIGH' : s.fit >= 0.45 ? 'MED' : 'LOW'),
     gap:s.gap || 'UNSCORED', air:s.air || ci.c, opp:s.opp || Math.round(total * 0.82) + ' / 100',
     blrWhy:s.blrWhy || 'Held on the watchlist: the signal is real but has not yet cleared the passenger-relevance threshold for Bengaluru.'
