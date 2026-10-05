@@ -4,9 +4,12 @@ import { Topbar } from "@/components/Topbar";
 import { MotionGrid, MotionItem } from "@/components/Motion";
 import { Icon } from "@/components/Icon";
 import Link from "next/link";
-import type { SignalType } from "@/lib/types";
+import type { Signal, SignalType } from "@/lib/types";
+import { getLiveFeed, stamp, type LiveFeed } from "@/lib/signals/live";
 
 export const dynamic = "force-dynamic";
+// A cold Data Cache means one full live collection (~20s) before first paint.
+export const maxDuration = 60;
 
 const TYPE_ICON: Record<SignalType, string> = {
   "Emerging Brand": "bag",
@@ -35,16 +38,31 @@ function relevance(conf: number): { label: string; color: string } {
 
 export default async function SignalsPage() {
   const { config, opportunities } = await getPageData();
-  const signals = [...(await Repo.signals())].sort((a, b) => (b.firstDetectedAt < a.firstDetectedAt ? -1 : 1));
+  let feed: LiveFeed | null = null;
+  try {
+    feed = await getLiveFeed();
+  } catch {
+    feed = null; // live research unavailable — fall back to the stored signals
+  }
+  // Live signals first, then anything in the store they don't already cover.
+  const byUrl = new Map<string, Signal>();
+  for (const s of [...(feed?.signals || []), ...(await Repo.signals())]) if (!byUrl.has(s.url)) byUrl.set(s.url, s);
+  const signals = [...byUrl.values()].sort((a, b) => stamp(b) - stamp(a));
+  const liveCount = feed?.signals.length ?? 0;
   const oppByBrand = new Map(opportunities.map((o) => [o.brand.toLowerCase(), o.id]));
 
   return (
     <>
-      <Topbar title="Live Signals" subtitle="Every consolidated intelligence event, newest first" mode={config.mode} lastRefresh={config.lastRefreshAt} />
+      <Topbar title="Live Signals" subtitle="Every consolidated intelligence event, newest first" mode={feed?.live ? "live" : config.mode} lastRefresh={feed?.collectedAt || config.lastRefreshAt} />
       <div style={{ padding: "28px 34px 48px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
           <span className="live-dot" />
           <span className="eyebrow">{signals.length} signals · {new Set(signals.map((s) => s.source)).size} sources</span>
+        </div>
+        <div style={{ fontSize: 12.5, color: "var(--muted)", margin: "-10px 0 20px", maxWidth: 900, lineHeight: 1.5 }}>
+          {feed?.live
+            ? <>Live collection {ago(feed.collectedAt)} via {feed.providers.join(" + ") || "search"} · {feed.queries} queries · {feed.docs} documents · {liveCount} fresh signals. Re-collected every 6 hours and by the daily refresh.</>
+            : <>Live collection is unavailable right now — showing the stored signal set.</>}
         </div>
 
         <MotionGrid style={{ display: "grid", gap: 12, maxWidth: 900 }}>
@@ -67,7 +85,7 @@ export default async function SignalsPage() {
                     <div style={{ fontSize: 15.5, fontWeight: 600, marginTop: 9, lineHeight: 1.3 }}>{s.brand ? `${s.brand} — ` : ""}{s.trend}</div>
                     <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 5, lineHeight: 1.5 }}>{s.description}</div>
                     <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 12, flexWrap: "wrap", fontSize: 12 }}>
-                      <span style={{ color: "var(--muted-2)" }}>Detected {ago(s.firstDetectedAt)}</span>
+                      <span style={{ color: "var(--muted-2)" }}>{s.publishedAt ? `Published ${ago(s.publishedAt)}` : `Detected ${ago(s.firstDetectedAt)}`}</span>
                       <span style={{ color: "var(--muted-2)" }}>Confidence {s.confidence}%</span>
                       <a href={s.url} target="_blank" rel="noreferrer" style={{ color: "var(--accent)" }}>{s.source} ↗</a>
                       {s.corroboratingUrls.length > 0 && <span style={{ color: "var(--muted-2)" }}>+{s.corroboratingUrls.length} corroborating</span>}

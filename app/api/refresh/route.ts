@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { runPipeline } from "@/lib/agents";
+import { expireLiveFeed } from "@/lib/signals/live";
 
 export const dynamic = "force-dynamic";
 // Live collection (Tavily fan-out across 6 cities × 6 lenses) measured ~11s
@@ -12,10 +13,12 @@ export const maxDuration = 60;
 // automated refresh (see spec §7 monitoring engine).
 export async function POST() {
   const { entry } = await runPipeline();
+  expireLiveFeed(); // /signals re-collects on its next request
   return NextResponse.json({ ok: true, entry });
 }
 
 export async function GET() {
   const { entry } = await runPipeline();
+  expireLiveFeed();
   return NextResponse.json({ ok: true, entry });
 }

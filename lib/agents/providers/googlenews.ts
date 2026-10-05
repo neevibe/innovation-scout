@@ -17,7 +17,7 @@ export const googleNewsProvider: SearchProvider = {
 
   async search(query, { city, country, timespanMonths }) {
     const url = `https://news.google.com/rss/search?q=${encodeURIComponent(
-      `${query} when:${timespanMonths}m`
+      `${query} when:${timespanMonths * 30}d`
     )}&hl=en-IN&gl=IN&ceid=IN:en`;
 
     const res = await fetch(url, {

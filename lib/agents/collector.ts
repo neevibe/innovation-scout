@@ -81,7 +81,7 @@ export interface CollectionResult {
   };
 }
 
-export async function collectSignalsDetailed(): Promise<CollectionResult> {
+export async function collectSignalsDetailed(opts: { providerIds?: string[] } = {}): Promise<CollectionResult> {
   if (!isLive()) {
     // Offline — derive docsByProvider from existing signal sources as a
     // best-effort so Mastery still has something to render.
@@ -102,7 +102,7 @@ export async function collectSignalsDetailed(): Promise<CollectionResult> {
     return { signals: sigs, docsByProvider, meta: { live: false, providersUsed: [], usedLLM: false, queriesRun: 0, docsFound: sigs.length, complianceNotes: {}, failedProviders: [] } };
   }
   try {
-    return await collectLive();
+    return await collectLive(opts.providerIds);
   } catch (err) {
     console.error("[collector] live collection failed, using stored signals:", err);
     const sigs = await Repo.signals();
@@ -135,10 +135,11 @@ async function activeProviders(): Promise<SearchProvider[]> {
   return base;
 }
 
-async function collectLive(): Promise<CollectionResult> {
-  const cfg = await Repo.config();
+async function collectLive(providerIds?: string[]): Promise<CollectionResult> {
   const cities = (await Repo.cities()).filter((c) => c.active);
-  const providers = await activeProviders();
+  const providers = providerIds?.length
+    ? providerIds.map((id) => ALL_PROVIDERS[id]).filter(Boolean)
+    : await activeProviders();
   const fallback = fallbackChain();
   const months = 3;
 
