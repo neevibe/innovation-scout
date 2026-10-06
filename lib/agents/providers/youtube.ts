@@ -16,6 +16,7 @@ interface YtSearchHit {
   duration?: string;
   views?: number;
   likes?: number;
+  description?: string;
 }
 
 const fmtViews = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}K` : String(n));
@@ -35,7 +36,9 @@ export const youtubeProvider: SearchProvider = {
     if (hits.length === 0) return [];
     const out: RawDoc[] = [];
     for (const h of hits.slice(0, 3)) {
-      const transcript = await fetchTranscript(h.id);
+      // Transcript scraping is slow (one page fetch per video); with the Data
+      // API the description is enough and keeps the live feed fast.
+      const transcript = h.description !== undefined ? h.description || null : await fetchTranscript(h.id);
       const titleVal = h.title ?? "YouTube video";
       out.push({
         // Views lead the title: signal titles are truncated at 120 chars.
@@ -51,7 +54,7 @@ export const youtubeProvider: SearchProvider = {
         city: opts.city,
         country: opts.country,
       });
-      await sleep(150);
+      if (h.description === undefined) await sleep(150);
     }
     if (out.length === 0) return [];
     for (const d of out) if (!d.source || d.source === "unknown") d.source = domainOf(d.url) || "youtube.com";
@@ -69,13 +72,14 @@ async function searchVideos(query: string): Promise<YtSearchHit[]> {
       const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) return [];
       const j = (await res.json()) as {
-        items?: { id: { videoId: string }; snippet: { title: string; channelTitle: string; publishedAt: string } }[];
+        items?: { id: { videoId: string }; snippet: { title: string; channelTitle: string; publishedAt: string; description?: string } }[];
       };
       const hits: YtSearchHit[] = (j.items || []).map((it) => ({
         id: it.id.videoId,
         title: it.snippet.title,
         channel: it.snippet.channelTitle,
         publishedAt: it.snippet.publishedAt,
+        description: it.snippet.description || "",
       }));
       // View/like counts (1 quota unit for up to 50 ids).
       if (hits.length) {

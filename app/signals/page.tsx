@@ -5,11 +5,13 @@ import { MotionGrid, MotionItem } from "@/components/Motion";
 import { Icon } from "@/components/Icon";
 import Link from "next/link";
 import type { Signal, SignalType } from "@/lib/types";
+import { after } from "next/server";
 import { getLiveFeed, stamp, type LiveFeed } from "@/lib/signals/live";
 
 export const dynamic = "force-dynamic";
-// A cold Data Cache means one full live collection (~20s) before first paint.
-export const maxDuration = 60;
+// A cold collection can take 30-60s: it finishes in the background via after(),
+// so give the function room beyond the response.
+export const maxDuration = 300;
 
 const TYPE_ICON: Record<SignalType, string> = {
   "Emerging Brand": "bag",
@@ -39,8 +41,19 @@ function relevance(conf: number): { label: string; color: string } {
 export default async function SignalsPage() {
   const { config, opportunities } = await getPageData();
   let feed: LiveFeed | null = null;
+  let warming = false;
   try {
-    feed = await getLiveFeed();
+    // Cached feed answers instantly. A cold one gets 8s; past that we render
+    // the stored signals now and let the collection complete after the
+    // response so the next visit is served from cache.
+    const pending = getLiveFeed();
+    pending.catch(() => {});
+    const timeout = new Promise<"timeout">((r) => setTimeout(() => r("timeout"), 8000));
+    const first = await Promise.race([pending, timeout]);
+    if (first === "timeout") {
+      warming = true;
+      after(() => pending.then(() => undefined, (e) => console.error("[signals] background collection failed:", e)));
+    } else feed = first;
   } catch (err) {
     console.error("[signals] live feed unavailable:", err);
     feed = null; // live research unavailable — fall back to the stored signals
@@ -63,7 +76,9 @@ export default async function SignalsPage() {
         <div style={{ fontSize: 12.5, color: "var(--muted)", margin: "-10px 0 20px", maxWidth: 900, lineHeight: 1.5 }}>
           {feed?.live
             ? <>Live collection {ago(feed.collectedAt)} via {feed.providers.join(" + ") || "search"} · {feed.queries} queries · {feed.docs} documents · {liveCount} fresh signals. Re-collected every 6 hours and by the daily refresh.</>
-            : <>Live collection is unavailable right now — showing the stored signal set.</>}
+            : warming
+              ? <>Collecting live signals now (about a minute) — showing the stored set meanwhile. Refresh shortly.</>
+              : <>Live collection is unavailable right now — showing the stored signal set.</>}
         </div>
 
         <MotionGrid style={{ display: "grid", gap: 12, maxWidth: 900 }}>
