@@ -22,7 +22,27 @@ export interface LiveFeed {
   signals: Signal[];
 }
 
-const MAX_SIGNALS = 150; // Data Cache entries are capped at 2 MB
+const MAX_SIGNALS = 220; // Data Cache entries are capped at 2 MB (~1 KB each here)
+
+// Priority platforms get reserved slots so fresh-by-the-hour chatter
+// (Bluesky, Mastodon, news) can't crowd out week-old YouTube videos or
+// Instagram / Facebook posts that are still the most-watched in the market.
+const RESERVED: [RegExp, number][] = [
+  [/youtube\.com/, 40],
+  [/instagram\.com/, 40],
+  [/facebook\.com/, 30],
+];
+
+function pick(signals: Signal[]): Signal[] {
+  const sorted = [...signals].sort((a, b) => stamp(b) - stamp(a));
+  const chosen = new Set<Signal>();
+  for (const [re, n] of RESERVED) sorted.filter((s) => re.test(s.url)).slice(0, n).forEach((s) => chosen.add(s));
+  for (const s of sorted) {
+    if (chosen.size >= MAX_SIGNALS) break;
+    chosen.add(s);
+  }
+  return sorted.filter((s) => chosen.has(s));
+}
 
 async function collect(): Promise<LiveFeed> {
   // Fast HTTP providers only — the subprocess scrapers (scrapling, X, …) are
@@ -53,10 +73,7 @@ async function collect(): Promise<LiveFeed> {
   if (meta.failedProviders.includes("*") || signals.length === 0) throw new Error("live collection failed");
   const { consolidated } = consolidate(signals);
   const NOISE = /trip report|things to do|itinerary|travel guide|best places to|share price|stock price|\bipo\b/i;
-  const recent = consolidated
-    .filter((s) => !NOISE.test(`${s.trend} ${s.description}`))
-    .sort((a, b) => stamp(b) - stamp(a))
-    .slice(0, MAX_SIGNALS)
+  const recent = pick(consolidated.filter((s) => !NOISE.test(`${s.trend} ${s.description}`)))
     .map((s) => ({ ...s, description: s.description.slice(0, 400) }));
   const feed = {
     collectedAt: new Date().toISOString(),
@@ -73,7 +90,7 @@ async function collect(): Promise<LiveFeed> {
 
 // The Data Cache is shared across deployments: key by environment so a preview
 // can never serve (or overwrite) production's feed.
-export const getLiveFeed = unstable_cache(collect, ["live-signals-v2", process.env.VERCEL_ENV || "local"], {
+export const getLiveFeed = unstable_cache(collect, ["live-signals-v3", process.env.VERCEL_ENV || "local"], {
   revalidate: 6 * 3600,
   tags: ["live-signals"],
 });

@@ -38,7 +38,8 @@ export const youtubeProvider: SearchProvider = {
       const transcript = await fetchTranscript(h.id);
       const titleVal = h.title ?? "YouTube video";
       out.push({
-        title: `${titleVal} — ${h.channel ?? ""}${h.views != null ? ` (${fmtViews(h.views)} views)` : ""}`,
+        // Views lead the title: signal titles are truncated at 120 chars.
+        title: `${h.views != null ? `▶ ${fmtViews(h.views)} views · ` : ""}${titleVal} — ${h.channel ?? ""}`,
         url: `https://www.youtube.com/watch?v=${h.id}`,
         source: "youtube.com",
         // Keyless search gives no upload date — leave it unset rather than
